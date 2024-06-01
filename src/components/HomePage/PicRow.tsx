@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef} from "react";
 import PicCommodityItem from "./PicCommodityItem.tsx";
 import PicMerchantItem from "./PicMerchantItem.tsx";
 
@@ -13,12 +13,26 @@ interface picArrayObj {
     isDirectionToRight: boolean
 }
 
-const PicItem = ({data}:{data: picArrayObj}) => {
-    const [index, setIndex] = useState(0);
+const PicRow = ({data}:{data: picArrayObj}) => {
     const timeIdRef = useRef<number>(0);
+    const rowRef = useRef<HTMLDivElement>(null);
+    const startPointRef = useRef(0);
+    // let startPoint = 0;
+
 
     const startPlay = () => {
-        return setInterval(() => setIndex(i => i + 1), 10);
+        return setInterval(() => {
+            if(rowRef.current){
+                startPointRef.current++;
+                if(data.isDirectionToRight){
+                    rowRef.current.style.transform = `translate3d(${(startPointRef.current%10000/10000-1)*216*9}px,0,0)`;
+                }
+                else {
+                    rowRef.current.style.transform = `translate3d(${(-startPointRef.current%10000/10000)*216*9}px,0,0)`;
+                }
+            }
+        }, 10);
+
     }
 
     useEffect(() => {
@@ -38,12 +52,9 @@ const PicItem = ({data}:{data: picArrayObj}) => {
 
     return (
             <div className={`flex gap-4 w-max relative`}
-                 style={{
-                     transform: data.isDirectionToRight? `translate3d(${(index%10000/10000-1)*216*9}px,0,0`
-                         :`translate3d(${(-index%10000/10000)*216*9}px,0,0`,
-            }}
                  onMouseOver={handleMouseOver}
                  onMouseOut={handleMouseOut}
+                 ref={rowRef}
             >
                 {
                     data.data.map((d, index) => {
@@ -79,4 +90,5 @@ const PicItem = ({data}:{data: picArrayObj}) => {
     )
 }
 
-export default PicItem;
+
+export default PicRow;
