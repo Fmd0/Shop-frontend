@@ -1,4 +1,7 @@
 import MarketPageMainContent from "../components/MarketPage/MarketPageMainContent.tsx";
+import NavBar from "../components/NavBar.tsx";
+import ContactModal from "../components/MarketPage/ContactModal.tsx";
+import PrivacyModal from "../components/MarketPage/PrivacyModal.tsx";
 
 
 const MarketPage = () => {
@@ -16,7 +19,10 @@ const MarketPage = () => {
 
     return (
         <>
+            <NavBar />
             <MarketPageMainContent id={id} />
+            <ContactModal />
+            <PrivacyModal />
         </>
     )
 }

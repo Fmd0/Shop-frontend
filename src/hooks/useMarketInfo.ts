@@ -1,15 +1,14 @@
-
 import useSWR from "swr";
 import fetcher from "../utils/fetcher.ts";
-import {HomeShopStartedType} from "../utils/type.ts";
+import {MarketInfoType} from "../utils/type.ts";
 
 
 const useMarketInfo = (id: string) => {
-    const {data, error}: {
-        data: {msg: string, data: HomeShopStartedType[]},
+    const {data:marketInfoData, error}: {
+        data: {msg: string, data: MarketInfoType},
         error: boolean|undefined
-    } = useSWR(`http://localhost:3000/api/market/${id}`, fetcher);
-    return {data, error};
+    } = useSWR(`${import.meta.env.VITE_API_ADDRESS}/api/market/${id}`, fetcher);
+    return {marketInfoData, error};
 }
 
 
