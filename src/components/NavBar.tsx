@@ -61,7 +61,7 @@ const HomePageNav = () => {
                     <p className="opacity-0">{searchPlaceholderList[searchPlaceholderList.length - 1]}</p>
                     {
                         searchPlaceholderList.map((s, i) => (
-                            <p key={i} className={`${searchIndex === 0 ? "" : "duration-300"} ${searchIndex === i ? "opacity-100" : "opacity-0"}`}>{s}</p>
+                            <p key={i} className={`text-nowrap ${searchIndex === 0 ? "" : "duration-300"} ${searchIndex === i ? "opacity-100" : "opacity-0"}`}>{s}</p>
                         ))
                     }
                     <p className={`${searchIndex === 0 ? "" : "duration-300"} ${searchIndex === searchPlaceholderList.length ? "opacity-100" : "opacity-0"}`}>{searchPlaceholderList[0]}</p>

@@ -34,4 +34,21 @@ export interface MarketInfoType {
     privacyPolicy?: string,
     refundPolicy?: string,
     shippingPolicy?: string,
+
+    marketTag?: MarketTagType
+}
+
+export interface MarketPageCommodityInfoType {
+    id: string,
+    name: string,
+    price: number,
+    promotingPrice: number,
+    images: string[],
+    rating: string,
+    ratingAmount: string,
+}
+
+export interface MarketTagType {
+    id: string,
+    tags: string[]
 }

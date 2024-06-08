@@ -10,8 +10,9 @@ const MoreInfoModal = () => {
     const {marketInfo, moreInfoOpen, openContactModalOpen, openPrivacyModalOpen} = useMarketInfoStore();
 
     return (
-        <div className={`bg-transparent text-black rounded-xl absolute top-[calc(100%+3px)] left-1/2 -translate-x-1/2 p-2 text-nowrap w-max
-        border-black border-[0.5px] text-[16px] tracking-[0.15px] font-normal flex flex-col
+        <div className={`bg-white text-black rounded-xl absolute top-[calc(100%+5px)] left-1/2 -translate-x-1/2 p-2 text-nowrap w-max
+        border-[#0000001a] border-[0.5px] text-[16px] tracking-[0.15px] font-normal flex flex-col
+        shadow-[0_4px_6px_-1px_#0000001a]
         ${moreInfoOpen?"":"hidden"}
         `}>
             {

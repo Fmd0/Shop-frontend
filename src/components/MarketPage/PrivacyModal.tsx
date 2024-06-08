@@ -11,14 +11,14 @@ const PrivacyModal = () => {
         duration-100 ${privacyModalOpen?"visible":"invisible"}`}
              onClick={closePrivacyModalOpen}
         >
-            <div className={`w-[640px] max-w-full h-[400px] tracking-[.15px] bg-white rounded-3xl absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+            <div className={`w-4/5 max-w-[640px] max-h-[800px] h-3/5 tracking-[.15px] bg-white rounded-3xl overflow-hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
             ${privacyModalOpen ? "scale-100 opacity-100" : "scale-75 opacity-0"} duration-100 origin-bottom`}
                  onClick={(e) => e.stopPropagation()}>
                 <h1 className="p-5 text-[20px] font-semibold text-center">Privacy policy</h1>
 
                 {
                     marketInfo?.privacyPolicy&&
-                    <iframe src={marketInfo.privacyPolicy} className="w-full" />
+                    <iframe src={marketInfo.privacyPolicy} className="w-full h-full" />
                 }
 
                 <button type="button" className="absolute top-5 right-5" onClick={closePrivacyModalOpen}>
