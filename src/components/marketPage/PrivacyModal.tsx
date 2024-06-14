@@ -9,7 +9,10 @@ const PrivacyModal = () => {
     return (
         <div className={`fixed left-0 top-0 w-screen h-screen bg-neutral-500 bg-opacity-50 z-50
         duration-100 ${privacyModalOpen?"visible":"invisible"}`}
-             onClick={closePrivacyModalOpen}
+             onClick={e => {
+                 e.stopPropagation();
+                 closePrivacyModalOpen();
+             }}
         >
             <div className={`w-4/5 max-w-[640px] max-h-[800px] h-3/5 tracking-[.15px] bg-white rounded-3xl overflow-hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
             ${privacyModalOpen ? "scale-100 opacity-100" : "scale-75 opacity-0"} duration-100 origin-bottom`}

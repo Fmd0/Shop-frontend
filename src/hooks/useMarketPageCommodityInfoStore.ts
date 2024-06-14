@@ -14,6 +14,8 @@ interface State {
     commodityList: MarketPageCommodityInfoType[],
     sortByModalOpen: boolean,
     priceModalOpen: boolean,
+    moreInfoModalOpen: boolean,
+
 }
 
 
@@ -29,6 +31,7 @@ interface Actions {
     setCommodityList: (commodityList: MarketPageCommodityInfoType[]) => void,
     toggleSortByModalOpen: () => void,
     togglePriceModalOpen: () => void,
+    toggleMoreInfoModalOpen: () => void,
     closeAllModal: () => void,
 }
 
@@ -44,11 +47,13 @@ const initialState: State = {
     commodityList: [],
     sortByModalOpen: false,
     priceModalOpen: false,
+    moreInfoModalOpen: false,
 }
 
 const modalGroupState = {
     sortByModalOpen: false,
     priceModalOpen: false,
+    moreInfoModalOpen: false,
 }
 
 const useMarketPageCommodityInfoStore = create<State & Actions>((set) => ({
@@ -64,6 +69,7 @@ const useMarketPageCommodityInfoStore = create<State & Actions>((set) => ({
     setCommodityList: (commodityList) => set({commodityList}),
     toggleSortByModalOpen: () => set(state => ({...modalGroupState, sortByModalOpen: !state.sortByModalOpen})),
     togglePriceModalOpen: () => set(state => ({...modalGroupState, priceModalOpen: !state.priceModalOpen})),
+    toggleMoreInfoModalOpen: () => set(state => ({...modalGroupState, moreInfoModalOpen: !state.moreInfoModalOpen})),
     closeAllModal: () => set(({...modalGroupState})),
 }))
 

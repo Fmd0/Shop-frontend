@@ -3,11 +3,13 @@ import whiteLink from "../../assets/MarketPage/whiteLink.svg"
 import {useEffect} from "react";
 import useMarketInfoStore from "../../hooks/useMarketInfoStore.ts";
 import MoreInfoModal from "./MoreInfoModal.tsx";
+import useMarketPageCommodityInfoStore from "../../hooks/useMarketPageCommodityInfoStore.ts";
 
 
 const MarketPageMainContent = () => {
 
-    const {marketInfo, setMarketInfo, toggleMoreInfoOpen} = useMarketInfoStore();
+    const {marketInfo, setMarketInfo} = useMarketInfoStore();
+    const {toggleMoreInfoModalOpen} = useMarketPageCommodityInfoStore();
     const id = (new URLSearchParams(window.location.search)).get('id')||"";
 
 
@@ -29,7 +31,10 @@ const MarketPageMainContent = () => {
                 <div className="flex flex-col gap-4 text-[14px]">
                     <div className="flex flex-row items-center gap-4">
                         <div className="relative w-[56px] h-[56px] rounded-xl overflow-hidden">
-                            <img src={marketInfo?.icon || ""} alt="icon" className="w-full h-full object-contain"/>
+                            {
+                                marketInfo?.icon && marketInfo.icon !== "" &&
+                                <img src={marketInfo.icon} alt="icon" className="w-full h-full object-contain"/>
+                            }
                             <div className="absolute inset-0 bg-[#0000000a]"></div>
                         </div>
                         <div>
@@ -48,10 +53,10 @@ const MarketPageMainContent = () => {
                             {marketInfo?.website?.replace("https://", "").replace("/", "") || ""}
                         </a>
 
-                        <div className="relative">
+                        <div className="relative" onClick={e => e.stopPropagation()}>
                             <button type="button"
                                     className="border-neutral-400 border-[1px] px-3 text-center py-2 font-extrabold rounded-xl duration-200 hover:bg-[rgba(0,0,0,.1)]"
-                                    onClick={toggleMoreInfoOpen}>
+                                    onClick={toggleMoreInfoModalOpen}>
                                 ···
                             </button>
                             <MoreInfoModal/>
@@ -74,7 +79,8 @@ const MarketPageMainContent = () => {
                     marketInfo?.bigLogo && marketInfo?.bigLogo !== "" ?
                         <img src={marketInfo.bigLogo || ""} alt="logo"
                              className="max-w-[200px] max-h-[80px] object-contain"/> :
-                        <img src={marketInfo?.icon || ""} alt="icon"
+                        marketInfo?.icon && marketInfo.icon !== "" &&
+                        <img src={marketInfo.icon} alt="icon"
                              className="w-[56px] h-[56px] rounded-xl object-contain"/>
                 }
                 <p className="cursor-pointer text-[12px] font-semibold">{marketInfo?.rating || ""}★({marketInfo?.ratingAmount || ""})</p>
@@ -105,24 +111,30 @@ const MarketPageMainContent = () => {
                         <div className={`absolute rounded-xl inset-0 ${marketInfo.bigLogoFontColor==="black"?"bg-[rgba(0,0,0,.08)]":"bg-[rgba(255,255,255,.08)]"} duration-200 opacity-0 group-hover/link:opacity-100`}></div>
                     </a>
 
+
                     {/*more info*/}
-                    <div className="relative cursor-pointer group/link" onClick={toggleMoreInfoOpen}>
-                        <div className="border-[1px] border-opacity-30 px-3 text-center rounded-xl py-2 duration-300 font-extrabold"
-                                style={{
-                                    borderColor: marketInfo.bigLogoFontColor === "black" ? "rgb(10 10 10 / 0.5)" : "rgb(245 245 245 / 0.5)"
-                                }}>
-                            ···
+                    <div className="relative" onClick={e => e.stopPropagation()}>
+                        <div className="relative cursor-pointer group/link">
+                            <div onClick={toggleMoreInfoModalOpen}
+                                 className="border-[1px] border-opacity-30 px-3 text-center rounded-xl py-2 duration-300 font-extrabold"
+                                 style={{borderColor: marketInfo.bigLogoFontColor === "black" ? "rgb(10 10 10 / 0.5)" : "rgb(245 245 245 / 0.5)"}}
+                            >
+                                ···
+                            </div>
+                            <div onClick={toggleMoreInfoModalOpen}
+                                 className={`absolute inset-0 rounded-xl ${marketInfo.bigLogoFontColor === "black" ? "bg-[rgba(0,0,0,.08)]" : "bg-[rgba(255,255,255,.08)]"} duration-200 opacity-0 group-hover/link:opacity-100`}>
+                            </div>
                         </div>
                         <MoreInfoModal/>
-                        <div className={`absolute inset-0 rounded-xl ${marketInfo.bigLogoFontColor === "black" ? "bg-[rgba(0,0,0,.08)]" : "bg-[rgba(255,255,255,.08)]"} duration-200 opacity-0 group-hover/link:opacity-100`}></div>
-
                     </div>
+
+
                 </div>
             </div>
             <div className="rounded-2xl overflow-hidden">
                 {
-                    marketInfo?.bigPic &&
-                    <img src={marketInfo?.bigPic || ""} alt="bigPic" className="w-full h-[350px] object-cover"/>
+                    marketInfo?.bigPic && marketInfo.bigPic!=="" &&
+                    <img src={marketInfo.bigPic} alt="bigPic" className="w-full h-[350px] object-cover"/>
                 }
             </div>
         </main>

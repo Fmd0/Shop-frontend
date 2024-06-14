@@ -32,7 +32,7 @@ const MarketPageCommodityInfo = () => {
     } = useMarketPageCommodityInfoStore();
     const marketId = (new URLSearchParams(window.location.search)).get('id')||"";
 
-    const [hasMore, setHasMore] = useState<boolean>(true);
+    const [hasMore, setHasMore] = useState<boolean>(false);
     const [amount, setAmount] = useState<number>(0);
     const [queryFormControl, setQueryFormControl] = useState("");
 
@@ -41,33 +41,22 @@ const MarketPageCommodityInfo = () => {
         fetch(`${import.meta.env.VITE_API_ADDRESS}/api/market/commodity?page=${page}&query=${query}&pageSize=10&marketId=${marketId}&sortBy=${sortBy}&onSale=${onSale?onSale:""}&inStock=${inStock?inStock:""}&startPrice=${startPrice}&endPrice=${endPrice}&tag=${tag}`)
             .then(res => res.json())
             .then(data => {
-                if(ignore) return;
-                setCommodityList(data?.data||[]);
-                setAmount(data?.totalAmount||0);
-                setHasMore(data?.hasMore||false);
+                if(!ignore) {
+                    if(page === 1) {
+                        setCommodityList(data?.data||[]);
+                        setAmount(data?.totalAmount||0);
+                        setHasMore(data?.hasMore||false)
+                    }
+                    else {
+                        setCommodityList([...commodityList, ...data?.data||[]]);
+                        setAmount(data?.totalAmount||0);
+                        setHasMore(data?.hasMore||false)
+                    }
+                }
             })
             .catch(err => console.log(err));
         return () => {ignore = true;}
-    }, [marketId, sortBy, onSale, inStock, startPrice, endPrice, tag, query]);
-
-    useEffect(() => {
-        let ignore = false;
-        fetch(`${import.meta.env.VITE_API_ADDRESS}/api/market/commodity?page=${page}&query=${query}&pageSize=10&marketId=${marketId}&sortBy=${sortBy}&onSale=${onSale?onSale:""}&inStock=${inStock?inStock:""}&startPrice=${startPrice}&endPrice=${endPrice}&tag=${tag}`)
-            .then(res => res.json())
-            .then(data => {
-                if(ignore) return;
-                if(page === 1) {
-                    setCommodityList(data?.data||[]);
-                }
-                else {
-                    setCommodityList([...commodityList, ...data?.data || []]);
-                }
-                setAmount(data?.totalAmount||0);
-                setHasMore(data?.hasMore||false);
-            })
-            .catch(err => console.log(err));
-        return () => {ignore = true;}
-    }, [page]);
+    }, [page, marketId, sortBy, onSale, inStock, startPrice, endPrice, tag, query, setCommodityList]);
 
     return (
         <div className="max-w-[1144px] mx-auto w-[80%] flex flex-col gap-8 mt-8 mb-10">

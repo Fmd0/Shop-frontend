@@ -3,17 +3,19 @@ import privacyPolicy from "../../assets/MarketPage/privacyPolicy.svg"
 import refundPolicy from "../../assets/MarketPage/refundPolicy.svg"
 import shippingPolicy from "../../assets/MarketPage/shippingPolicy.svg"
 import contact from "../../assets/MarketPage/contact.svg"
+import useMarketPageCommodityInfoStore from "../../hooks/useMarketPageCommodityInfoStore.ts";
 
 
 
 const MoreInfoModal = () => {
-    const {marketInfo, moreInfoOpen, openContactModalOpen, openPrivacyModalOpen} = useMarketInfoStore();
+    const {marketInfo, openContactModalOpen, openPrivacyModalOpen} = useMarketInfoStore();
+    const {moreInfoModalOpen} = useMarketPageCommodityInfoStore();
 
     return (
-        <div className={`bg-white text-black rounded-xl absolute top-[calc(100%+5px)] left-1/2 -translate-x-1/2 p-2 text-nowrap w-max
+        <div className={`bg-white text-black rounded-xl absolute z-10 top-[calc(100%+5px)] left-1/2 -translate-x-1/2 p-2 text-nowrap w-max
         border-[#0000001a] border-[0.5px] text-[16px] tracking-[0.15px] font-normal flex flex-col
         shadow-[0_4px_6px_-1px_#0000001a]
-        ${moreInfoOpen?"":"hidden"}
+        ${moreInfoModalOpen?"":"hidden"}
         `}>
             {
                 marketInfo?.privacyPolicy&&marketInfo.privacyPolicy!==""&& (

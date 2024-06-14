@@ -1,8 +1,8 @@
-import HomePageBanner from "../components/HomePage/HomePageBanner.tsx";
-import HomePageNav from "../components/HomePage/HomePageNav.tsx";
-import HomePageMainContent from "../components/HomePage/HomePageMainContent.tsx";
-import RewardingWay from "../components/HomePage/RewardingWay.tsx";
-import StartShopList from "../components/HomePage/StartShopList.tsx";
+import HomePageBanner from "../components/homePage/HomePageBanner.tsx";
+import HomePageNav from "../components/homePage/HomePageNav.tsx";
+import HomePageMainContent from "../components/homePage/HomePageMainContent.tsx";
+import RewardingWay from "../components/homePage/RewardingWay.tsx";
+import StartShopList from "../components/homePage/StartShopList.tsx";
 
 const HomePage = () => {
 

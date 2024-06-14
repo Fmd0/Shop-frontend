@@ -52,3 +52,53 @@ export interface MarketTagType {
     id: string,
     tags: string[]
 }
+
+export interface CommodityInfoType {
+    id: string,
+    name: string,
+    price: number,
+    promotingPrice: number,
+    images: string[],
+    rating: string,
+    ratingAmount: string,
+    description?: string,
+    stock?: number,
+    marketId?: string,
+    officialLink?: string,
+    market?: MarketInfoType,
+    skuConfigs: SkuConfigType[],
+    skuItems: SkuItemType[],
+}
+
+export interface SkuConfigType {
+    key: string,
+    defaultValue: string,
+    value: string[],
+}
+
+export interface SkuItemType {
+    sku: {
+        [key: string]: string,
+    },
+    price: number,
+    promotingPrice: number,
+    image?: string,
+    stock: number,
+}
+
+
+export interface CommentType {
+    id: string,
+    rating: number,
+    comment: string,
+    userName: string,
+    marketId: string,
+    commodityId: string,
+    createdAt: string,
+    market: {
+        name: string,
+    },
+    commodity: {
+        name: string,
+    }
+}

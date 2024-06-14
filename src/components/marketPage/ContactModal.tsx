@@ -1,27 +1,54 @@
-import useMarketInfoStore from "../../hooks/useMarketInfoStore.ts";
 import closeModal from "../../assets/MarketPage/closeModal.svg"
 
 
-const ContactModal = () => {
+const ContactModal = (
+    {
+        name="",
+        website,
+        email,
+        telephone,
+        facebook,
+        twitter,
+        ins,
+        youtube,
+        address,
+        contactModalOpen,
+        closeContactModalOpen,
+}: {
+        name: string|undefined,
+        website: string|undefined,
+        email: string|undefined,
+        telephone: string|undefined,
+        facebook: string|undefined,
+        twitter: string|undefined,
+        ins: string|undefined,
+        youtube: string|undefined
+        address: string|undefined,
+        contactModalOpen: boolean,
+        closeContactModalOpen:  () => void,
+    }) => {
 
-    const {marketInfo, contactModalOpen, closeContactModalOpen} = useMarketInfoStore();
 
     return (
-        <div className={`fixed left-0 top-0 w-screen h-screen bg-neutral-500 bg-opacity-50 z-50
-        duration-100
-        ${contactModalOpen?"visible":"invisible"}`}
-             onClick={closeContactModalOpen}
+        <div className={`fixed left-0 top-0 w-screen h-screen bg-neutral-500 z-50
+        duration-300 ease-[cubic-bezier(.16,1,.3,1)]
+        ${contactModalOpen?"visible bg-opacity-50":"invisible bg-opacity-0"}`}
+             onClick={e => {
+                 e.stopPropagation();
+                 closeContactModalOpen();
+             }}
         >
-            <div className={`w-[640px] max-w-full h-[400px] tracking-[.15px] bg-white rounded-3xl absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
-            ${contactModalOpen?"scale-100 opacity-100":"scale-75 opacity-0"} duration-100 origin-bottom
-            `}
-                 onClick={(e) => e.stopPropagation()}
-            >
-                <h1 className="p-5 text-[20px] font-semibold text-center">Contact {marketInfo?.name||""}</h1>
+            <div className={`w-[640px] max-w-full h-[400px] tracking-[.15px] bg-white rounded-3xl absolute left-1/2 top-1/2 -translate-x-1/2
+            ${contactModalOpen ? "scale-100 opacity-100 -translate-y-1/2" : "scale-90 -translate-y-[40%] opacity-0"} duration-300 ease-[cubic-bezier(.16,1,.3,1)]`}
+                 onClick={(e) => e.stopPropagation()}>
+                <h1 className="p-5 text-[20px] font-semibold text-center">Contact {name}</h1>
                 <div className={`p-5 grid grid-cols-2 gap-4 text-[16px]`}>
+
+                    {/*left column*/}
                     <div className="flex flex-col gap-6">
                         {
-                            marketInfo?.website && <a href={marketInfo.website} target="_blank" className="flex items-center gap-3">
+                            !!website && website!==""&&
+                            <a href={website} target="_blank" className="flex items-center gap-3">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                      xmlns="http://www.w3.org/2000/svg" data-testid="icon-website" stroke="none"
                                      style={{width: "20px", height: "20px"}}>
@@ -29,11 +56,12 @@ const ContactModal = () => {
                                           d="M3 4C2.44772 4 2 4.44772 2 5V20C2 20.5523 2.44772 21 3 21H12C12.5523 21 13 20.5523 13 20C13 19.4477 12.5523 19 12 19H4V6H20V12.25C20 12.8023 20.4477 13.25 21 13.25C21.5523 13.25 22 12.8023 22 12.25V5C22 4.44772 21.5523 4 21 4H3ZM14.7941 13.5442C14.4401 13.4353 14.0548 13.531 13.7929 13.7929C13.531 14.0548 13.4353 14.4401 13.5442 14.7941L15.5442 21.2941C15.6644 21.6847 16.0102 21.9629 16.4175 21.9966C16.8248 22.0303 17.2117 21.8128 17.3944 21.4472L18.7454 18.7454L21.4472 17.3944C21.8128 17.2117 22.0303 16.8248 21.9966 16.4175C21.9629 16.0102 21.6847 15.6644 21.2941 15.5442L14.7941 13.5442ZM16.7218 18.3204L16.0113 16.0113L18.3204 16.7218L17.5528 17.1056C17.3593 17.2023 17.2023 17.3593 17.1056 17.5528L16.7218 18.3204ZM5.5 8.75C5.5 9.44036 6.05964 10 6.75 10C7.44036 10 8 9.44036 8 8.75C8 8.05964 7.44036 7.5 6.75 7.5C6.05964 7.5 5.5 8.05964 5.5 8.75ZM9 8.75C9 9.44036 9.55964 10 10.25 10C10.9404 10 11.5 9.44036 11.5 8.75C11.5 8.05964 10.9404 7.5 10.25 7.5C9.55964 7.5 9 8.05964 9 8.75ZM12.5 8.75C12.5 9.44036 13.0596 10 13.75 10C14.4404 10 15 9.44036 15 8.75C15 8.05964 14.4404 7.5 13.75 7.5C13.0596 7.5 12.5 8.05964 12.5 8.75Z"
                                           fill="currentColor"></path>
                                 </svg>
-                                <p>{marketInfo?.website?.replace("https://", "").replace("/", "")}</p>
+                                <p>{website.replace("https://", "").replace("/", "")}</p>
                             </a>
                         }
                         {
-                            marketInfo?.email && <a href={`mailto:${marketInfo.email}`} target="_blank" className="flex items-center gap-3">
+                            !!email && email!=="" &&
+                            <a href={`mailto:${email}`} target="_blank" className="flex items-center gap-3">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                      xmlns="http://www.w3.org/2000/svg" data-testid="icon-email"
                                      stroke="none" style={{width: "20px", height: "20px"}}>
@@ -41,11 +69,12 @@ const ContactModal = () => {
                                         d="M21 5H22C22 4.44772 21.5523 4 21 4V5ZM21 19V20C21.5523 20 22 19.5523 22 19H21ZM3 19H2C2 19.5523 2.44772 20 3 20V19ZM3 5V4C2.44772 4 2 4.44772 2 5H3ZM12 13L11.3668 13.774C11.7351 14.0754 12.2649 14.0754 12.6332 13.774L12 13ZM20 5V19H22V5H20ZM21 18H3V20H21V18ZM4 19V5H2V19H4ZM3 6H21V4H3V6ZM20.3668 4.86241L11.3668 12.226L12.6332 13.774L21.6332 6.41033L20.3668 4.86241ZM12.6332 12.226L3.63324 4.86241L2.36676 6.41033L11.3668 13.774L12.6332 12.226Z"
                                         fill="currentColor"></path>
                                 </svg>
-                                <p>{marketInfo.email}</p>
+                                <p>{email}</p>
                             </a>
                         }
                         {
-                            marketInfo?.telephone && <a href={`tel:${marketInfo.telephone}`} target="_blank" className="flex items-center gap-3">
+                            !!telephone && telephone!=="" &&
+                            <a href={`tel:${telephone}`} target="_blank" className="flex items-center gap-3">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                      xmlns="http://www.w3.org/2000/svg" data-testid="icon-phone"
                                      stroke="none" style={{width: "20px", height: "20px"}}>
@@ -54,17 +83,21 @@ const ContactModal = () => {
                                         stroke="currentColor" strokeWidth="2" strokeLinecap="round"
                                         strokeLinejoin="round"></path>
                                 </svg>
-                                <p>{marketInfo.telephone}</p>
+                                <p>{telephone}</p>
                             </a>
                         }
                     </div>
 
+
+                    {/*right column*/}
                     <div className="flex flex-col gap-6">
                         {
-                            marketInfo?.facebook && <a href={marketInfo.facebook} target="_blank" className="flex items-center gap-3">
+                            !!facebook && facebook !== "" &&
+                            <a href={facebook} target="_blank" className="flex items-center gap-3">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                      xmlns="http://www.w3.org/2000/svg"
-                                     data-testid="icon-shop-facebook" stroke="none" style={{width: "20px",height: "20px"}}>
+                                     data-testid="icon-shop-facebook" stroke="none"
+                                     style={{width: "20px", height: "20px"}}>
                                     <path fillRule="evenodd" clipRule="evenodd"
                                           d="M15.3317 6.93457C15.463 6.94973 15.5792 6.96488 15.6746 6.97813V8.57284H14.8724C14.241 8.57284 13.7723 8.77193 13.4679 9.12446C13.1713 9.46788 13.0731 9.90815 13.0731 10.3124V12.3333H15.5141L15.2174 14.2681H13.0731V21.6011C12.7215 21.6445 12.3636 21.6666 12.0002 21.6666C11.6367 21.6666 11.2788 21.6445 10.9272 21.6011V14.2681H8.64209V12.3333H10.9272V10.0171C10.9272 8.95596 11.2418 8.17322 11.7583 7.65617C12.2751 7.13879 13.0325 6.84888 13.9935 6.84888C14.468 6.84888 14.9576 6.89138 15.3317 6.93457Z"
                                           fill="currentColor"></path>
@@ -76,11 +109,12 @@ const ContactModal = () => {
                             </a>
                         }
                         {
-                            marketInfo?.twitter &&
-                            <a href={marketInfo?.twitter} target="_blank" className="flex items-center gap-3">
+                            !!twitter && twitter !== "" &&
+                            <a href={twitter} target="_blank" className="flex items-center gap-3">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                      xmlns="http://www.w3.org/2000/svg"
-                                     data-testid="icon-shop-twitter" stroke="none" style={{width: "20px", height: "20px"}}>
+                                     data-testid="icon-shop-twitter" stroke="none"
+                                     style={{width: "20px", height: "20px"}}>
                                     <path fillRule="evenodd" clipRule="evenodd"
                                           d="M21.1618 9.6663C20.9488 15.3851 16.6271 22.0002 8.66259 22.0002C8.623 22.0002 8.58369 21.999 8.54467 21.9968C6.18521 21.9769 3.88248 21.2728 1.90259 19.9701L1.90226 19.9687C1.39645 19.6449 1.09747 19.3453 0.649902 18.8906L1.75667 16.3281C2.74732 16.4824 3.56073 16.3962 3.87125 16.3506C2.94716 15.1662 2.38955 13.722 2.08499 12.4591C1.74283 11.0404 1.62871 9.56444 1.68849 8.26577C1.7404 7.13815 1.93234 5.93764 2.36688 4.99778L2.36475 4.99609C2.63428 4.30469 3.62646 3.11719 4.40771 3.0625C5.48489 4.35823 7.49791 6.54302 9.96369 7.29489C9.97427 7.24403 10.5447 4.55919 13.3769 3.3987C16.0724 2.35132 18.1502 3.63793 18.5609 3.92292C19.3051 3.73328 20.1729 3.42048 21.0015 3L23.0015 7C22.7686 7.56986 21.887 8.97113 21.1632 9.62824L21.1618 9.6663ZM19.1697 9.22393C19.1697 9.05969 19.1697 8.89695 19.1587 8.73421C19.8812 8.198 20.5057 7.53429 21.0015 6.77234C20.328 7.07907 19.6128 7.28005 18.8808 7.36855C19.6516 6.89533 20.2285 6.15062 20.5042 5.27393C19.7788 5.7149 18.9861 6.02613 18.1591 6.19337C16.7609 4.66872 14.4216 4.59522 12.9342 6.02913C11.9748 6.95382 11.5682 8.33224 11.8658 9.64765C8.89616 9.49541 6.1298 8.057 4.25485 5.6909C3.27496 7.42179 3.77514 9.63565 5.39781 10.7478C4.80987 10.7298 4.2351 10.5671 3.72176 10.2739V10.3219C3.72176 12.1247 4.96125 13.6771 6.6841 14.0341C6.14077 14.1864 5.57039 14.2089 5.01682 14.0994C5.50092 15.642 6.88666 16.6987 8.46691 16.7295C7.15869 17.7831 5.54333 18.3554 3.88044 18.3539C3.58647 18.3531 3.29324 18.3351 3.00146 18.2991C4.69068 19.4105 6.65558 20 8.66216 19.997V20C15.4548 20 19.1697 14.2284 19.1697 9.22393Z"
                                           fill="currentColor"></path>
@@ -89,11 +123,12 @@ const ContactModal = () => {
                             </a>
                         }
                         {
-                            marketInfo?.ins &&
-                            <a href={marketInfo.ins} target="_blank" className="flex items-center gap-3">
+                            !!ins && ins !== "" &&
+                            <a href={ins} target="_blank" className="flex items-center gap-3">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                      xmlns="http://www.w3.org/2000/svg" className="text-text"
-                                     data-testid="icon-shop-instagram" stroke="none" style={{width: "20px", height: "20px"}}>
+                                     data-testid="icon-shop-instagram" stroke="none"
+                                     style={{width: "20px", height: "20px"}}>
                                     <path fillRule="evenodd" clipRule="evenodd"
                                           d="M11.9998 3.80173C14.67 3.80173 14.986 3.81205 16.0407 3.86008C17.0156 3.90454 17.5451 4.06728 17.8976 4.20423C18.3644 4.38563 18.6974 4.60236 19.0475 4.95207C19.3976 5.30217 19.6144 5.63521 19.7954 6.10201C19.9323 6.4545 20.0951 6.98402 20.1395 7.95892C20.1876 9.0132 20.1979 9.32956 20.1979 11.9998C20.1979 14.67 20.1876 14.986 20.1395 16.0407C20.0951 17.0156 19.9323 17.5451 19.7954 17.8976C19.614 18.3644 19.3972 18.6974 19.0475 19.0475C18.6974 19.3976 18.3644 19.6144 17.8976 19.7954C17.5451 19.9323 17.0156 20.0951 16.0407 20.1395C14.9864 20.1876 14.67 20.1979 11.9998 20.1979C9.32956 20.1979 9.0132 20.1876 7.95892 20.1395C6.98402 20.0951 6.4545 19.9323 6.10201 19.7954C5.63521 19.614 5.30217 19.3972 4.95207 19.0475C4.60196 18.6974 4.38523 18.3644 4.20423 17.8976C4.06728 17.5451 3.90453 17.0156 3.86008 16.0407C3.81205 14.9864 3.80173 14.67 3.80173 11.9998C3.80173 9.32956 3.81205 9.0136 3.86008 7.95892C3.90453 6.98402 4.06728 6.4545 4.20423 6.10201C4.38563 5.63521 4.60236 5.30217 4.95207 4.95207C5.30217 4.60196 5.63521 4.38523 6.10201 4.20423C6.4545 4.06728 6.98402 3.90454 7.95892 3.86008C9.01359 3.81205 9.32956 3.80173 11.9998 3.80173ZM11.9998 2C9.28391 2 8.94334 2.01151 7.87675 2.06034C6.81254 2.10876 6.08534 2.27786 5.44944 2.52516C4.7917 2.78079 4.234 3.12256 3.67828 3.67867C3.12256 4.2344 2.78039 4.7921 2.52476 5.44944C2.27746 6.08534 2.10837 6.81254 2.05994 7.87675C2.01151 8.94334 2 9.28391 2 11.9998C2 14.7157 2.01151 15.0563 2.06034 16.1229C2.10876 17.1871 2.27786 17.9143 2.52516 18.5502C2.78079 19.2079 3.12256 19.7656 3.67867 20.3213C4.23479 20.8774 4.7921 21.2192 5.44984 21.4748C6.08574 21.7221 6.81294 21.8912 7.87715 21.9397C8.94373 21.9885 9.28431 22 12.0002 22C14.7161 22 15.0567 21.9885 16.1233 21.9397C17.1875 21.8912 17.9147 21.7221 18.5506 21.4748C19.2083 21.2192 19.766 20.8774 20.3217 20.3213C20.8778 19.7652 21.2196 19.2079 21.4752 18.5502C21.7225 17.9143 21.8916 17.1871 21.9401 16.1229C21.9889 15.0563 22.0004 14.7157 22.0004 11.9998C22.0004 9.28391 21.9889 8.94334 21.9401 7.87675C21.8916 6.81254 21.7225 6.08534 21.4752 5.44944C21.2196 4.7917 20.8778 4.234 20.3217 3.67828C19.7656 3.12216 19.2083 2.78039 18.5506 2.52476C17.9147 2.27746 17.1875 2.10837 16.1233 2.05994C15.0563 2.01151 14.7157 2 11.9998 2ZM11.9998 6.86494C9.16364 6.86494 6.86494 9.16403 6.86494 11.9998C6.86494 14.8356 9.16364 17.1347 11.9998 17.1347C14.836 17.1347 17.1347 14.836 17.1347 11.9998C17.1347 9.16364 14.836 6.86494 11.9998 6.86494ZM11.9998 15.3329C10.1588 15.3329 8.66667 13.8404 8.66667 11.9998C8.66667 10.1592 10.1592 8.66666 11.9998 8.66666C13.8408 8.66666 15.3329 10.1592 15.3329 11.9998C15.3329 13.8404 13.8408 15.3329 11.9998 15.3329ZM18.5379 6.6617C18.5379 7.32442 18.0006 7.86166 17.3379 7.86166C16.6752 7.86166 16.1379 7.32442 16.1379 6.6617C16.1379 5.99898 16.6752 5.46174 17.3379 5.46174C18.0006 5.46174 18.5379 5.99898 18.5379 6.6617Z"
                                           fill="currentColor"></path>
@@ -101,9 +136,10 @@ const ContactModal = () => {
                                 <p>Instagram</p>
                             </a>
                         }
+
                         {
-                            marketInfo?.youtube &&
-                            <a href={marketInfo.youtube} target="_blank" className="flex items-center gap-3">
+                            !!youtube && youtube !== "" &&
+                            <a href={youtube} target="_blank" className="flex items-center gap-3">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                      xmlns="http://www.w3.org/2000/svg" className="text-text" data-testid="icon-youtube"
                                      stroke="none" style={{width: "20px", height: "20px"}}>
@@ -117,10 +153,12 @@ const ContactModal = () => {
                     </div>
 
                 </div>
+
                 {
-                    marketInfo?.address &&
-                    <p className="absolute bottom-5 left-5 text-neutral-500">{marketInfo.address}</p>
+                    !!address && address !== "" &&
+                    <p className="absolute bottom-5 left-5 text-neutral-500">{address}</p>
                 }
+
                 <button type="button" className="absolute top-5 right-5" onClick={closeContactModalOpen}>
                     <img src={closeModal} alt="closeModal" className="w-6"/>
                 </button>

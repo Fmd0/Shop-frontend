@@ -16,7 +16,7 @@ const PriceModal = () => {
     const [endPriceFormControl, setEndPriceFormControl] = useState<number>(2000);
 
     return (
-        <div className={`absolute z-50 top-[calc(100%+6px)] left-1/2 -translate-x-1/2 w-[300px] bg-white text-nowrap pt-1 pb-5 px-5 rounded-3xl shadow-[0px_0px_8px_#00000026]
+        <div className={`absolute z-30 top-[calc(100%+6px)] left-1/2 -translate-x-1/2 w-[300px] bg-white text-nowrap pt-1 pb-5 px-5 rounded-3xl shadow-[0px_0px_8px_#00000026]
         ${priceModalOpen ? "" : "hidden"}
         `}>
             <div className="grid grid-cols-[1fr_auto_1fr] gap-2 mt-4 items-center text-[14px] tracking-[0.15px]">
@@ -24,7 +24,7 @@ const PriceModal = () => {
                        min="0"
                        max="2000"
                        step="1"
-                       className="w-full outline-none rounded-lg py-1 px-4 border-[1px] border-neutral-200 focus:border-purple-500 inputNumberNoArrow"
+                       className="w-full outline-none rounded-lg py-1 px-4 border-[1px] border-neutral-200 focus:border-purple-600 inputNumberNoArrow"
                        value={startPriceFormControl}
                        onChange={(e) => {
                            setStartPriceFormControl(Number(e.target.value));
@@ -35,7 +35,7 @@ const PriceModal = () => {
                        min="0"
                        max="2000"
                        step="1"
-                       className="w-full outline-none rounded-lg py-1 px-4 border-[1px] border-neutral-200 focus:border-purple-500 inputNumberNoArrow"
+                       className="w-full outline-none rounded-lg py-1 px-4 border-[1px] border-neutral-200 focus:border-purple-600 inputNumberNoArrow"
                        value={endPriceFormControl}
                        onChange={(e) => {
                            setEndPriceFormControl(Number(e.target.value))

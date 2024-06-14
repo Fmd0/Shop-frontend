@@ -53,7 +53,7 @@ const HomePageNav = () => {
                        value={data}
                        onChange={(e) => setData(e.target.value)}
                 />
-                <div className={`absolute text-[16px] text-gray-400 left-10
+                <div className={`absolute text-[16px] text-gray-400 left-10 pointer-events-none
                        ${searchIndex === 0 ? "" : "duration-300"}
                         ${data !== "" ? "hidden" : ""}`}
                      style={{top: `calc(-12px - ${searchIndex * 24}px)`}}

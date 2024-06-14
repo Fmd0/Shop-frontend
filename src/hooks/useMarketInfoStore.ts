@@ -4,7 +4,6 @@ import {create} from "zustand";
 
 interface State {
     marketInfo: MarketInfoType|null,
-    moreInfoOpen: boolean,
     contactModalOpen: boolean,
     privacyModalOpen: boolean,
     refundModalOpen: boolean,
@@ -13,7 +12,6 @@ interface State {
 
 interface Actions {
     setMarketInfo: (marketInfo: MarketInfoType|null) => void,
-    toggleMoreInfoOpen: () => void,
     openContactModalOpen: () => void,
     closeContactModalOpen: () => void,
     openPrivacyModalOpen: () => void,
@@ -24,15 +22,14 @@ interface Actions {
     closeShippingModalOpen: () => void,
 }
 
+
 const useMarketInfoStore = create<State & Actions>((set) => ({
     marketInfo: null,
-    moreInfoOpen: false,
     contactModalOpen: false,
     privacyModalOpen: false,
     refundModalOpen: false,
     shippingModalOpen: false,
     setMarketInfo: (marketInfo) => set({marketInfo}),
-    toggleMoreInfoOpen: () => set(state => ({moreInfoOpen: !state.moreInfoOpen})),
     openContactModalOpen: () => {
         set({contactModalOpen: true});
         window.document.body.style.overflow = "hidden";
