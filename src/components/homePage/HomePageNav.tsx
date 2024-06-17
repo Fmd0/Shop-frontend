@@ -1,7 +1,6 @@
 import navLike from "../../assets/HomePage/navLike.svg"
 import navCart from "../../assets/HomePage/navCart.svg"
 import navLogo from "../../assets/HomePage/navLogo.svg"
-
 import {useEffect, useState} from "react";
 import Search from "../../assets/HomePage/Search.svg";
 import {searchPlaceholderList} from "../../utils/data.ts";
@@ -15,15 +14,22 @@ const HomePageNav = () => {
 
     useEffect(() => {
         const TopOffset = 370;
+        let ignore = false;
         const  handleScroll = () => {
-            if(window.scrollY >= TopOffset) {
-                setShow(true);
-            }
-            else {
-                setShow(false);
-            }
+            if(ignore) return;
+            ignore = true;
+            setTimeout(() => {
+                ignore = false;
+                if(window.scrollY >= TopOffset) {
+                    setShow(true);
+                }
+                else {
+                    setShow(false);
+                }
+            }, 300)
         }
         window.addEventListener('scroll', handleScroll)
+        return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
     useEffect(() => {

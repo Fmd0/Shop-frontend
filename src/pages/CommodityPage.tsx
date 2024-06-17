@@ -6,6 +6,7 @@ import ContactModal from "../components/marketPage/ContactModal.tsx";
 import useCommodityPageStore from "../hooks/useCommodityPageStore.ts";
 import CommodityPageDescriptionModal from "../components/commodityPage/CommodityPageDescriptionModal.tsx";
 import CommodityPageCommentModal from "../components/commodityPage/CommodityPageCommentModal.tsx";
+import Footer from "../components/Footer.tsx";
 
 
 const CommodityPage = () => {
@@ -34,6 +35,7 @@ const CommodityPage = () => {
             <ContactModal {...commodityInfo?.market} closeContactModalOpen={closeContactModal} contactModalOpen={contactModalOpen} />
             <CommodityPageDescriptionModal />
             <CommodityPageCommentModal />
+            <Footer />
         </>
     )
 }

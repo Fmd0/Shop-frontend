@@ -3,8 +3,7 @@ import {useMemo, useState} from "react";
 
 const ImageModal = () => {
 
-    const {imageModalOpen,commodityInfo, setImageModalOpen, skuItemKey} = useCommodityPageStore();
-    const [imageIndex, setImageIndex] = useState<number>(0);
+    const {imageModalOpen,commodityInfo, setImageModalOpen, skuItemKey, imageIndex, addImageIndex, subtractImageIndex} = useCommodityPageStore();
     const [isZoomIn, setIsZoomIn] = useState<boolean>(true);
 
     const skuItemMap = useMemo(() => {
@@ -54,7 +53,7 @@ const ImageModal = () => {
                     className="cursor-pointer w-11 h-11 grid place-items-center rounded-[999px] bg-neutral-400 duration-300 hover:bg-neutral-500"
                     onClick={(e) => {
                         e.stopPropagation();
-                        setImageIndex(i => (i + (images?.length || 1) - 1) % (images?.length || 1));
+                        subtractImageIndex();
                     }}>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" color="white"
                          xmlns="http://www.w3.org/2000/svg" data-testid="icon-left-chevron" stroke="none"
@@ -66,7 +65,7 @@ const ImageModal = () => {
                 <div className="cursor-pointer w-11 h-11 grid place-items-center rounded-[999px] bg-neutral-400 duration-300 hover:bg-neutral-500"
                     onClick={(e) => {
                         e.stopPropagation();
-                        setImageIndex(i => (i + 1) % (images?.length || 1));
+                        addImageIndex();
                     }}>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                          xmlns="http://www.w3.org/2000/svg" color="white"

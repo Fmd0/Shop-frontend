@@ -1,16 +1,18 @@
-import navLike from "../assets/HomePage/navLike.svg"
-import navCart from "../assets/HomePage/navCart.svg"
-import navLogo from "../assets/HomePage/navLogo.svg"
-import Search from "../assets/HomePage/Search.svg";
+import navLike from "../../assets/HomePage/navLike.svg"
+import navCart from "../../assets/HomePage/navCart.svg"
+import navLogo from "../../assets/HomePage/navLogo.svg"
+import Search from "../../assets/HomePage/Search.svg";
 import {useEffect, useState} from "react";
-import {searchPlaceholderList} from "../utils/data.ts";
+import {searchPlaceholderList} from "../../utils/data.ts";
+import {useSearchInfoStore} from "../../hooks/useSearchInfoStore.ts";
 
 
-const NavBar = () => {
+const NavBarSearchPage = () => {
 
     const [searchIndex, setSearchIndex] = useState<number>(0);
-    const [queryFormControl, setQueryFormControl] = useState("");
+    const [queryFormControl, setQueryFormControl] = useState(new URLSearchParams(window.location.search).get("query")||"");
 
+    const {setQuery} = useSearchInfoStore();
 
     useEffect(() => {
         const timeId = setInterval(() => {
@@ -46,17 +48,20 @@ const NavBar = () => {
                 </a>
             </div>
 
-            <div
-                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[25%] flex items-center  bg-neutral-100 rounded-2xl p-3 transition-all duration-200`}>
-                <img src={Search} alt="Search" className="w-5 mr-2"/>
-                <form method="GET" action="/search" className="relative z-10 flex-1">
+            <form method="GET" onSubmit={(e) => {
+                e.preventDefault();
+                if(queryFormControl !== "") {
+                    setQuery(queryFormControl);
+                }
+            }}>
+                <div
+                    className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[25%] flex items-center  bg-neutral-100 rounded-2xl p-3 transition-all duration-200`}>
+                    <img src={Search} alt="Search" className="w-5 mr-2"/>
                     <input type="search" autoComplete="off"
-                           className="w-full bg-transparent focus:outline-none"
+                           className="relative z-10 flex-grow-[1] bg-transparent focus:outline-none"
                            value={queryFormControl}
-                           name="query"
                            onChange={(e) => setQueryFormControl(e.target.value)}
                     />
-                </form>
                     <div className={`absolute text-[16px] text-gray-400 left-10 pointer-events-none
                        ${searchIndex === 0 ? "" : "duration-300"}
                         ${queryFormControl !== "" ? "hidden" : ""}`}
@@ -73,9 +78,11 @@ const NavBar = () => {
                         <p className="opacity-0">{searchPlaceholderList[1]}</p>
 
                     </div>
-            </div>
-</header>
+                </div>
+            </form>
+        </header>
     )
 }
 
-export default NavBar;
+
+export default NavBarSearchPage;

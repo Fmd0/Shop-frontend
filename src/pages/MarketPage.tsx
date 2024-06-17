@@ -6,6 +6,7 @@ import MarketPageCommodityInfo from "../components/marketPage/MarketPageCommodit
 import {useEffect} from "react";
 import useMarketPageCommodityInfoStore from "../hooks/useMarketPageCommodityInfoStore.ts";
 import useMarketInfoStore from "../hooks/useMarketInfoStore.ts";
+import Footer from "../components/Footer.tsx";
 
 
 const MarketPage = () => {
@@ -36,6 +37,7 @@ const MarketPage = () => {
             <ContactModal {...marketInfo} contactModalOpen={contactModalOpen} closeContactModalOpen={closeContactModalOpen} />
             <PrivacyModal />
             <MarketPageCommodityInfo/>
+            <Footer />
         </>
     )
 }

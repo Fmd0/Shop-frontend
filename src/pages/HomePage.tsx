@@ -3,6 +3,7 @@ import HomePageNav from "../components/homePage/HomePageNav.tsx";
 import HomePageMainContent from "../components/homePage/HomePageMainContent.tsx";
 import RewardingWay from "../components/homePage/RewardingWay.tsx";
 import StartShopList from "../components/homePage/StartShopList.tsx";
+import Footer from "../components/Footer.tsx";
 
 const HomePage = () => {
 
@@ -13,6 +14,7 @@ const HomePage = () => {
             <HomePageMainContent />
             <StartShopList />
             <RewardingWay />
+            <Footer />
         </>
     )
 }
