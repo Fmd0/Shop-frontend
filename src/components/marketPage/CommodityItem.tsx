@@ -14,7 +14,7 @@ const PicCommodityItem = ({id, name, image, rating, ratingAmount, price, promoti
 
     return (
         <a href={`/commodity/?id=${id}`}>
-            <div className="cursor-pointer group/CommodityItem tracking-[0.15px] text-[12px]">
+            <div className="cursor-pointer  group/CommodityItem tracking-[0.15px] text-[12px]">
                 <div className="relative overflow-hidden rounded-xl">
                     <img src={image} alt="picItem"
                          className="w-full aspect-square object-cover object-center duration-200 group-hover/CommodityItem:scale-[105%]"/>

@@ -5,12 +5,13 @@ import Search from "../../assets/HomePage/Search.svg";
 import {useEffect, useState} from "react";
 import {searchPlaceholderList} from "../../utils/data.ts";
 import {useSearchInfoStore} from "../../hooks/useSearchInfoStore.ts";
+import {getParamFromURL} from "../../utils/searchPageUtils.ts";
 
 
 const NavBarSearchPage = () => {
 
     const [searchIndex, setSearchIndex] = useState<number>(0);
-    const [queryFormControl, setQueryFormControl] = useState(new URLSearchParams(window.location.search).get("query")||"");
+    const [queryFormControl, setQueryFormControl] = useState(getParamFromURL("query")||"");
 
     const {setQuery} = useSearchInfoStore();
 
@@ -47,39 +48,38 @@ const NavBarSearchPage = () => {
                     Sign In
                 </a>
             </div>
-
-            <form method="GET" onSubmit={(e) => {
-                e.preventDefault();
-                if(queryFormControl !== "") {
-                    setQuery(queryFormControl);
-                }
-            }}>
-                <div
-                    className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[25%] flex items-center  bg-neutral-100 rounded-2xl p-3 transition-all duration-200`}>
-                    <img src={Search} alt="Search" className="w-5 mr-2"/>
+            <div
+                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[25%] flex items-center  bg-neutral-100 rounded-2xl p-3 transition-all duration-200`}>
+                <img src={Search} alt="Search" className="w-5 mr-2"/>
+                <form method="GET" className="flex-1" onSubmit={(e) => {
+                    e.preventDefault();
+                    if (queryFormControl !== "") {
+                        setQuery(queryFormControl);
+                    }
+                }}>
                     <input type="search" autoComplete="off"
-                           className="relative z-10 flex-grow-[1] bg-transparent focus:outline-none"
+                           className="relative w-full z-10 bg-transparent focus:outline-none"
                            value={queryFormControl}
                            onChange={(e) => setQueryFormControl(e.target.value)}
                     />
-                    <div className={`absolute text-[16px] text-gray-400 left-10 pointer-events-none
+                </form>
+                <div className={`absolute text-[16px] text-gray-400 left-10 pointer-events-none
                        ${searchIndex === 0 ? "" : "duration-300"}
                         ${queryFormControl !== "" ? "hidden" : ""}`}
-                         style={{top: `calc(-12px - ${searchIndex * 24}px)`}}
-                    >
-                        <p className="opacity-0">{searchPlaceholderList[searchPlaceholderList.length - 1]}</p>
-                        {
-                            searchPlaceholderList.map((s, i) => (
-                                <p key={i}
-                                   className={`text-nowrap ${searchIndex === 0 ? "" : "duration-300"} ${searchIndex === i ? "opacity-100" : "opacity-0"}`}>{s}</p>
-                            ))
-                        }
-                        <p className={`${searchIndex === 0 ? "" : "duration-300"} ${searchIndex === searchPlaceholderList.length ? "opacity-100" : "opacity-0"}`}>{searchPlaceholderList[0]}</p>
-                        <p className="opacity-0">{searchPlaceholderList[1]}</p>
+                     style={{top: `calc(-12px - ${searchIndex * 24}px)`}}
+                >
+                    <p className="opacity-0">{searchPlaceholderList[searchPlaceholderList.length - 1]}</p>
+                    {
+                        searchPlaceholderList.map((s, i) => (
+                            <p key={i}
+                               className={`text-nowrap ${searchIndex === 0 ? "" : "duration-300"} ${searchIndex === i ? "opacity-100" : "opacity-0"}`}>{s}</p>
+                        ))
+                    }
+                    <p className={`${searchIndex === 0 ? "" : "duration-300"} ${searchIndex === searchPlaceholderList.length ? "opacity-100" : "opacity-0"}`}>{searchPlaceholderList[0]}</p>
+                    <p className="opacity-0">{searchPlaceholderList[1]}</p>
 
-                    </div>
                 </div>
-            </form>
+            </div>
         </header>
     )
 }

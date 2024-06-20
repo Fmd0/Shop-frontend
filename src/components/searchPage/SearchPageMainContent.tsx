@@ -2,6 +2,12 @@ import {useSearchInfoStore} from "../../hooks/useSearchInfoStore.ts";
 import FormControlSearchPage from "./FormControlSearchPage.tsx";
 import {useEffect} from "react";
 import CommodityItem from "../marketPage/CommodityItem.tsx";
+import SortByModal from "../marketPage/SortByModal.tsx";
+import PriceModal from "../marketPage/PriceModal.tsx";
+import RatingsModal from "./RatingsModal.tsx";
+import SizeModal from "./SizeModal.tsx";
+import ColorModal from "./ColorModal.tsx";
+import ShipToModal from "./ShipToModal.tsx";
 
 const SearchPageMainContent = () => {
 
@@ -13,11 +19,43 @@ const SearchPageMainContent = () => {
         setSearchCommodityList,
         searchPage,
         addSearchPage,
+        closeAllModal,
+        sortByModalOpen,
+        toggleSortByModalOpen,
+        sortBy,
+        setSortBy,
+        priceModalOpen,
+        togglePriceModalOpen,
+        startPrice,
+        setStartPrice,
+        endPrice,
+        setEndPrice,
+        onSale,
+        toggleOnSale,
+        ratingsModalOpen,
+        toggleRatingsModalOpen,
+        ratings,
+        setRatings,
+        sizeModalOpen,
+        toggleSizeModalOpen,
+        size,
+        setSize,
+        colorModalOpen,
+        toggleColorModalOpen,
+        color,
+        setColor,
+        shipToModalOpen,
+        toggleShipToModalOpen,
+        shipsTo,
+        setShipsTo
     } = useSearchInfoStore();
 
     useEffect(() => {
+        const searchParams = new URLSearchParams(window.location.search);
+        searchParams.set("pageSize", "5");
+        searchParams.set("page", String(searchPage));
         let ignore = false;
-        fetch(`${import.meta.env.VITE_API_ADDRESS}/api/market/commodity?pageSize=5&page=${searchPage}&query=${query}`)
+        fetch(import.meta.env.VITE_API_ADDRESS+"/api/search?"+searchParams.toString())
             .then(res => res.json())
             .then(data => {
                 if(!ignore) {
@@ -31,12 +69,16 @@ const SearchPageMainContent = () => {
                 }
             })
         return () => { ignore = true; }
-    }, [query, searchPage])
+    }, [searchPage, query, onSale, ratings, size, color, startPrice, endPrice, sortBy])
 
-    console.log(searchCommodityList);
+    useEffect(() => {
+        window.addEventListener("click", closeAllModal);
+        return () => window.removeEventListener("click", closeAllModal);
+    }, []);
+
 
     return (
-        <>
+        <div className="select-none">
             <div
                 className="w-[1144px] mx-auto p-4 mt-4 flex gap-2 items-center justify-center text-black tracking-[0.15px] text-[SuisseIntl-Medium,sans-serif]">
 
@@ -53,32 +95,50 @@ const SearchPageMainContent = () => {
                 </div>
 
                 {/*category button*/}
-                <FormControlSearchPage name="Category" hasArrow={true} />
+                <FormControlSearchPage checked={false} onClick={undefined} name="Category" hasArrow={true} />
 
                 {/*onSale button*/}
-                <FormControlSearchPage name="On sale" hasArrow={false} />
+                <FormControlSearchPage checked={onSale} onClick={toggleOnSale} name="On sale" hasArrow={false} />
 
                 {/*ratings button*/}
-                <FormControlSearchPage name="Ratings" hasArrow={true} />
+                <div className="relative" onClick={(e) => {e.stopPropagation()}}>
+                    <FormControlSearchPage checked={ratingsModalOpen || ratings!==0} onClick={toggleRatingsModalOpen} name="Ratings" hasArrow={true} />
+                    <RatingsModal modalOpen={ratingsModalOpen} toggleModalOpen={toggleRatingsModalOpen} setState={setRatings} />
+                </div>
 
                 {/*size button*/}
-                <FormControlSearchPage name="Size" hasArrow={true} />
+                <div className="relative" onClick={(e) => {e.stopPropagation()}}>
+                    <FormControlSearchPage checked={sizeModalOpen||size.length!==0} onClick={toggleSizeModalOpen} name="Size" hasArrow={true} />
+                    <SizeModal modalOpen={sizeModalOpen} toggleModalOpen={toggleSizeModalOpen} setState={setSize} />
+                </div>
 
                 {/*shipsTo button*/}
-                <FormControlSearchPage name="Ships to" hasArrow={true} />
+                <div className="relative" onClick={(e) => {e.stopPropagation()}}>
+                    <FormControlSearchPage checked={shipToModalOpen || shipsTo!==""} onClick={toggleShipToModalOpen} name={`Ships to${shipsTo!==""?" - "+shipsTo:""}`} hasArrow={true} />
+                    <ShipToModal modalOpen={shipToModalOpen} toggleModalOpen={toggleShipToModalOpen} setState={setShipsTo} />
+                </div>
 
                 {/*color button*/}
-                <FormControlSearchPage name="Color" hasArrow={true} />
+                <div className="relative" onClick={(e) => {e.stopPropagation()}}>
+                    <FormControlSearchPage checked={colorModalOpen || color.length!==0} onClick={toggleColorModalOpen} name="Color" hasArrow={true} />
+                    <ColorModal modalOpen={colorModalOpen} toggleModalOpen={toggleColorModalOpen} setState={setColor} />
+                </div>
 
                 {/*price button*/}
-                <FormControlSearchPage name="Price" hasArrow={true} />
+                <div className="relative" onClick={e => e.stopPropagation()}>
+                    <FormControlSearchPage checked={priceModalOpen || startPrice!==0 || endPrice!== 2000} onClick={togglePriceModalOpen} name="Price" hasArrow={true} />
+                    <PriceModal priceModalOpen={priceModalOpen} togglePriceModalOpen={togglePriceModalOpen} setStartPrice={setStartPrice} setEndPrice={setEndPrice} />
+                </div>
 
                 {/*sortBy button*/}
-                <FormControlSearchPage name="Sort by" hasArrow={true} />
+                <div className="relative" onClick={e => e.stopPropagation()}>
+                    <FormControlSearchPage checked={sortByModalOpen || sortBy!==""} onClick={toggleSortByModalOpen} name="Sort by" hasArrow={true} />
+                    <SortByModal sortByModalOpen={sortByModalOpen} setSortBy={setSortBy} toggleSortByModalOpen={toggleSortByModalOpen}/>
+                </div>
 
             </div>
 
-            <div>
+            <div >
                 {
                     searchCommodityList.length == 0 &&
                     <div className="h-[calc(100vh-80px-440px)] grid place-items-center text-[20px] font-medium">
@@ -109,7 +169,7 @@ const SearchPageMainContent = () => {
                     </div>
                 </div>
             }
-        </>
+        </div>
     )
 }
 

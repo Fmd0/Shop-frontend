@@ -1,16 +1,16 @@
 import SortByItem from "./SortByItem.tsx";
-import UseMarketPageCommodityInfoStore from "../../hooks/useMarketPageCommodityInfoStore.ts";
 import {useState} from "react";
+import { getParamFromURL} from "../../utils/searchPageUtils.ts";
 
-const SortByModal = () => {
+const SortByModal = ({sortByModalOpen, toggleSortByModalOpen, setSortBy}: {
+    sortByModalOpen: boolean,
+    toggleSortByModalOpen: () => void,
+    setSortBy: (sortBy: string) => void;
 
-    const {
-        setSortBy,
-        sortByModalOpen,
-        toggleSortByModalOpen,
-    } = UseMarketPageCommodityInfoStore();
+}) => {
 
-    const [sortByFormControl, setSortByFormControl] = useState<string>("");
+
+    const [sortByFormControl, setSortByFormControl] = useState<string>(getParamFromURL("sortBy")||"");
 
     return (
         <div className={`absolute z-30 top-[calc(100%+6px)] left-1/2 -translate-x-1/2 w-[300px] bg-white text-nowrap pt-1 pb-5 px-5 rounded-3xl shadow-[0px_0px_8px_#00000026]

@@ -19,6 +19,7 @@ const MarketPageCommodityInfo = () => {
         tag,
         setTag,
         sortBy,
+        setSortBy,
         onSale,
         inStock,
         startPrice,
@@ -29,6 +30,8 @@ const MarketPageCommodityInfo = () => {
         togglePriceModalOpen,
         toggleInStock,
         toggleOnSale,
+        setStartPrice,
+        setEndPrice
     } = useMarketPageCommodityInfoStore();
     const marketId = (new URLSearchParams(window.location.search)).get('id')||"";
 
@@ -99,7 +102,7 @@ const MarketPageCommodityInfo = () => {
                                       strokeLinejoin="round"></path>
                             </svg>
                         </div>
-                        <SortByModal />
+                        <SortByModal setSortBy={setSortBy} sortByModalOpen={sortByModalOpen} toggleSortByModalOpen={toggleSortByModalOpen}/>
                     </div>
 
 
@@ -125,7 +128,7 @@ const MarketPageCommodityInfo = () => {
                                       strokeLinejoin="round"></path>
                             </svg>
                         </div>
-                        <PriceModal/>
+                        <PriceModal priceModalOpen={priceModalOpen} togglePriceModalOpen={togglePriceModalOpen} setStartPrice={setStartPrice} setEndPrice={setEndPrice}/>
                     </div>
 
 

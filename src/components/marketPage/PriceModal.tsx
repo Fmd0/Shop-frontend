@@ -1,19 +1,18 @@
-import useMarketPageCommodityInfoStore from "../../hooks/useMarketPageCommodityInfoStore.ts";
 import {useState} from "react";
+import {getParamFromURL} from "../../utils/searchPageUtils.ts";
 
 
-const PriceModal = () => {
-
-    const {
-        priceModalOpen,
-        setStartPrice,
-        setEndPrice,
-        togglePriceModalOpen
-    } = useMarketPageCommodityInfoStore();
+const PriceModal = ({priceModalOpen, togglePriceModalOpen, setStartPrice, setEndPrice}: {
+    priceModalOpen: boolean;
+    togglePriceModalOpen: () => void;
+    setStartPrice: (price: number) => void;
+    setEndPrice: (price: number) => void;
+}) => {
 
 
-    const [startPriceFormControl, setStartPriceFormControl] = useState<number>(0);
-    const [endPriceFormControl, setEndPriceFormControl] = useState<number>(2000);
+
+    const [startPriceFormControl, setStartPriceFormControl] = useState<number>(Number(getParamFromURL("startPrice")) || 0);
+    const [endPriceFormControl, setEndPriceFormControl] = useState<number>(Number(getParamFromURL("endPrice")) || 2000);
 
     return (
         <div className={`absolute z-30 top-[calc(100%+6px)] left-1/2 -translate-x-1/2 w-[300px] bg-white text-nowrap pt-1 pb-5 px-5 rounded-3xl shadow-[0px_0px_8px_#00000026]

@@ -15,6 +15,9 @@ const HomePageNav = () => {
     useEffect(() => {
         const TopOffset = 370;
         let ignore = false;
+        if(window.scrollY >= TopOffset) {
+            setShow(true);
+        }
         const  handleScroll = () => {
             if(ignore) return;
             ignore = true;
@@ -72,10 +75,13 @@ const HomePageNav = () => {
             ${show ? "opacity-100" : "opacity-0"}
             `}>
                 <img src={Search} alt="Search" className="w-5 mr-2"/>
-                <input type="search" autoComplete="off" className="relative z-10 flex-grow-[1] bg-transparent focus:outline-none"
-                       value={data}
-                       onChange={(e) => setData(e.target.value)}
-                />
+                <form action="/search" className="flex-1">
+                    <input type="search" autoComplete="off" name="query"
+                           className="relative z-10 w-full bg-transparent focus:outline-none"
+                           value={data}
+                           onChange={(e) => setData(e.target.value)}
+                    />
+                </form>
                 <div className={`absolute text-[18px] text-gray-400 left-10
                        ${searchIndex === 0 ? "" : "duration-300"}
                         ${data !== "" ? "hidden" : ""}`}
