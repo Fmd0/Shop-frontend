@@ -102,3 +102,38 @@ export interface CommentType {
         name: string,
     }
 }
+
+export interface CartInfoMarketType {
+    id: string,
+    name: string,
+    icon: string,
+}
+
+export interface CartInfoCommodityType {
+    id: string,
+    name: string,
+    price: number,
+    promotingPrice: number,
+    image: string,
+    skuKey: string,
+    count: number,
+}
+
+export interface CartInfoType {
+    [key: string]: {
+        id: string,
+        name: string,
+        icon: string,
+        commodity: {
+            [key: string]: CartInfoCommodityType,
+        },
+    }
+}
+
+export interface RecentlyViewedItemInfoType {
+    id: string,
+    name: string,
+    image: string,
+    price: number,
+    promotingPrice: number,
+}

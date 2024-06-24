@@ -4,12 +4,14 @@ import navLogo from "../assets/HomePage/navLogo.svg"
 import Search from "../assets/HomePage/Search.svg";
 import {useEffect, useState} from "react";
 import {searchPlaceholderList} from "../utils/data.ts";
+import useCartInfoStore from "../hooks/useCartInfoStore.ts";
 
 
 const NavBar = () => {
 
     const [searchIndex, setSearchIndex] = useState<number>(0);
     const [queryFormControl, setQueryFormControl] = useState("");
+    const {cartAmount} = useCartInfoStore();
 
 
     useEffect(() => {
@@ -37,8 +39,12 @@ const NavBar = () => {
                 <a href="#" className="p-[10px] mr-1 rounded-[22px] hover:bg-neutral-100">
                     <img src={navLike} alt="navLike" className="w-6"/>
                 </a>
-                <a href="#" className="p-[10px] mr-4 rounded-[22px] hover:bg-neutral-100">
+                <a href="/cart" className="relative p-[10px] mr-4 rounded-[22px] hover:bg-neutral-100">
                     <img src={navCart} alt="navCart" className="w-6"/>
+                    {
+                        cartAmount!==0&&
+                        <p className="absolute right-1 top-1 w-4 h-4 rounded-[999px] bg-[rgb(84_51_235)] text-white text-[10px] grid place-items-center">{cartAmount}</p>
+                    }
                 </a>
                 <a className="cursor-pointer bg-neutral-100 text-black text-[14px] py-2 px-3 rounded-lg font-semibold
                     hover:bg-neutral-200">
@@ -57,24 +63,26 @@ const NavBar = () => {
                            onChange={(e) => setQueryFormControl(e.target.value)}
                     />
                 </form>
-                    <div className={`absolute text-[16px] text-gray-400 left-10 pointer-events-none
+
+                {/*placeholder list animation*/}
+                <div className={`absolute text-[16px] text-gray-400 left-10 pointer-events-none
                        ${searchIndex === 0 ? "" : "duration-300"}
                         ${queryFormControl !== "" ? "hidden" : ""}`}
-                         style={{top: `calc(-12px - ${searchIndex * 24}px)`}}
-                    >
-                        <p className="opacity-0">{searchPlaceholderList[searchPlaceholderList.length - 1]}</p>
-                        {
-                            searchPlaceholderList.map((s, i) => (
-                                <p key={i}
-                                   className={`text-nowrap ${searchIndex === 0 ? "" : "duration-300"} ${searchIndex === i ? "opacity-100" : "opacity-0"}`}>{s}</p>
-                            ))
-                        }
-                        <p className={`${searchIndex === 0 ? "" : "duration-300"} ${searchIndex === searchPlaceholderList.length ? "opacity-100" : "opacity-0"}`}>{searchPlaceholderList[0]}</p>
-                        <p className="opacity-0">{searchPlaceholderList[1]}</p>
+                     style={{top: `calc(-12px - ${searchIndex * 24}px)`}}
+                >
+                    <p className="opacity-0">{searchPlaceholderList[searchPlaceholderList.length - 1]}</p>
+                    {
+                        searchPlaceholderList.map((s, i) => (
+                            <p key={i}
+                               className={`text-nowrap ${searchIndex === 0 ? "" : "duration-300"} ${searchIndex === i ? "opacity-100" : "opacity-0"}`}>{s}</p>
+                        ))
+                    }
+                    <p className={`${searchIndex === 0 ? "" : "duration-300"} ${searchIndex === searchPlaceholderList.length ? "opacity-100" : "opacity-0"}`}>{searchPlaceholderList[0]}</p>
+                    <p className="opacity-0">{searchPlaceholderList[1]}</p>
 
-                    </div>
+                </div>
             </div>
-</header>
+        </header>
     )
 }
 

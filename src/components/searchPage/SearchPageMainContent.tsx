@@ -138,7 +138,7 @@ const SearchPageMainContent = () => {
 
             </div>
 
-            <div >
+            <div>
                 {
                     searchCommodityList.length == 0 &&
                     <div className="h-[calc(100vh-80px-440px)] grid place-items-center text-[20px] font-medium">

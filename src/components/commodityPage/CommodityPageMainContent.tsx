@@ -4,6 +4,11 @@ import {SkuConfigType} from "../../utils/type.ts";
 import CommodityPageCommentPart from "./CommodityPageCommentPart.tsx";
 import ImagesGallery from "./ImagesGallery.tsx";
 import CommodityPageMoreInfoModal from "./CommodityPageMoreInfoModal.tsx";
+import {
+    setCartInfoItemToLocalStorage,
+    setRecentlyViewedInfoItemToLocalStorage
+} from "../../utils/localStorage.ts";
+import useCartInfoStore from "../../hooks/useCartInfoStore.ts";
 
 
 const CommodityPageMainContent = () => {
@@ -26,6 +31,7 @@ const CommodityPageMainContent = () => {
         toggleMoreInfoModalOpen,
         openDescriptionModal,
     } = useCommodityPageStore();
+    const {updateCartAmount} = useCartInfoStore();
 
     const [quantity, setQuantity] = useState<number>(1);
 
@@ -51,6 +57,18 @@ const CommodityPageMainContent = () => {
         return skuItemMap[skuItemKey]!==undefined?skuItemMap[skuItemKey].stock:commodityInfo?.stock||0;
     }, [commodityInfo, skuItemMap, skuItemKey]);
 
+    const image = useMemo(() => {
+        if(!commodityInfo) {
+            return "";
+        }
+        if(commodityInfo.skuItems.length === 0) {
+            return commodityInfo.images[0];
+        }
+        return skuItemMap[skuItemKey]?.image||"";
+    }, [commodityInfo]);
+
+
+    // fetch commodity data
     useEffect(() => {
         let ignore = false;
         fetch(`${import.meta.env.VITE_API_ADDRESS}/api/commodity/${id}`)
@@ -67,6 +85,7 @@ const CommodityPageMainContent = () => {
     }, [id]);
 
 
+    // fetch comment info
     useEffect(() => {
         let ignore = false;
         fetch(`${import.meta.env.VITE_API_ADDRESS}/api/comment?pageSize=6&page=${commentPage}&commodityId=${id}`)
@@ -89,7 +108,18 @@ const CommodityPageMainContent = () => {
         return () => { ignore = true; };
     }, [commentPage, id]);
 
-    // console.log(comment);
+
+    useEffect(() => {
+        if(!commodityInfo) return;
+        setRecentlyViewedInfoItemToLocalStorage({
+            id: commodityInfo?.id,
+            name: commodityInfo?.name,
+            image: commodityInfo.images[0],
+            price: commodityInfo.price,
+            promotingPrice: commodityInfo.promotingPrice,
+        })
+    }, [commodityInfo]);
+
     return (
         <div className="relative w-[1144px] font-[SuisseIntl-Medium,sans-serif] font-medium tracking-[0.15px] select-none mx-auto mt-4 flex gap-10">
 
@@ -288,7 +318,27 @@ const CommodityPageMainContent = () => {
                         ?
                         <div>
                             <div
-                                className="relative mt-6 cursor-pointer h-11 rounded-xl text-white bg-[rgb(84_51_235)] duration-200 hover:bg-[rgb(69_36_219)] grid place-items-center">
+                                className="relative mt-6 cursor-pointer h-11 rounded-xl text-white bg-[rgb(84_51_235)] duration-200 hover:bg-[rgb(69_36_219)] grid place-items-center"
+                                onClick={() => {
+                                    setCartInfoItemToLocalStorage({
+                                        market: {
+                                            id: commodityInfo?.market?.id||"",
+                                            name: commodityInfo?.market?.name||"",
+                                            icon: commodityInfo?.market?.icon||"",
+                                        },
+                                        commodity: {
+                                            id: commodityInfo?.id||"",
+                                            name: commodityInfo?.name||"",
+                                            price,
+                                            promotingPrice,
+                                            image,
+                                            skuKey: [commodityInfo?.name||"",skuItemKey].join("_"),
+                                            count: quantity,
+                                        }
+                                    });
+                                    updateCartAmount();
+                                }}
+                            >
                                 Add to cart
                             </div>
                             <div

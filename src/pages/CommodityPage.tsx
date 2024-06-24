@@ -1,7 +1,7 @@
 import NavBar from "../components/NavBar.tsx";
 import CommodityPageMainContent from "../components/commodityPage/CommodityPageMainContent.tsx";
 import ImageModal from "../components/commodityPage/ImageModal.tsx";
-import BestSellers from "../components/commodityPage/BestSellers.tsx";
+import BestSellersCommodityPage from "../components/commodityPage/BestSellersCommodityPage.tsx";
 import ContactModal from "../components/marketPage/ContactModal.tsx";
 import useCommodityPageStore from "../hooks/useCommodityPageStore.ts";
 import CommodityPageDescriptionModal from "../components/commodityPage/CommodityPageDescriptionModal.tsx";
@@ -30,7 +30,7 @@ const CommodityPage = () => {
         <>
             <NavBar />
             <CommodityPageMainContent />
-            <BestSellers />
+            <BestSellersCommodityPage />
             <ImageModal />
             <ContactModal {...commodityInfo?.market} closeContactModalOpen={closeContactModal} contactModalOpen={contactModalOpen} />
             <CommodityPageDescriptionModal />

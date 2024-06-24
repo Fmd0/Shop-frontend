@@ -1,13 +1,13 @@
 import useCommodityPageStore from "../../hooks/useCommodityPageStore.ts";
 import CommodityItem from "../marketPage/CommodityItem.tsx";
 
-const BestSellers = () => {
+const BestSellersCommodityPage = () => {
     const {
         bestSellingCommodities,
         commodityInfo
     } = useCommodityPageStore();
     return (
-        <div className="mt-20 mb-10 max-w-[1440px] w-[90%] mx-auto font-[SuisseIntl-Medium,sans-serif] font-medium">
+        <div className="mt-20 mb-10 max-w-[1240px] w-[90%] mx-auto font-[SuisseIntl-Medium,sans-serif] font-medium">
             <div className="flex items-center gap-4">
                 <div className="relative w-11 h-11 rounded-lg overflow-hidden">
                     <img src={commodityInfo?.market?.icon||""} alt="icon"/>
@@ -18,7 +18,7 @@ const BestSellers = () => {
                     <p className="text-[20px]">Best sellers</p>
                 </div>
             </div>
-            <div className="mt-4 grid grid-cols-6 items-center gap-8">
+            <div className="mt-4 grid grid-cols-6 gap-4">
                 {
                     bestSellingCommodities.length > 0 &&
                     bestSellingCommodities.map((b, index) => (
@@ -30,4 +30,4 @@ const BestSellers = () => {
     )
 }
 
-export default BestSellers;
+export default BestSellersCommodityPage;
