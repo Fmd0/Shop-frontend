@@ -7,6 +7,7 @@ import useCommodityPageStore from "../hooks/useCommodityPageStore.ts";
 import CommodityPageDescriptionModal from "../components/commodityPage/CommodityPageDescriptionModal.tsx";
 import CommodityPageCommentModal from "../components/commodityPage/CommodityPageCommentModal.tsx";
 import Footer from "../components/Footer.tsx";
+import SignInGlobalModal from "../components/SignInGlobalModal.tsx";
 
 
 const CommodityPage = () => {
@@ -36,6 +37,7 @@ const CommodityPage = () => {
             <CommodityPageDescriptionModal />
             <CommodityPageCommentModal />
             <Footer />
+            <SignInGlobalModal />
         </>
     )
 }

@@ -17,7 +17,6 @@ const CommodityPageCommentModal = () => {
         commodityInfo,
         commentGroup,
         commentTotalAmount,
-        commentModalRowDisplay
     } = useCommodityPageStore();
 
     const ratingAmountMap = useMemo(() => {
@@ -84,8 +83,11 @@ const CommodityPageCommentModal = () => {
                                     <div key={a} className="flex items-center gap-1.5">
                                         <p className="text-[10px]">{a}</p>
                                         <div className="flex-1 h-2 rounded-[8px] overflow-hidden bg-white">
-                                            <div className={`bg-black duration-700 h-full rounded-[8px]`}
-                                                 style={{width: commentModalRowDisplay?(ratingAmountMap?.[a]||0)/commentTotalAmount*100+"%":0}}>
+                                            <div className={`bg-black h-full rounded-[8px] delay-500`}
+                                                 style={{
+                                                     width: modalOpen?(ratingAmountMap?.[a]||0)/commentTotalAmount*100+"%":0,
+                                                     transitionDuration: modalOpen?"700ms":"0ms",
+                                            }}>
                                             </div>
                                         </div>
                                     </div>

@@ -1,5 +1,5 @@
 import AddToLikeSvg from "../homePage/AddToLikeSvg.tsx";
-import useRecentlyViewedInfoStore from "../../hooks/useRecentlyViewedInfoStore.tsx";
+import useRecentlyViewedInfoStore from "../../hooks/useRecentlyViewedInfoStore.ts";
 
 
 const CommodityItemRecentlyViewed = ({id, name, image, price, promotingPrice, hasDelete}: {

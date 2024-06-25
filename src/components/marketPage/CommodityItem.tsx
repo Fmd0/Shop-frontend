@@ -1,7 +1,7 @@
 import AddToLikeSvg from "../homePage/AddToLikeSvg.tsx";
 
 
-const PicCommodityItem = ({id, name, image, rating, ratingAmount, price, promotingPrice}: {
+const CommodityItem = ({id, name, image, rating, ratingAmount, price, promotingPrice, checked, handleClickLike}: {
     id: string,
     name: string,
     image: string,
@@ -9,6 +9,8 @@ const PicCommodityItem = ({id, name, image, rating, ratingAmount, price, promoti
     ratingAmount: string,
     price: number,
     promotingPrice: number,
+    checked: boolean,
+    handleClickLike: (id: string, checked: boolean) => void
 }
 ) => {
 
@@ -19,7 +21,16 @@ const PicCommodityItem = ({id, name, image, rating, ratingAmount, price, promoti
                     <img src={image} alt="picItem"
                          className="w-full aspect-square object-cover object-center duration-200 group-hover/CommodityItem:scale-[105%]"/>
                     <div className="absolute inset-0 bg-[#0000000a]"></div>
-                    <div className="absolute bottom-3 right-3 transition-all duration-200 "><AddToLikeSvg/></div>
+
+
+                    <div className="absolute bottom-3 right-3 transition-all duration-200"
+                         onClick={e => {
+                             e.preventDefault();
+                             handleClickLike(id, checked);
+                         }}
+                    ><AddToLikeSvg checked={checked}/></div>
+
+                    {/*top left promoting sign*/}
                     {
                         !!promotingPrice && promotingPrice !== 0 && (
                             <div className="absolute top-3 left-3 flex gap-0.5 items-center bg-red-600 text-white rounded-[4px] py-0.5 px-1">
@@ -79,4 +90,4 @@ const PicCommodityItem = ({id, name, image, rating, ratingAmount, price, promoti
     )
 }
 
-export default PicCommodityItem;
+export default CommodityItem;

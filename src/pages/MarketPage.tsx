@@ -7,6 +7,7 @@ import {useEffect} from "react";
 import useMarketPageCommodityInfoStore from "../hooks/useMarketPageCommodityInfoStore.ts";
 import useMarketInfoStore from "../hooks/useMarketInfoStore.ts";
 import Footer from "../components/Footer.tsx";
+import SignInGlobalModal from "../components/SignInGlobalModal.tsx";
 
 
 const MarketPage = () => {
@@ -38,6 +39,7 @@ const MarketPage = () => {
             <PrivacyModal />
             <MarketPageCommodityInfo/>
             <Footer />
+            <SignInGlobalModal />
         </>
     )
 }

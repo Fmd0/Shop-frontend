@@ -17,7 +17,6 @@ interface State {
     contactModalOpen: boolean,
     descriptionModalOpen: boolean,
     commentModalOpen: boolean,
-    commentModalRowDisplay: boolean,
 }
 
 interface Actions {
@@ -94,15 +93,10 @@ const useCommodityPageStore = create<State & Actions>((set) => ({
     openCommentModal: () => {
         window.document.body.style.overflow="hidden";
         set(({commentModalOpen: true}));
-        setTimeout(() => {
-            set(({commentModalRowDisplay: true}));
-        }, 400)
     },
     closeCommentModal: () => {
         window.document.body.style.overflow="visible";
         set(({commentModalOpen: false}));
-        set(({commentModalRowDisplay: false}));
-
     }
 }))
 

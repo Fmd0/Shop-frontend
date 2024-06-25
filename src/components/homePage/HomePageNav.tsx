@@ -1,9 +1,12 @@
-import navLike from "../../assets/HomePage/navLike.svg"
 import navCart from "../../assets/HomePage/navCart.svg"
 import navLogo from "../../assets/HomePage/navLogo.svg"
-import {useEffect, useState} from "react";
+import { useEffect, useState} from "react";
 import Search from "../../assets/HomePage/Search.svg";
 import {searchPlaceholderList} from "../../utils/data.ts";
+import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
+import LogoutModal from "../LogoutModal.tsx";
+import useCartInfoStore from "../../hooks/useCartInfoStore.ts";
+import LikeAnchor from "../common/LikeAnchor.tsx";
 
 
 const HomePageNav = () => {
@@ -11,6 +14,8 @@ const HomePageNav = () => {
     const [show, setShow] = useState(false);
     const [data, setData] = useState("");
     const [searchIndex, setSearchIndex] = useState<number>(0);
+    const {email, openSignInModal, toggleLogoutModalOpen, closeAllModal} = useUserInfoStore();
+    const {cartAmount} = useCartInfoStore();
 
     useEffect(() => {
         const TopOffset = 370;
@@ -49,6 +54,11 @@ const HomePageNav = () => {
         return () => clearInterval(timeId);
     }, []);
 
+    useEffect(() => {
+        window.addEventListener("click", closeAllModal);
+        return () => window.removeEventListener("click", closeAllModal);
+    }, []);
+
     return (
         <header className="sticky top-0 left-0 z-50 bg-white flex justify-between items-center p-4">
 
@@ -58,17 +68,36 @@ const HomePageNav = () => {
             `}/>
             </a>
 
-            <div className="flex items-center">
-                <a href="#" className="p-[10px] mr-1 rounded-[22px] hover:bg-neutral-100">
-                    <img src={navLike} alt="navLike" className="w-6"/>
-                </a>
-                <a href="#" className="p-[10px] mr-4 rounded-[22px] hover:bg-neutral-100">
+            <div className="flex items-center gap-1">
+                <LikeAnchor />
+                <a href="/cart" className="relative p-[10px] rounded-[22px] hover:bg-neutral-100">
                     <img src={navCart} alt="navCart" className="w-6"/>
+                    {
+                        cartAmount !== 0 &&
+                        <p className="absolute right-1 top-1 w-4 h-4 rounded-[999px] bg-[rgb(84_51_235)] text-white text-[10px] grid place-items-center">{cartAmount}</p>
+                    }
                 </a>
-                <a className="cursor-pointer bg-neutral-100 text-black text-[14px] py-2 px-3 rounded-lg font-semibold
-                    hover:bg-neutral-200">
-                    Sign In
-                </a>
+                {
+                    email !== ""
+                        ? <div className="relative" onClick={e => e.stopPropagation()}>
+
+                            <div
+                                className="cursor-pointer size-11 ml-2 rounded-[999px] grid place-items-center bg-white hover:bg-[rgb(242_244_245)]">
+                                <div
+                                    className="w-8 h-8 bg-[rgb(242_244_245)] rounded-[999px] grid place-items-center border-[rgb(225_228_229)] border-[1px]"
+                                    onClick={toggleLogoutModalOpen}>
+                                    {email[0]}
+                                </div>
+                            </div>
+
+                            <LogoutModal/>
+                        </div>
+                        : <div
+                            className="cursor-pointer ml-4 bg-neutral-100 text-black text-[14px] py-2 px-3 rounded-lg font-semibold hover:bg-neutral-200"
+                            onClick={openSignInModal}>
+                            Sign In
+                        </div>
+                }
             </div>
 
             <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[25%] flex items-center  bg-neutral-100 rounded-2xl p-3 transition-all duration-200

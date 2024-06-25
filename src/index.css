@@ -13,5 +13,19 @@
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
     }
+    .inputHasText:not(:placeholder-shown) {
+        padding-top: 24px;
+        padding-bottom: 8px;
+    }
+    .inputHasText:not(:placeholder-shown)::placeholder {
+        color: white;
+    }
+    .inputHasText:not(:placeholder-shown) + div {
+        top: calc(50% - 10px);
+        opacity: 1;
+    }
+}
+
+@layer components {
 
 }

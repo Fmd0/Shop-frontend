@@ -57,3 +57,11 @@ export const setRecentlyViewedInfoItemToLocalStorage = (newData: RecentlyViewedI
 export const setRecentlyViewedInfoToLocalStorage = (newData: RecentlyViewedItemInfoType[]) => {
     localStorage.setItem("recentlyViewed", JSON.stringify(newData));
 }
+
+export const setEmailToLocalStorage = (email: string) => {
+    localStorage.setItem("email", email);
+}
+
+export const getEmailFromLocalStorage = () => {
+    return String(localStorage.getItem("email")||"");
+}

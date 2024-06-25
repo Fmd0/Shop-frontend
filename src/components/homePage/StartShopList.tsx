@@ -1,19 +1,28 @@
 import StartShopItem from "./StartShopItem.tsx";
 import leftArrow from "../../assets/HomePage/startShop/leftArrow.svg"
 import rightArrow from "../../assets/HomePage/startShop/rightArrow.svg"
-import { useState} from "react";
-import useHomeShopStarted from "../../hooks/useHomeShopStarted.ts";
+import {useEffect, useState} from "react";
+import {HomeShopStartedType} from "../../utils/type.ts";
 
 
 const StartShopList = () => {
 
     const [showRight, setShowRight] = useState(false);
 
-    const {data={msg:"", data:[]}, error} = useHomeShopStarted();
+    const [startShopList, setStartShopList] = useState<HomeShopStartedType[]>([]);
 
-    if(error) {
-        return null;
-    }
+    useEffect(() => {
+        let ignore = false;
+        fetch(`${import.meta.env.VITE_API_ADDRESS}/api/home/started`)
+        .then(res => res.json())
+            .then(data => {
+                if(!ignore) {
+                    setStartShopList(data.data)
+                }
+            })
+        return () => {ignore = true}
+    }, []);
+
 
     return (
         <div className="mt-28 w-[1144px] mx-auto overflow-hidden">
@@ -53,20 +62,10 @@ const StartShopList = () => {
                 ${showRight?"-translate-x-1/2":""}`}
                 >
                     {
-                        data.data.map((d, i) => (
+                        startShopList.map((d, i) => (
                             <StartShopItem {...d} key={i}/>
                         ))
                     }
-                    {/*{*/}
-                    {/*    startShopRow0.map((s, i) => (*/}
-                    {/*        <StartShopItem {...s} key={i}/>*/}
-                    {/*    ))*/}
-                    {/*}*/}
-                    {/*{*/}
-                    {/*    startShopRow1.map((s, i) => (*/}
-                    {/*        <StartShopItem {...s} key={i}/>*/}
-                    {/*    ))*/}
-                    {/*}*/}
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 import {RecentlyViewedItemInfoType} from "../../utils/type.ts";
 import CommodityItemRecentlyViewed from "./CommodityItemRecentlyViewed.tsx";
-import useRecentlyViewedInfoStore from "../../hooks/useRecentlyViewedInfoStore.tsx";
+import useRecentlyViewedInfoStore from "../../hooks/useRecentlyViewedInfoStore.ts";
 
 
 const RecentlyViewedPageMainContent = () => {

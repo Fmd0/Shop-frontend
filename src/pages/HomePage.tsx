@@ -4,6 +4,7 @@ import HomePageMainContent from "../components/homePage/HomePageMainContent.tsx"
 import RewardingWay from "../components/homePage/RewardingWay.tsx";
 import StartShopList from "../components/homePage/StartShopList.tsx";
 import Footer from "../components/Footer.tsx";
+import SignInGlobalModal from "../components/SignInGlobalModal.tsx";
 
 const HomePage = () => {
 
@@ -15,6 +16,7 @@ const HomePage = () => {
             <StartShopList />
             <RewardingWay />
             <Footer />
+            <SignInGlobalModal />
         </>
     )
 }

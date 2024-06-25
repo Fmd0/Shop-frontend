@@ -1,9 +1,11 @@
 
 
-const AddToLikeSvg = () => {
+const AddToLikeSvg = ({checked}: {
+    checked: boolean,
+}) => {
     return (
-        <div className="w-8 h-8 bg-neutral-500 transition-all ease-[cubic-bezier(.4,0,.2,1)] duration-[150ms] bg-opacity-35 p-2 cursor-pointer rounded-[16px] grid place-items-center hover:bg-opacity-70">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+        <div className={`w-8 h-8 ${checked?"bg-[rgb(84_51_235)] hover:bg-[rgb(69_36_219)]":"bg-neutral-500 bg-opacity-35 hover:bg-opacity-70"} transition-all ease-[cubic-bezier(.4,0,.2,1)] duration-[150ms] p-2 cursor-pointer rounded-[16px] grid place-items-center`}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill={`${checked?"white":"none"}`} xmlns="http://www.w3.org/2000/svg"
                  data-testid="icon-favorites" stroke="none"
                  style={{width: "16px", height: "16px"}}>
                 <path

@@ -8,6 +8,8 @@ import RatingsModal from "./RatingsModal.tsx";
 import SizeModal from "./SizeModal.tsx";
 import ColorModal from "./ColorModal.tsx";
 import ShipToModal from "./ShipToModal.tsx";
+import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
+import {useUserLikeList} from "../../hooks/useUserLikeList.ts";
 
 const SearchPageMainContent = () => {
 
@@ -76,6 +78,13 @@ const SearchPageMainContent = () => {
         return () => window.removeEventListener("click", closeAllModal);
     }, []);
 
+
+    const {userLikeList={msg: "", data: []}, error} = useUserLikeList();
+    const {handleClickLike} = useUserInfoStore();
+
+    if(error) {
+        return null;
+    }
 
     return (
         <div className="select-none">
@@ -153,7 +162,7 @@ const SearchPageMainContent = () => {
                         <div className="mt-4 grid grid-cols-5 gap-6">
                             {
                                 searchCommodityList.map(c => (
-                                    <CommodityItem key={c.id} {...c} image={c.images[0]}/>
+                                    <CommodityItem key={c.id} {...c} image={c.images[0]} checked={userLikeList?.data?.includes(c.id)} handleClickLike={handleClickLike}/>
                                 ))
                             }
                         </div>

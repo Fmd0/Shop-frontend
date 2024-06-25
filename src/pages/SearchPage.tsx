@@ -1,6 +1,7 @@
 import Footer from "../components/Footer.tsx";
 import SearchPageMainContent from "../components/searchPage/SearchPageMainContent.tsx";
 import NavBarSearchPage from "../components/searchPage/NavBarSearchPage.tsx";
+import SignInGlobalModal from "../components/SignInGlobalModal.tsx";
 
 
 const SearchPage = () => {
@@ -9,6 +10,7 @@ const SearchPage = () => {
             <NavBarSearchPage />
             <SearchPageMainContent />
             <Footer />
+            <SignInGlobalModal />
         </>
     )
 }
