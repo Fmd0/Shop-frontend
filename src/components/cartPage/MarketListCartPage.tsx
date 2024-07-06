@@ -16,16 +16,16 @@ const MarketListCartPage = ({marketInfo}: {
         <div className="flex flex-col gap-8">
 
             {/*market item*/}
-            <div className="grid grid-cols-[68fr_32fr]">
+            <div className="flex">
 
                 {/*left part market and commodity list info*/}
-                <div className="border-[1px] border-neutral-200 rounded-l-2xl p-8">
+                <div className="flex-1 border-[1px] border-neutral-200 rounded-l-2xl p-8">
 
                     {/* top part market info */}
                     <a href={`/market/?id=${marketInfo.id}`}>
                         <div className="flex items-center gap-4 mb-5">
                             <div className="relative w-11 h-11 rounded-lg overflow-hidden">
-                                <img className="w-full h-full object-cover" src={marketInfo.icon} alt="icon"/>
+                                <img className="w-full h-full object-contain" src={marketInfo.icon} alt="icon"/>
                                 <div className="absolute inset-0 bg-[#0000001a]"></div>
                             </div>
                             <p className="text-[18px]">{marketInfo.name}</p>

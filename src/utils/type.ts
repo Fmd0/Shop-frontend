@@ -137,3 +137,13 @@ export interface RecentlyViewedItemInfoType {
     price: number,
     promotingPrice: number,
 }
+
+
+export interface HomeBannerType {
+    id: string,
+    relativeId: string,
+    image: string,
+    logo: string,
+    isCommodity: boolean,
+    row: string,
+}

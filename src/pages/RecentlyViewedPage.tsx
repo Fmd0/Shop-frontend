@@ -1,18 +1,13 @@
-import NavBar from "../components/NavBar.tsx";
-import Footer from "../components/Footer.tsx";
 import RecentlyViewedPageMainContent from "../components/recentlyViewedPage/RecentlyViewedPageMainContent.tsx";
-import SignInGlobalModal from "../components/SignInGlobalModal.tsx";
+import Layout from "../components/Layout.tsx";
 
 
 const RecentlyViewedPage = () => {
 
     return (
-        <>
-            <NavBar />
+        <Layout>
             <RecentlyViewedPageMainContent />
-            <Footer />
-            <SignInGlobalModal />
-        </>
+        </Layout>
     )
 }
 

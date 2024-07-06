@@ -1,12 +1,17 @@
 import {getRecentlyViewedInfoFromLocalStorage} from "../../utils/localStorage.ts";
 import CommodityItemRecentlyViewed from "../recentlyViewedPage/CommodityItemRecentlyViewed.tsx";
 import {RecentlyViewedItemInfoType} from "../../utils/type.ts";
+import {useUserLikeList} from "../../hooks/useUserLikeList.ts";
+import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
 
 const RecentlyViewedListCartPage = () => {
-    const data = getRecentlyViewedInfoFromLocalStorage();
-    console.log(data);
 
+    const {userLikeList={msg: "", data: []}, error} = useUserLikeList();
+    const {handleClickLike} = useUserInfoStore();
 
+    if(error) {
+        return null;
+    }
     return (
         <div className="w-[90%] max-w-[1144px] mx-auto tracking-[0.15px] font-medium mt-12">
 
@@ -26,10 +31,10 @@ const RecentlyViewedListCartPage = () => {
             </a>
 
 
-            <div className="grid grid-cols-6 gap-2 mt-6">
+            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-6">
                 {
-                    getRecentlyViewedInfoFromLocalStorage().map((r:RecentlyViewedItemInfoType, i:number) => (
-                        <CommodityItemRecentlyViewed key={i} {...r}  hasDelete={false} />
+                    getRecentlyViewedInfoFromLocalStorage().slice(0,6).map((r:RecentlyViewedItemInfoType, i:number) => (
+                        <CommodityItemRecentlyViewed key={i} {...r}  hasDelete={false} checked={userLikeList?.data?.includes(r.id)} handleClickLike={handleClickLike} />
                     ))
                 }
             </div>

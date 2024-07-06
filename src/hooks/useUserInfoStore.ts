@@ -15,6 +15,8 @@ interface State {
         price: number,
         promotingPrice: number,
     }[];
+    addedToLikeModalOpen: boolean;
+    addedToLikeModalTimeId: number;
 }
 
 interface Actions {
@@ -34,12 +36,16 @@ interface Actions {
         promotingPrice: number,
     }[]) => void;
     handleClickLike: (id: string, checked: boolean) => void;
+    setAddedToLikeModalOpen: (open: boolean) => void;
+    setAddedToLikeModalTimeId: (timeId: number) => void;
 }
 
 const initialState = {
     email: getEmailFromLocalStorage(),
     signInModalOpen: false,
     like: [],
+    addedToLikeModalOpen: false,
+    addedToLikeModalTimeId: 0,
 }
 
 const initialModalState = {
@@ -69,7 +75,12 @@ const useUserInfoStore = create<State & Actions>(set => ({
         setEmailToLocalStorage("");
     },
     setLike: (like) => set({like}),
-    handleClickLike: (id, checked) => {
+    handleClickLike: (id, checked) => set(state => {
+        if(state.email === "") {
+            state.signInModalOpen = true;
+            return {};
+        }
+
         fetch(`${import.meta.env.VITE_AUTH_API_ADDRESS}/api/session/user/like`, {
             method: checked?"DELETE":"POST",
             body: new URLSearchParams("id="+id),
@@ -79,10 +90,19 @@ const useUserInfoStore = create<State & Actions>(set => ({
                 throw res.json()
             }
             mutateUserLikeList();
+            if(!checked) {
+                clearTimeout(state.addedToLikeModalTimeId);
+                state.setAddedToLikeModalOpen(true);
+                state.setAddedToLikeModalTimeId(setTimeout(() => state.setAddedToLikeModalOpen(false), 3000))
+            }
         }).catch((err) => {
             console.log(err);
         })
-    }
+
+        return {};
+    }),
+    setAddedToLikeModalOpen: (open) => set({addedToLikeModalOpen: open}),
+    setAddedToLikeModalTimeId: (timeId) => set({addedToLikeModalTimeId: timeId}),
 }))
 
 export default useUserInfoStore;

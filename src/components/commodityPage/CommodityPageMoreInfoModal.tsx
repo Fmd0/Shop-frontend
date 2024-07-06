@@ -6,7 +6,8 @@ const CommodityPageMoreInfoModal = () => {
     const {commodityInfo, moreInfoModalOpen, openContactModal} = useCommodityPageStore();
 
     return (
-        <div className={`absolute right-0 top-[calc(100%+4px)] text-nowrap w-max bg-white p-2 border-[0.5px] border-neutral-100 rounded-2xl shadow-[0_4px_6px_-1px_#0000001a] ${moreInfoModalOpen?"":"hidden"}`}
+        <div className={`absolute right-0 top-[calc(100%+4px)] text-nowrap w-max bg-white p-2 border-[0.5px] border-neutral-100 rounded-2xl 
+        shadow-[0px_0px_8px_#00000026] ${moreInfoModalOpen?"":"hidden"}`}
              onClick={e => e.stopPropagation()}>
             <div className="cursor-pointer flex items-center gap-2 pl-2 pr-3 py-3 hover:bg-neutral-200 rounded-xl duration-300"
                  onClick={openContactModal}

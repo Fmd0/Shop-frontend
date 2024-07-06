@@ -1,27 +1,19 @@
 import StartShopItem from "./StartShopItem.tsx";
 import leftArrow from "../../assets/HomePage/startShop/leftArrow.svg"
 import rightArrow from "../../assets/HomePage/startShop/rightArrow.svg"
-import {useEffect, useState} from "react";
-import {HomeShopStartedType} from "../../utils/type.ts";
+import {useState} from "react";
+import useHomeShopStarted from "../../hooks/useHomeShopStarted.ts";
 
 
 const StartShopList = () => {
 
     const [showRight, setShowRight] = useState(false);
 
-    const [startShopList, setStartShopList] = useState<HomeShopStartedType[]>([]);
+    const {data={msg: "", data: []}, error} = useHomeShopStarted();
 
-    useEffect(() => {
-        let ignore = false;
-        fetch(`${import.meta.env.VITE_API_ADDRESS}/api/home/started`)
-        .then(res => res.json())
-            .then(data => {
-                if(!ignore) {
-                    setStartShopList(data.data)
-                }
-            })
-        return () => {ignore = true}
-    }, []);
+    if(error) {
+        return null;
+    }
 
 
     return (
@@ -62,7 +54,7 @@ const StartShopList = () => {
                 ${showRight?"-translate-x-1/2":""}`}
                 >
                     {
-                        startShopList.map((d, i) => (
+                        data.data.map((d, i) => (
                             <StartShopItem {...d} key={i}/>
                         ))
                     }

@@ -2,13 +2,15 @@ import AddToLikeSvg from "../homePage/AddToLikeSvg.tsx";
 import useRecentlyViewedInfoStore from "../../hooks/useRecentlyViewedInfoStore.ts";
 
 
-const CommodityItemRecentlyViewed = ({id, name, image, price, promotingPrice, hasDelete}: {
+const CommodityItemRecentlyViewed = ({id, name, image, price, promotingPrice, hasDelete, checked, handleClickLike}: {
     id: string,
     name: string,
     image: string,
     price: number,
     promotingPrice: number,
-    hasDelete: boolean
+    hasDelete: boolean,
+    handleClickLike: (id: string, checked: boolean) => void,
+    checked: boolean,
 }) => {
 
     const {deleteRecentlyViewedInfoItem} = useRecentlyViewedInfoStore();
@@ -55,8 +57,11 @@ const CommodityItemRecentlyViewed = ({id, name, image, price, promotingPrice, ha
 
 
                     <div className="absolute bottom-3 right-3 duration-200"
-                         onClick={e => e.preventDefault()}>
-                        <AddToLikeSvg/>
+                         onClick={e => {
+                             e.preventDefault();
+                             handleClickLike(id, checked)
+                         }}>
+                        <AddToLikeSvg checked={checked}/>
                     </div>
                 </div>
 

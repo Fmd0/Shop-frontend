@@ -8,6 +8,7 @@ import {CartInfoType} from "../utils/type.ts";
 interface State {
     cartInfo: CartInfoType,
     cartAmount: number,
+    addToCartStatus: string,
 }
 
 interface Actions {
@@ -15,17 +16,35 @@ interface Actions {
     updateCartAmount: () => void,
     addCartAmount: (marketName: string, commodityName: string) => void,
     subtractCartAmount: (marketName: string, commodityName: string) => void,
+    addToCartSuccess: () => void,
+    addToCartInit: () => void,
+    updateCartAmountCommodityPage: () => void,
 }
 
 const initialState = {
     cartInfo: getCartInfoFromLocalStorage(),
     cartAmount: getCartAmountFromLocalStorage(),
+    addToCartStatus: "init",
 }
 
 const useCartInfoStore = create<State & Actions>(set => ({
     ...initialState,
     setCartInfo: (cartInfo) => set(({cartInfo})),
     updateCartAmount: () => set(({cartAmount: getCartAmountFromLocalStorage()})),
+    updateCartAmountCommodityPage: () => set( state => {
+
+        window.setTimeout(() => {
+            state.addToCartSuccess();
+            state.updateCartAmount();
+            window.setTimeout(() => {
+                state.addToCartInit();
+            }, 3000)
+        }, 3000);
+
+        return {
+            addToCartStatus: "loading",
+        }
+    }),
     addCartAmount: (marketName, commodityName) => {
         set(state => {
             state.cartInfo[marketName]["commodity"][commodityName].count++;
@@ -50,7 +69,10 @@ const useCartInfoStore = create<State & Actions>(set => ({
             setCartInfoToLocalStorage(newCartInfo)
             return {cartInfo: newCartInfo}
         })
-    }
+    },
+    addToCartSuccess: () => set({addToCartStatus: "success"}),
+    addToCartInit: () => set({addToCartStatus: "init"}),
+
 }))
 
 

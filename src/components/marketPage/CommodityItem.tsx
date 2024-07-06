@@ -27,8 +27,9 @@ const CommodityItem = ({id, name, image, rating, ratingAmount, price, promotingP
                          onClick={e => {
                              e.preventDefault();
                              handleClickLike(id, checked);
-                         }}
-                    ><AddToLikeSvg checked={checked}/></div>
+                         }}>
+                        <AddToLikeSvg checked={checked}/>
+                    </div>
 
                     {/*top left promoting sign*/}
                     {

@@ -9,6 +9,8 @@ import {
     setRecentlyViewedInfoItemToLocalStorage
 } from "../../utils/localStorage.ts";
 import useCartInfoStore from "../../hooks/useCartInfoStore.ts";
+import BigAddToLikeButton from "./BigAddToLikeButton.tsx";
+import AddToFavorite from "./AddToFavorite.tsx";
 
 
 const CommodityPageMainContent = () => {
@@ -30,8 +32,11 @@ const CommodityPageMainContent = () => {
         setSkuItemKey,
         toggleMoreInfoModalOpen,
         openDescriptionModal,
+        openRefundModal,
+        openShippingModal,
+        closeAllModal
     } = useCommodityPageStore();
-    const {updateCartAmount} = useCartInfoStore();
+    const {updateCartAmountCommodityPage, addToCartStatus} = useCartInfoStore();
 
     const [quantity, setQuantity] = useState<number>(1);
 
@@ -71,12 +76,12 @@ const CommodityPageMainContent = () => {
     // fetch commodity data
     useEffect(() => {
         let ignore = false;
-        fetch(`${import.meta.env.VITE_API_ADDRESS}/api/commodity/${id}`)
+        fetch(`${import.meta.env.VITE_AUTH_API_ADDRESS}/api/commodity/${id}`)
             .then(res => res.json())
             .then(data => {
                 if(!ignore) {
                     setCommodityInfo(data?.data?.commodity||null);
-                    setBestSellingCommodities(data?.data?.bestSellingCommodities||null);
+                    setBestSellingCommodities(data?.data?.bestSellingCommodities||[]);
                     setSkuItemKey((data?.data?.commodity?.skuConfigs?.map((skuConfig: SkuConfigType) => skuConfig.defaultValue))?.join("_")||"");
                 }
             })
@@ -88,7 +93,7 @@ const CommodityPageMainContent = () => {
     // fetch comment info
     useEffect(() => {
         let ignore = false;
-        fetch(`${import.meta.env.VITE_API_ADDRESS}/api/comment?pageSize=6&page=${commentPage}&commodityId=${id}`)
+        fetch(`${import.meta.env.VITE_AUTH_API_ADDRESS}/api/comment?pageSize=6&page=${commentPage}&commodityId=${id}`)
             .then(res => res.json())
             .then(data => {
                 if(!ignore) {
@@ -120,11 +125,18 @@ const CommodityPageMainContent = () => {
         })
     }, [commodityInfo]);
 
+
+    useEffect(() => {
+        window.addEventListener("click", closeAllModal);
+        return () => window.removeEventListener("click", closeAllModal);
+    }, []);
+
+
     return (
-        <div className="relative w-[1144px] font-[SuisseIntl-Medium,sans-serif] font-medium tracking-[0.15px] select-none mx-auto mt-4 flex gap-10">
+        <div className="relative max-w-[1144px] w-[90%] font-[SuisseIntl-Medium,sans-serif] font-medium tracking-[0.15px] select-none mx-auto mt-4 flex gap-10">
 
             {/*left part*/}
-            <div className="w-[65%] flex-1">
+            <div className="flex-[1_1_65%] overflow-hidden">
 
                 {/*images big gallery and small gallery*/}
                 <ImagesGallery />
@@ -135,7 +147,7 @@ const CommodityPageMainContent = () => {
 
 
             {/*right part*/}
-            <div className="w-[35%] flex-1 flex flex-col">
+            <div className="flex-[1_1_35%] flex flex-col ">
 
                 {/*market icon, name and more button*/}
                 <div className="flex items-center justify-between">
@@ -144,14 +156,14 @@ const CommodityPageMainContent = () => {
                             {
                                 !!commodityInfo?.market?.icon && commodityInfo?.market?.icon!=="" &&
                                 <div className="relative w-8 h-8 rounded-lg overflow-hidden">
-                                    <img src={commodityInfo?.market?.icon} alt="icon"/>
+                                    <img src={commodityInfo?.market?.icon} alt="icon" className="w-full h-full object-contain"/>
                                     <div className="absolute inset-0 bg-[#0000000a]"></div>
                                 </div>
                             }
                             <p className="text-[14px] font-semibold">{commodityInfo?.market?.name || ""}</p>
                         </div>
                     </a>
-                    <div className="relative">
+                    <div className="relative" onClick={e => e.stopPropagation()}>
                         <div
                             className="font-extrabold w-11 h-11 grid place-items-center rounded-[999px] cursor-pointer duration-300 hover:bg-neutral-200"
                             onClick={toggleMoreInfoModalOpen}
@@ -165,7 +177,7 @@ const CommodityPageMainContent = () => {
                 {/*market name, commodity rating and like button*/}
                 <div className="flex items-center justify-between mt-3 tracking-[0.15px]">
                     <div>
-                    <p className="font-semibold">{commodityInfo?.name}</p>
+                        <p className="font-semibold">{commodityInfo?.name}</p>
                         <div className="cursor-pointer text-black flex items-center gap-1">
                             <div className="flex items-center gap-[1px]">
                                 {
@@ -196,16 +208,7 @@ const CommodityPageMainContent = () => {
                             <p className="text-[12px]">({commodityInfo?.ratingAmount})</p>
                         </div>
                     </div>
-                    <div
-                        className="cursor-pointer w-11 h-11 grid place-items-center border-neutral-300 border-[1px] rounded-[999px] duration-300 hover:bg-neutral-300">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                             data-testid="icon-favorites" stroke="none"
-                             style={{width: "20px", height: "20px"}}>
-                            <path
-                                d="M10.7966 4.30255L11.9999 5.53674L13.2034 4.30255C15.3006 2.15177 18.6827 2.1219 20.8156 4.21294L20.905 4.30255C23.0021 6.45334 23.0313 9.92188 20.9923 12.1093L20.905 12.2009L12 21.3334L3.09505 12.2009C0.968317 10.0199 0.968317 6.48363 3.09505 4.30255C5.22178 2.12148 8.6699 2.12148 10.7966 4.30255Z"
-                                stroke="currentColor" strokeWidth="2" strokeLinecap="round"></path>
-                        </svg>
-                    </div>
+                   <BigAddToLikeButton />
                 </div>
 
 
@@ -318,56 +321,66 @@ const CommodityPageMainContent = () => {
                         ?
                         <div>
                             <div
-                                className="relative mt-6 cursor-pointer h-11 rounded-xl text-white bg-[rgb(84_51_235)] duration-200 hover:bg-[rgb(69_36_219)] grid place-items-center"
+                                className="relative overflow-hidden mt-6 cursor-pointer h-11 rounded-xl text-white bg-[rgb(84_51_235)] duration-200 hover:bg-[rgb(69_36_219)]"
                                 onClick={() => {
                                     setCartInfoItemToLocalStorage({
                                         market: {
-                                            id: commodityInfo?.market?.id||"",
-                                            name: commodityInfo?.market?.name||"",
-                                            icon: commodityInfo?.market?.icon||"",
+                                            id: commodityInfo?.market?.id || "",
+                                            name: commodityInfo?.market?.name || "",
+                                            icon: commodityInfo?.market?.icon || "",
                                         },
                                         commodity: {
-                                            id: commodityInfo?.id||"",
-                                            name: commodityInfo?.name||"",
+                                            id: commodityInfo?.id || "",
+                                            name: commodityInfo?.name || "",
                                             price,
                                             promotingPrice,
                                             image,
-                                            skuKey: [commodityInfo?.name||"",skuItemKey].join("_"),
+                                            skuKey: [commodityInfo?.name || "", skuItemKey].join("_"),
                                             count: quantity,
                                         }
                                     });
-                                    updateCartAmount();
+                                    updateCartAmountCommodityPage();
                                 }}
                             >
-                                Add to cart
+                                <div className="duration-300"
+                                    style={{translate: addToCartStatus==="success"?"0 -50%":"" }}
+                                >
+                                    <div className="h-11 grid place-items-center">
+                                        {
+                                            addToCartStatus === "loading"
+                                                ? <svg fill="none" width="20" height="20" viewBox="0 0 52 58"
+                                                       xmlns="http://www.w3.org/2000/svg"
+                                                       startOffset="0" strokeDasharray="0 136"
+                                                       stroke="white"
+                                                       className="animate-[addToCart_1.3s_ease-in_infinite]"
+                                                >
+                                                    <path
+                                                        d="M3 13C5 11.75 10.4968 6.92307 21.5 6.4999C34.5 5.99993 42 13 45 23C48.3 34 42.9211 48.1335 30.5 51C17.5 54 6.6 46 6 37C5.46667 29 10.5 25 14 23"
+                                                        strokeWidth="12"></path>
+                                                </svg>
+                                                : <p>Add to cart</p>
+                                        }
+                                    </div>
+                                    <div className="h-11 flex items-center justify-center gap-1">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg" className="mr-xxs text-text-fixed-light"
+                                             data-testid="icon-checkmark-circle" stroke="none"
+                                             style={{width: "24px", height: "24px"}}>
+                                            <path
+                                                d="M15 9.5L10.5 15L8.5 13M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                                                stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                                strokeLinejoin="round"></path>
+                                        </svg>
+                                        <p>Added to cart</p>
+                                    </div>
+                                </div>
                             </div>
                             <div
                                 className="relative mt-2 cursor-pointer h-11 rounded-xl text-white bg-black duration-200 hover:bg-neutral-900 grid place-items-center">
                                 Buy now
                             </div>
                         </div>
-                        :
-                        <div>
-                            <div
-                                className="relative mt-2 cursor-pointer h-11 rounded-xl text-white bg-black duration-200 hover:bg-neutral-900 grid place-items-center">
-                                Add to favorites
-                            </div>
-                            <div className="mt-4 font-normal flex gap-2">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                     xmlns="http://www.w3.org/2000/svg" data-testid="icon-about"
-                                     stroke="none"
-                                     style={{width: "16px", height: "16px", minWidth: "16px", minHeight: "16px"}}>
-                                    <path
-                                        d="M11 11H12V16M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
-                                        stroke="currentColor" strokeWidth="2" strokeLinecap="round"
-                                        strokeLinejoin="round"></path>
-                                    <rect x="11.25" y="7.25" width="1.5" height="1.5" rx="0.75" fill="currentColor"
-                                          stroke="currentColor" strokeWidth="0.5"></rect>
-                                </svg>
-                                <p className="text-[12px]">Adding this product to favorites will notify you when it’s
-                                    back in stock</p>
-                            </div>
-                        </div>
+                        : <AddToFavorite/>
                 }
 
                 {/*description*/}
@@ -414,14 +427,18 @@ const CommodityPageMainContent = () => {
                     {
                         commodityInfo?.market?.shippingPolicy &&
                         <div
-                            className="cursor-pointer flex-1 py-2 rounded-xl text-[14px] bg-neutral-100 duration-300 hover:bg-neutral-300 grid place-items-center">
+                            className="cursor-pointer flex-1 py-2 rounded-xl text-[14px] bg-neutral-100 duration-300 hover:bg-neutral-300 grid place-items-center"
+                            onClick={openShippingModal}
+                        >
                             Shipping Policy
                         </div>
                     }
                     {
                         commodityInfo?.market?.refundPolicy &&
                         <div
-                            className="cursor-pointer flex-1 py-2 rounded-xl text-[14px] bg-neutral-100 duration-300 hover:bg-neutral-300 grid place-items-center">
+                            className="cursor-pointer flex-1 py-2 rounded-xl text-[14px] bg-neutral-100 duration-300 hover:bg-neutral-300 grid place-items-center"
+                            onClick={openRefundModal}
+                        >
                             Refund Policy
                         </div>
                     }
@@ -434,21 +451,23 @@ const CommodityPageMainContent = () => {
                     <a href={`/market/?id=${commodityInfo?.market.id || ""}`}>
                         <div
                             className="relative cursor-pointer mt-8 rounded-xl overflow-hidden border-neutral-300 border-[1px] group/commodityPageMarket">
-                            <div className="relative aspect-[4] grid grid-cols-4">
-                                <img className="h-full object-cover" src={bestSellingCommodities[0].images[0]}
-                                     alt="commodity"/>
-                                <img className="h-full object-cover" src={bestSellingCommodities[1].images[0]}
-                                     alt="commodity"/>
-                                <img className="h-full object-cover" src={bestSellingCommodities[2].images[0]}
-                                     alt="commodity"/>
-                                <img className="h-full object-cover" src={bestSellingCommodities[3].images[0]}
-                                     alt="commodity"/>
+                            <div className="relative grid grid-cols-4">
+                                {
+                                    bestSellingCommodities?.length > 0 &&
+                                    bestSellingCommodities.slice(0,4).map(b => (
+                                        <img key={b.id} className="overflow-hidden aspect-square w-full object-cover"
+                                             src={b?.images?.[0]}
+                                             alt="commodity"/>
+                                    ))
+                                }
 
                                 <div
                                     className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 rounded-lg overflow-hidden">
-                                    <img src={commodityInfo?.market?.icon} alt="icon"/>
+                                    <img src={commodityInfo?.market?.icon} alt="icon"
+                                         className="w-full h-full object-contain"/>
                                     <div className="absolute inset-0 bg-[#0000000a]"></div>
                                 </div>
+                                <div className="absolute inset-0 bg-[#0000000a]"></div>
                             </div>
                             <div className="flex justify-between p-4">
                                 <div>

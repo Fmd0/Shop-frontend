@@ -14,7 +14,7 @@ const HomePageNav = () => {
     const [show, setShow] = useState(false);
     const [data, setData] = useState("");
     const [searchIndex, setSearchIndex] = useState<number>(0);
-    const {email, openSignInModal, toggleLogoutModalOpen, closeAllModal} = useUserInfoStore();
+    const {email, openSignInModal, toggleLogoutModalOpen, closeAllModal, logoutModalOpen} = useUserInfoStore();
     const {cartAmount} = useCartInfoStore();
 
     useEffect(() => {
@@ -82,9 +82,8 @@ const HomePageNav = () => {
                         ? <div className="relative" onClick={e => e.stopPropagation()}>
 
                             <div
-                                className="cursor-pointer size-11 ml-2 rounded-[999px] grid place-items-center bg-white hover:bg-[rgb(242_244_245)]">
-                                <div
-                                    className="w-8 h-8 bg-[rgb(242_244_245)] rounded-[999px] grid place-items-center border-[rgb(225_228_229)] border-[1px]"
+                                className={`cursor-pointer size-11 ml-2 rounded-[999px] grid place-items-center bg-white hover:bg-[rgb(242_244_245)] ${logoutModalOpen?"outline outline-2 outline-blue-600 -outline-offset-1":""}`}>
+                                <div className="w-8 h-8 bg-[rgb(242_244_245)] rounded-[999px] grid place-items-center border-[rgb(225_228_229)] border-[1px]"
                                     onClick={toggleLogoutModalOpen}>
                                     {email[0]}
                                 </div>
@@ -111,7 +110,7 @@ const HomePageNav = () => {
                            onChange={(e) => setData(e.target.value)}
                     />
                 </form>
-                <div className={`absolute text-[18px] text-gray-400 left-10
+                <div className={`absolute text-[18px] text-gray-400 left-10 pointer-events-none
                        ${searchIndex === 0 ? "" : "duration-300"}
                         ${data !== "" ? "hidden" : ""}`}
                      style={{top: `calc(-16.5px - ${searchIndex * 27}px)`}}

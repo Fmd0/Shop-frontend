@@ -1,33 +1,28 @@
 import blackLink from "../../assets/MarketPage/blackLink.svg"
 import whiteLink from "../../assets/MarketPage/whiteLink.svg"
-import {useEffect} from "react";
-import useMarketInfoStore from "../../hooks/useMarketInfoStore.ts";
 import MoreInfoModal from "./MoreInfoModal.tsx";
 import useMarketPageCommodityInfoStore from "../../hooks/useMarketPageCommodityInfoStore.ts";
+import useMarketInfo from "../../hooks/useMarketInfo.ts";
 
 
 const MarketPageMainContent = () => {
 
-    const {marketInfo, setMarketInfo} = useMarketInfoStore();
     const {toggleMoreInfoModalOpen} = useMarketPageCommodityInfoStore();
-    const id = (new URLSearchParams(window.location.search)).get('id')||"";
+    const id = new URLSearchParams(window.location.search).get('id')||"";
 
 
-    useEffect(() => {
-        fetch(`${import.meta.env.VITE_API_ADDRESS}/api/market/${id}`)
-            .then(res => res.json())
-            .then(data => {
-                setMarketInfo(data?.data||null);
-            })
-            .catch(error => console.log(error));
-    }, [id]);
 
+    const {data:{data: marketInfo}={data: null}, error} = useMarketInfo(id);
+
+    if(error) {
+        return null;
+    }
 
     if((!marketInfo?.bigLogo || marketInfo?.bigLogo === "") && (
         !marketInfo?.bigPic || marketInfo?.bigPic === ""
     )) {
         return (
-            <main className="max-w-[1144px] mx-auto w-[80%] grid grid-cols-[40fr_55fr] gap-10 p-4 rounded-3xl items-center mt-8">
+            <main className="max-w-[1144px] mx-auto w-[80%] grid grid-cols-[60fr_40fr] gap-10 p-4 rounded-3xl items-center mt-8">
                 <div className="flex flex-col gap-4 text-[14px]">
                     <div className="flex flex-row items-center gap-4">
                         <div className="relative w-[56px] h-[56px] rounded-xl overflow-hidden">
@@ -69,7 +64,7 @@ const MarketPageMainContent = () => {
 
 
     return (
-        <main className="max-w-[1144px] mx-auto w-[80%] grid grid-cols-[40fr_55fr] gap-10 p-8 rounded-[36px] items-center mt-4"
+        <main className={`max-w-[1144px] mx-auto w-[80%] grid ${marketInfo.bigPic===""?"grid-cols-[65fr_35fr]":"grid-cols-[40fr_55fr]"} gap-10 p-8 rounded-[36px] items-center mt-4`}
               style={{
                 backgroundColor: marketInfo?.bigLogoBgColor || "",
                 color: marketInfo?.bigLogoFontColor || "",
@@ -78,13 +73,16 @@ const MarketPageMainContent = () => {
                 {
                     marketInfo?.bigLogo && marketInfo?.bigLogo !== "" ?
                         <img src={marketInfo.bigLogo || ""} alt="logo"
-                             className="max-w-[200px] max-h-[80px] object-contain"/> :
+                             className="max-h-[80px] min-h-xl max-w-[200px] object-contain object-left"/> :
                         marketInfo?.icon && marketInfo.icon !== "" &&
                         <img src={marketInfo.icon} alt="icon"
                              className="w-[56px] h-[56px] rounded-xl object-contain"/>
                 }
                 <p className="cursor-pointer text-[12px] font-semibold">{marketInfo?.rating || ""}★({marketInfo?.ratingAmount || ""})</p>
-                <p className="tracking-[0.15px]">{marketInfo?.description || ""}</p>
+                {
+                    marketInfo?.description && marketInfo.description!=="" &&
+                    <p className="tracking-[0.15px]">{marketInfo.description}</p>
+                }
                 <div className="flex flex-row gap-3 flex-wrap">
                     <div className="relative cursor-pointer px-3 text-center w-[88px] py-2 font-semibold rounded-xl group/link"
                             style={{

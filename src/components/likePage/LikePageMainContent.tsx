@@ -14,7 +14,7 @@ const LikePageMainContent = () => {
         promotingPrice: number,
     }[]>([]);
 
-    const {handleClickLike} = useUserInfoStore();
+    const {handleClickLike, email} = useUserInfoStore();
 
     useEffect(() => {
         let ignore = false;
@@ -37,6 +37,11 @@ const LikePageMainContent = () => {
     }, []);
 
     const {userLikeList={msg: "", data: []}, error} = useUserLikeList();
+
+    if(email === "") {
+        window.location.href = "/";
+        return null;
+    }
 
     if(error) {
         return null;

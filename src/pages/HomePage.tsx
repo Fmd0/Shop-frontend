@@ -5,6 +5,7 @@ import RewardingWay from "../components/homePage/RewardingWay.tsx";
 import StartShopList from "../components/homePage/StartShopList.tsx";
 import Footer from "../components/Footer.tsx";
 import SignInGlobalModal from "../components/SignInGlobalModal.tsx";
+import AddedToLikeGlobalModal from "../components/AddedToLikeGlobalModal.tsx";
 
 const HomePage = () => {
 
@@ -17,6 +18,7 @@ const HomePage = () => {
             <RewardingWay />
             <Footer />
             <SignInGlobalModal />
+            <AddedToLikeGlobalModal />
         </>
     )
 }

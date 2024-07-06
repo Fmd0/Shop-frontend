@@ -1,4 +1,5 @@
 import useUserInfoStore from "../hooks/useUserInfoStore.ts";
+import {mutateUserLikeList} from "../hooks/useUserLikeList.ts";
 
 
 const LogoutModal = () => {
@@ -8,6 +9,7 @@ const LogoutModal = () => {
     const handleClick = () => {
         fetch(`${import.meta.env.VITE_AUTH_API_ADDRESS}/api/session/user/logout`, {
             method: "POST",
+            credentials: "include",
         })
             .then(res => {
                 if(res.status !== 200) {
@@ -17,6 +19,7 @@ const LogoutModal = () => {
             })
             .then(() => {
                 clearSignInfo();
+                mutateUserLikeList();
             })
             .catch(err => {
                 console.log(err);

@@ -81,41 +81,41 @@ const row0 = {
     data: [
         {
             isCommodity: false,
-            img: row0Img,
-            svg: row0Svg,
+            image: row0Img,
+            logo: row0Svg,
         },
         {
             isCommodity: true,
-            img: row0Img1,
+            image: row0Img1,
         },
         {
             isCommodity: true,
-            img: row0Img2,
+            image: row0Img2,
         },
         {
             isCommodity: true,
-            img: row0Img3,
+            image: row0Img3,
         },
         {
             isCommodity: false,
-            img: row0Img4,
-            svg: row0svg4,
+            image: row0Img4,
+            logo: row0svg4,
         },
         {
             isCommodity: true,
-            img: row0Img5,
+            image: row0Img5,
         },
         {
             isCommodity: true,
-            img: row0Img6,
+            image: row0Img6,
         },
         {
             isCommodity: true,
-            img: row0Img7,
+            image: row0Img7,
         },
         {
             isCommodity: true,
-            img: row0Img8,
+            image: row0Img8,
         },
     ]
 }
@@ -125,41 +125,41 @@ const row1 = {
     data: [
         {
             isCommodity: false,
-            img: row1Img,
-            svg: row1svg,
+            image: row1Img,
+            logo: row1svg,
         },
         {
             isCommodity: true,
-            img: row1Img1,
+            image: row1Img1,
         },
         {
             isCommodity: true,
-            img: row1Img2,
+            image: row1Img2,
         },
         {
             isCommodity: true,
-            img: row1Img3,
+            image: row1Img3,
         },
         {
             isCommodity: false,
-            img: row1Img4,
-            svg: row1Svg4
+            image: row1Img4,
+            logo: row1Svg4
         },
         {
             isCommodity: true,
-            img: row1Img5,
+            image: row1Img5,
         },
         {
             isCommodity: true,
-            img: row1Img6,
+            image: row1Img6,
         },
         {
             isCommodity: true,
-            img: row1Img7,
+            image: row1Img7,
         },
         {
             isCommodity: true,
-            img: row1Img8,
+            image: row1Img8,
         }
 
     ]
@@ -170,41 +170,41 @@ const row2 = {
     data: [
         {
             isCommodity: false,
-            img: row2Img,
-            svg: row2svg,
+            image: row2Img,
+            logo: row2svg,
         },
         {
             isCommodity: true,
-            img: row2Img1,
+            image: row2Img1,
         },
         {
             isCommodity: true,
-            img: row2Img2,
+            image: row2Img2,
         },
         {
             isCommodity: true,
-            img: row2Img3,
+            image: row2Img3,
         },
         {
             isCommodity: false,
-            img: row2Img4,
-            svg: row2Svg4,
+            image: row2Img4,
+            logo: row2Svg4,
         },
         {
             isCommodity: true,
-            img: row2Img5,
+            image: row2Img5,
         },
         {
             isCommodity: true,
-            img: row2Img6,
+            image: row2Img6,
         },
         {
             isCommodity: true,
-            img: row2Img7,
+            image: row2Img7,
         },
         {
             isCommodity: true,
-            img: row2Img8,
+            image: row2Img8,
         }
     ]
 }

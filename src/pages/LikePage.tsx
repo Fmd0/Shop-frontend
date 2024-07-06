@@ -1,17 +1,14 @@
-import NavBar from "../components/NavBar.tsx";
-import Footer from "../components/Footer.tsx";
 import LikePageMainContent from "../components/likePage/LikePageMainContent.tsx";
+import Layout from "../components/Layout.tsx";
 
 
 const LikePage  = () => {
 
 
     return (
-        <>
-            <NavBar />
+        <Layout>
             <LikePageMainContent />
-            <Footer />
-        </>
+        </Layout>
     )
 }
 

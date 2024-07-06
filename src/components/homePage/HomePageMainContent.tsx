@@ -1,8 +1,9 @@
 import PicRow from "./PicRow.tsx";
-import {row0, row1, row2, searchPlaceholderList} from "../../utils/data.ts";
+import { searchPlaceholderList} from "../../utils/data.ts";
 import MainContentLogo from "../../assets/HomePage/MainContentLogo.svg"
 import Search from "../../assets/HomePage/Search.svg"
 import {useEffect, useState} from "react";
+import {useHomeBanner} from "../../hooks/useHomeBanner.ts";
 
 
 const HomePageMainContent = () => {
@@ -24,18 +25,32 @@ const HomePageMainContent = () => {
         return () => clearInterval(timeId);
     }, []);
 
+    const {data: homeBannerData={msg: "", data: []}, error} = useHomeBanner();
 
+    if(error) {
+        return null;
+    }
+
+    // console.log(homeBannerData?.data.filter(d => d.row === "ROW0"));
     return (
         <div className="overflow-hidden relative">
             <div className="flex flex-col gap-4">
-                <PicRow data={row0} />
-                <PicRow data={row1} />
-                <PicRow data={row2} />
+                <PicRow data={{
+                    data: homeBannerData?.data.filter(d => d.row === "ROW0"),
+                    isDirectionToRight: true,
+                }} />
+                <PicRow data={{
+                    data: homeBannerData?.data.filter(d => d.row === "ROW1"),
+                    isDirectionToRight: false,
+                }} />
+                <PicRow data={{
+                    data: homeBannerData?.data.filter(d => d.row === "ROW2"),
+                    isDirectionToRight: true,
+                }} />
             </div>
 
             <div
                 className="absolute z-10 left-1/2 top-[calc(24%+2px)] -translate-x-1/2 flex flex-col items-center justify-center pointer-events-none gap-12">
-
                 <div className="z-[-1] absolute top-[-536px] size-[800px]
                 bg-[radial-gradient(50%_50%_at_50%_50%,color(display-p3_1_1_1)_55.89%,color(display-p3_1_1_1_/_0.00)_100%)]
                 "></div>

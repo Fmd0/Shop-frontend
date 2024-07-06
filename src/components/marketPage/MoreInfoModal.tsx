@@ -4,15 +4,23 @@ import refundPolicy from "../../assets/MarketPage/refundPolicy.svg"
 import shippingPolicy from "../../assets/MarketPage/shippingPolicy.svg"
 import contact from "../../assets/MarketPage/contact.svg"
 import useMarketPageCommodityInfoStore from "../../hooks/useMarketPageCommodityInfoStore.ts";
+import useMarketInfo from "../../hooks/useMarketInfo.ts";
 
 
 
 const MoreInfoModal = () => {
-    const {marketInfo, openContactModalOpen, openPrivacyModalOpen} = useMarketInfoStore();
+    const id = new URLSearchParams(window.location.search).get('id')||"";
+    const {data:{data: marketInfo}={data: null}, error} = useMarketInfo(id);
+
+    const { openContactModalOpen, openPrivacyModalOpen, openRefundModalOpen, openShippingModalOpen} = useMarketInfoStore();
     const {moreInfoModalOpen} = useMarketPageCommodityInfoStore();
 
+    if(error) {
+        return null;
+    }
+
     return (
-        <div className={`bg-white text-black rounded-xl absolute z-10 top-[calc(100%+5px)] left-1/2 -translate-x-1/2 p-2 text-nowrap w-max
+        <div className={`bg-white text-black rounded-xl absolute z-10 top-[calc(100%+5px)] left-1/2 -translate-x-1/2 p-2 text-nowrap min-w-max w-48
         border-[#0000001a] border-[0.5px] text-[16px] tracking-[0.15px] font-normal flex flex-col
         shadow-[0_4px_6px_-1px_#0000001a]
         ${moreInfoModalOpen?"":"hidden"}
@@ -29,7 +37,9 @@ const MoreInfoModal = () => {
             }
             {
                 marketInfo?.refundPolicy && marketInfo.refundPolicy!==""&& (
-                    <button type="button" className="flex flex-row items-center gap-2 p-3 rounded-xl duration-300 hover:bg-[#0000001a]">
+                    <button type="button" className="flex flex-row items-center gap-2 p-3 rounded-xl duration-300 hover:bg-[#0000001a]"
+                            onClick={openRefundModalOpen}
+                    >
                         <img src={refundPolicy} alt="refundPolicy" className="w-5 h-5 object-cover"/>
                         <p>Refund policy</p>
                     </button>
@@ -37,7 +47,9 @@ const MoreInfoModal = () => {
             }
             {
                 marketInfo?.shippingPolicy && marketInfo.shippingPolicy!==""&& (
-                    <button type="button" className="flex flex-row items-center gap-2 p-3 rounded-xl duration-300 hover:bg-[#0000001a]">
+                    <button type="button" className="flex flex-row items-center gap-2 p-3 rounded-xl duration-300 hover:bg-[#0000001a]"
+                            onClick={openShippingModalOpen}
+                    >
                         <img src={shippingPolicy} alt="shippingPolicy" className="w-5 h-5 object-cover"/>
                         <p>Shipping policy</p>
                     </button>

@@ -1,15 +1,13 @@
 import {useEffect, useRef} from "react";
 import PicCommodityItem from "./PicCommodityItem.tsx";
 import PicMerchantItem from "./PicMerchantItem.tsx";
+import {HomeBannerType} from "../../utils/type.ts";
+import {useUserLikeList} from "../../hooks/useUserLikeList.ts";
+import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
 
-interface picArrayItem {
-    isCommodity: boolean,
-    img: string,
-    svg?: string
-}
 
 interface picArrayObj {
-    data: picArrayItem[],
+    data: HomeBannerType[],
     isDirectionToRight: boolean
 }
 
@@ -17,7 +15,7 @@ const PicRow = ({data}:{data: picArrayObj}) => {
     const timeIdRef = useRef<number>(0);
     const rowRef = useRef<HTMLDivElement>(null);
     const startPointRef = useRef(0);
-    // let startPoint = 0;
+    const {handleClickLike} = useUserInfoStore();
 
 
     const startPlay = () => {
@@ -49,7 +47,13 @@ const PicRow = ({data}:{data: picArrayObj}) => {
         timeIdRef.current = startPlay();
     }
 
+    const {userLikeList={msg:"", data:[]}, error} = useUserLikeList();
 
+    if(error) {
+        return null;
+    }
+
+    // console.log(userLikeList?.data);
     return (
             <div className={`flex gap-4 w-max relative`}
                  onMouseOver={handleMouseOver}
@@ -57,33 +61,19 @@ const PicRow = ({data}:{data: picArrayObj}) => {
                  ref={rowRef}
             >
                 {
-                    data.data.map((d, index) => {
-                        if(d.isCommodity) {
-                            return (
-                                <PicCommodityItem key={index} img={d.img} />
-                            )
-                        }
-                        else {
-                            return (
-                                <PicMerchantItem key={index} img={d.img} svg={d.svg} />
-                            )
-                        }
-                    })
+                    data.data.map((d, index) =>
+                        d.isCommodity
+                            ? <PicCommodityItem key={index} img={d.image} id={d.relativeId||""} checked={userLikeList?.data?.includes(d.relativeId)} handleClickLike={handleClickLike} />
+                            : <PicMerchantItem key={index} img={d.image} svg={d.logo} id={d.relativeId||""} />
+                    )
                 }
 
                 {
-                    data.data.map((d, index) => {
-                        if(d.isCommodity) {
-                            return (
-                                <PicCommodityItem key={index} img={d.img} />
-                            )
-                        }
-                        else {
-                            return (
-                                <PicMerchantItem key={index} img={d.img} svg={d.svg} />
-                            )
-                        }
-                    })
+                    data.data.map((d, index) =>
+                        d.isCommodity
+                            ? <PicCommodityItem key={index} img={d.image} id={d.relativeId||""} checked={userLikeList?.data?.includes(d.relativeId)} handleClickLike={handleClickLike} />
+                            : <PicMerchantItem key={index} img={d.image} svg={d.logo} id={d.relativeId||""} />
+                    )
                 }
 
             </div>

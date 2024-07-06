@@ -1,25 +1,39 @@
 import MarketPageMainContent from "../components/marketPage/MarketPageMainContent.tsx";
-import NavBar from "../components/NavBar.tsx";
 import ContactModal from "../components/marketPage/ContactModal.tsx";
 import PrivacyModal from "../components/marketPage/PrivacyModal.tsx";
 import MarketPageCommodityInfo from "../components/marketPage/MarketPageCommodityInfo.tsx";
 import {useEffect} from "react";
 import useMarketPageCommodityInfoStore from "../hooks/useMarketPageCommodityInfoStore.ts";
 import useMarketInfoStore from "../hooks/useMarketInfoStore.ts";
-import Footer from "../components/Footer.tsx";
-import SignInGlobalModal from "../components/SignInGlobalModal.tsx";
+import Layout from "../components/Layout.tsx";
+import RefundModal from "../components/marketPage/RefundModal.tsx";
+import ShippingModal from "../components/marketPage/ShippingModal.tsx";
+import useMarketInfo from "../hooks/useMarketInfo.ts";
+import useUserInfoStore from "../hooks/useUserInfoStore.ts";
 
 
 const MarketPage = () => {
 
     const id = (new URLSearchParams(window.location.search)).get('id')||"";
-    const {closeAllModal} = useMarketPageCommodityInfoStore();
-    const {marketInfo, contactModalOpen, closeContactModalOpen} = useMarketInfoStore();
+    const {closeAllModal: closeMarketPageAllModal} = useMarketPageCommodityInfoStore();
+    const {closeAllModal: closeUserInfoAllModal} = useUserInfoStore();
+    const {data:{data: marketInfo}={data: null}, error} = useMarketInfo(id);
+
+    const {
+        contactModalOpen,
+        closeContactModalOpen,
+        refundModalOpen,
+        closeRefundModalOpen,
+        shippingModalOpen,
+        closeShippingModalOpen
+    } = useMarketInfoStore();
 
     useEffect(() => {
-        window.addEventListener("click", closeAllModal);
+        window.addEventListener("click", closeMarketPageAllModal);
+        window.addEventListener("click", closeUserInfoAllModal);
         return () => {
-            window.removeEventListener("click", closeAllModal);
+            window.removeEventListener("click", closeMarketPageAllModal);
+            window.removeEventListener("click", closeUserInfoAllModal);
         }
     }, []);
 
@@ -30,17 +44,19 @@ const MarketPage = () => {
             </div>
         )
     }
+    if(error) {
+        return null;
+    }
 
     return (
-        <>
-            <NavBar />
+        <Layout>
             <MarketPageMainContent />
+            <MarketPageCommodityInfo/>
             <ContactModal {...marketInfo} contactModalOpen={contactModalOpen} closeContactModalOpen={closeContactModalOpen} />
             <PrivacyModal />
-            <MarketPageCommodityInfo/>
-            <Footer />
-            <SignInGlobalModal />
-        </>
+            <RefundModal url={marketInfo?.refundPolicy} closeModal={closeRefundModalOpen} modalOpen={refundModalOpen}/>
+            <ShippingModal url={marketInfo?.shippingPolicy} closeModal={closeShippingModalOpen} modalOpen={shippingModalOpen}/>
+        </Layout>
     )
 }
 

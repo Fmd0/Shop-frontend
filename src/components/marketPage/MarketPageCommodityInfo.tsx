@@ -4,11 +4,14 @@ import {useEffect, useState} from "react";
 import useMarketPageCommodityInfoStore from "../../hooks/useMarketPageCommodityInfoStore.ts";
 import SortByModal from "./SortByModal.tsx";
 import PriceModal from "./PriceModal.tsx";
+import useMarketInfo from "../../hooks/useMarketInfo.ts";
 
 
 const MarketPageCommodityInfo = () => {
 
-    const {marketInfo} = useMarketInfoStore();
+    const id = new URLSearchParams(window.location.search).get('id')||"";
+    const {data:{data: marketInfo}={data: null}, error} = useMarketInfo(id);
+
     const {
         commodityList,
         setCommodityList,
@@ -41,7 +44,7 @@ const MarketPageCommodityInfo = () => {
 
     useEffect(() => {
         let ignore = false;
-        fetch(`${import.meta.env.VITE_API_ADDRESS}/api/market/commodity?page=${page}&query=${query}&pageSize=10&marketId=${marketId}&sortBy=${sortBy}&onSale=${onSale?onSale:""}&inStock=${inStock?inStock:""}&startPrice=${startPrice}&endPrice=${endPrice}&tag=${tag}`)
+        fetch(`${import.meta.env.VITE_AUTH_API_ADDRESS}/api/market/commodity?page=${page}&query=${query}&pageSize=10&marketId=${marketId}&sortBy=${sortBy}&onSale=${onSale?onSale:""}&inStock=${inStock?inStock:""}&startPrice=${startPrice}&endPrice=${endPrice}&tag=${tag}`)
             .then(res => res.json())
             .then(data => {
                 if(!ignore) {
@@ -67,20 +70,25 @@ const MarketPageCommodityInfo = () => {
             <h1 className="text-[20px] font-semibold tracking-[0.15px]">Products</h1>
 
             {/*first line form control button*/}
-            <div className="flex items-center gap-6 text-[rgb(111_112_113)] text-[17px] tracking-[0.15px]">
-                <p className={`${tag==="All"?"text-black":""} cursor-pointer duration-300 hover:text-black`}
-                   onClick={() => setTag("All")}>
-                    All
-                </p>
-                {
-                    marketInfo?.marketTag?.tags&& marketInfo.marketTag.tags.map(t => (
-                        <p key={t} className={`${tag===t?"text-black":""} cursor-pointer duration-300 hover:text-black`}
-                           onClick={() => setTag(t)}>
-                            {t}
-                        </p>
-                    ))
-                }
-            </div>
+            {
+                marketInfo?.marketTag?.tags && marketInfo?.marketTag?.tags.length > 0 &&
+                <div className="flex items-center gap-6 text-[rgb(111_112_113)] text-[17px] tracking-[0.15px]">
+                    <p className={`${tag === "All" ? "text-black" : ""} cursor-pointer duration-300 hover:text-black`}
+                       onClick={() => setTag("All")}>
+                        All
+                    </p>
+                    {
+                        marketInfo?.marketTag?.tags && marketInfo.marketTag.tags.map(t => (
+                            <p key={t}
+                               className={`${tag === t ? "text-black" : ""} cursor-pointer duration-300 hover:text-black`}
+                               onClick={() => setTag(t)}>
+                                {t}
+                            </p>
+                        ))
+                    }
+                </div>
+
+            }
 
             {/*second line form control button*/}
             <div className="flex items-center justify-between text-[12px]">
@@ -91,7 +99,7 @@ const MarketPageCommodityInfo = () => {
                     {/*sortBy button and modal*/}
                     <div className="relative" onClick={(e) => e.stopPropagation()}>
                         <div className={`flex items-center gap-2 cursor-pointer py-1.5 pr-2 pl-4 rounded-[8px] border-[1px] duration-200
-                        ${sortByModalOpen||sortBy!==""? "bg-black text-white hover:bg-neutral-800 border-black" : "bg-white text-black hover:bg-neutral-200 border-neutral-300"}`}
+                        ${sortByModalOpen || sortBy !== "" ? "bg-black text-white hover:bg-neutral-800 border-black" : "bg-white text-black hover:bg-neutral-200 border-neutral-300"}`}
                              onClick={toggleSortByModalOpen}>
                             Sort by
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"

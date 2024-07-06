@@ -20,11 +20,11 @@ const BestSellersCommodityPage = () => {
         <div className="mt-20 mb-10 max-w-[1240px] w-[90%] mx-auto font-[SuisseIntl-Medium,sans-serif] font-medium">
             <div className="flex items-center gap-4">
                 <div className="relative w-11 h-11 rounded-lg overflow-hidden">
-                    <img src={commodityInfo?.market?.icon||""} alt="icon"/>
+                    <img src={commodityInfo?.market?.icon} alt="icon" className="w-full h-full object-contain"/>
                     <div className="absolute inset-0 bg-[#0000000a]"></div>
                 </div>
                 <div>
-                    <p className="text-[14px]">{commodityInfo?.market?.name||""}</p>
+                    <p className="text-[14px]">{commodityInfo?.market?.name || ""}</p>
                     <p className="text-[20px]">Best sellers</p>
                 </div>
             </div>

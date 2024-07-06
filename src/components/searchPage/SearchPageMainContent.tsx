@@ -57,7 +57,7 @@ const SearchPageMainContent = () => {
         searchParams.set("pageSize", "5");
         searchParams.set("page", String(searchPage));
         let ignore = false;
-        fetch(import.meta.env.VITE_API_ADDRESS+"/api/search?"+searchParams.toString())
+        fetch(import.meta.env.VITE_AUTH_API_ADDRESS+"/api/search?"+searchParams.toString())
             .then(res => res.json())
             .then(data => {
                 if(!ignore) {
@@ -104,7 +104,7 @@ const SearchPageMainContent = () => {
                 </div>
 
                 {/*category button*/}
-                <FormControlSearchPage checked={false} onClick={undefined} name="Category" hasArrow={true} />
+                {/*<FormControlSearchPage checked={false} onClick={undefined} name="Category" hasArrow={true} />*/}
 
                 {/*onSale button*/}
                 <FormControlSearchPage checked={onSale} onClick={toggleOnSale} name="On sale" hasArrow={false} />

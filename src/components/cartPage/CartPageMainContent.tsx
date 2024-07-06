@@ -17,11 +17,13 @@ const CartPageMainContent = () => {
     return (
         <div className="w-[90%] max-w-[1144px] mx-auto tracking-[0.15px] font-medium">
             <h1 className="text-[28px] mt-12 mb-8">Cart</h1>
-            {
-                Object.entries(cartInfo).map(([key, value]) => (
-                    <MarketListCartPage key={key} marketInfo={value} />
-                ))
-            }
+            <div className="flex flex-col gap-6">
+                {
+                    Object.entries(cartInfo).map(([key, value]) => (
+                        <MarketListCartPage key={key} marketInfo={value} />
+                    ))
+                }
+            </div>
         </div>
     )
 }

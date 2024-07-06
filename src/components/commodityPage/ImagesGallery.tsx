@@ -45,8 +45,6 @@ const ImagesGallery = () => {
                 {/*extra huge element*/}
                 <div className={`relative flex h-full duration-300`}
                      style={{left: `-${imageIndex * 100}%`}}>
-
-
                     {
                         !!images &&  images.map((image, index) => (
                             <div key={index} className="min-w-full w-full h-full">

@@ -17,6 +17,8 @@ interface State {
     contactModalOpen: boolean,
     descriptionModalOpen: boolean,
     commentModalOpen: boolean,
+    refundModalOpen: boolean,
+    shippingModalOpen: boolean,
 }
 
 interface Actions {
@@ -39,13 +41,14 @@ interface Actions {
     closeDescriptionModal: () => void,
     openCommentModal: () => void,
     closeCommentModal: () => void,
+    openRefundModal: () => void,
+    closeRefundModal: () => void,
+    openShippingModal: () => void,
+    closeShippingModal: () => void,
+    closeAllModal: () => void,
 }
 
-const initialModalState = {
-    moreInfoModalOpen: false,
-}
-
-const useCommodityPageStore = create<State & Actions>((set) => ({
+const initialState = {
     commodityInfo: null,
     bestSellingCommodities: [],
     comment: [],
@@ -56,6 +59,16 @@ const useCommodityPageStore = create<State & Actions>((set) => ({
     imageModalOpen: false,
     imageIndex: 0,
     skuItemKey: '',
+    refundModalOpen: false,
+    shippingModalOpen: false,
+}
+
+const initialModalState = {
+    moreInfoModalOpen: false,
+}
+
+const useCommodityPageStore = create<State & Actions>((set) => ({
+    ...initialState,
     ...initialModalState,
     contactModalOpen: false,
     descriptionModalOpen: false,
@@ -97,7 +110,24 @@ const useCommodityPageStore = create<State & Actions>((set) => ({
     closeCommentModal: () => {
         window.document.body.style.overflow="visible";
         set(({commentModalOpen: false}));
-    }
+    },
+    openRefundModal: () => {
+        window.document.body.style.overflow="hidden";
+        set(({refundModalOpen: true}));
+    },
+    closeRefundModal: () => {
+        window.document.body.style.overflow="visible";
+        set(({refundModalOpen: false}));
+    },
+    openShippingModal: () => {
+        window.document.body.style.overflow="hidden";
+        set(({shippingModalOpen: true}));
+    },
+    closeShippingModal: () => {
+        window.document.body.style.overflow="visible";
+        set(({shippingModalOpen: false}));
+    },
+    closeAllModal: () => set({...initialModalState}),
 }))
 
 export default useCommodityPageStore;
