@@ -22,7 +22,7 @@ const MarketListCartPage = ({marketInfo}: {
                 <div className="flex-1 border-[1px] border-neutral-200 rounded-l-2xl p-8">
 
                     {/* top part market info */}
-                    <a href={`/market/?id=${marketInfo.id}`}>
+                    <a href={`/market?id=${marketInfo.id}`}>
                         <div className="flex items-center gap-4 mb-5">
                             <div className="relative w-11 h-11 rounded-lg overflow-hidden">
                                 <img className="w-full h-full object-contain" src={marketInfo.icon} alt="icon"/>

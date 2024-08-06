@@ -79,7 +79,7 @@ const SignInGlobalModal = () => {
 
                             <div className="text-center text-xl font-medium">{isSignIn ? "Sign In" : "Register"}</div>
 
-                            <div className="px-4 py-6">
+                            <div className="p-4">
                                 <form className="border-neutral-300 overflow-hidden" onSubmit={handleSubmit}>
                                     {
                                         isSignIn

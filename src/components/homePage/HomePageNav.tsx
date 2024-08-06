@@ -99,7 +99,7 @@ const HomePageNav = () => {
                 }
             </div>
 
-            <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[25%] flex items-center  bg-neutral-100 rounded-2xl p-3 transition-all duration-200
+            <div className={`absolute overflow-hidden top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[25%] flex items-center  bg-neutral-100 rounded-2xl p-3 transition-all duration-200
             ${show ? "opacity-100" : "opacity-0"}
             `}>
                 <img src={Search} alt="Search" className="w-5 mr-2"/>
@@ -115,14 +115,14 @@ const HomePageNav = () => {
                         ${data !== "" ? "hidden" : ""}`}
                      style={{top: `calc(-16.5px - ${searchIndex * 27}px)`}}
                 >
-                    <p className="opacity-0">{searchPlaceholderList[searchPlaceholderList.length - 1]}</p>
+                    <p className="opacity-0 text-nowrap">{searchPlaceholderList[searchPlaceholderList.length - 1]}</p>
                     {
                         searchPlaceholderList.map((s, i) => (
-                            <p key={i} className={`${searchIndex === 0 ? "" : "duration-300"} ${searchIndex === i ? "opacity-100" : "opacity-0"}`}>{s}</p>
+                            <p key={i} className={`${searchIndex === 0 ? "" : "duration-300"} ${searchIndex === i ? "opacity-100" : "opacity-0"} text-nowrap`}>{s}</p>
                         ))
                     }
-                    <p className={`${searchIndex === 0 ? "" : "duration-300"} ${searchIndex === searchPlaceholderList.length ? "opacity-100" : "opacity-0"}`}>{searchPlaceholderList[0]}</p>
-                    <p className="opacity-0">{searchPlaceholderList[1]}</p>
+                    <p className={`${searchIndex === 0 ? "" : "duration-300"} ${searchIndex === searchPlaceholderList.length ? "opacity-100" : "opacity-0"} text-nowrap`}>{searchPlaceholderList[0]}</p>
+                    <p className="opacity-0 text-nowrap">{searchPlaceholderList[1]}</p>
 
                 </div>
             </div>

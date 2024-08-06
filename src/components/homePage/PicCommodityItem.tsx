@@ -10,7 +10,7 @@ const PicCommodityItem = ({id, img, handleClickLike, checked}: {
 }) => {
 
     return (
-        <a href={`/commodity/?id=${id}`}>
+        <a href={`/commodity?id=${id}`}>
             <div
                 className="relative cursor-pointer w-[200px] h-[200px] overflow-hidden rounded-xl group/picCommodityItem">
                 <img src={img} alt="picItem"

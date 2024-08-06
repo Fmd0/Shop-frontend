@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 
 src/assets
+
+yarn.lock
+package-lock.json
+.env

@@ -6,7 +6,7 @@ const PicMerchantItem = ({id, img, svg}: {
     svg: string|undefined
 }) => {
     return (
-        <a href={`/market/?id=${id}`}>
+        <a href={`/market?id=${id}`}>
             <div className="relative cursor-pointer w-[200px] h-[200px] rounded-xl overflow-hidden">
                 <img src={img} alt="picItem" className="w-full h-full object-cover"/>
                 <div className="absolute inset-0 bg-[rgba(0,0,0,12%)]"></div>

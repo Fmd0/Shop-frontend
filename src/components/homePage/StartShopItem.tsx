@@ -22,7 +22,7 @@ const StartShopItem = ({relativeId, logo, imageLeft, imageRight, name, rating,ra
                 </div>
             </div>
 
-            <a href={`/market/?id=${relativeId}`} className="absolute top-0 left-0 w-full h-full bg-neutral-500 bg-opacity-0 duration-300 group-hover/startShopItem:bg-opacity-20 cursor-pointer"></a>
+            <a href={`/market?id=${relativeId}`} className="absolute top-0 left-0 w-full h-full bg-neutral-500 bg-opacity-0 duration-300 group-hover/startShopItem:bg-opacity-20 cursor-pointer"></a>
 
             <div className="w-full h-1/2 p-3">
                 <h5 className="text-[14px] font-semibold">{name}</h5>
