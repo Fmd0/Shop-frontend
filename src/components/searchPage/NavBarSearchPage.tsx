@@ -6,7 +6,7 @@ import {searchPlaceholderList} from "../../utils/data.ts";
 import {useSearchInfoStore} from "../../hooks/useSearchInfoStore.ts";
 import {getParamFromURL} from "../../utils/searchPageUtils.ts";
 import LikeAnchor from "../common/LikeAnchor.tsx";
-import LogoutModal from "../LogoutModal.tsx";
+import LogoutModal from "../common/LogoutModal.tsx";
 import useCartInfoStore from "../../hooks/useCartInfoStore.ts";
 import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
 

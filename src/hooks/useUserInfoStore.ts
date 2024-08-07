@@ -1,22 +1,17 @@
 import {create} from "zustand";
 import {getEmailFromLocalStorage, setEmailToLocalStorage} from "../utils/localStorage.ts";
 import {mutateUserLikeList} from "./useUserLikeList.ts";
+import {LikedCommodityInfoType} from "../utils/type.ts";
 
 interface State {
     email: string;
     signInModalOpen: boolean;
     logoutModalOpen: boolean;
-    like: {
-        id: string,
-        name: string,
-        image: string,
-        rating: string,
-        ratingAmount: string,
-        price: number,
-        promotingPrice: number,
-    }[];
+    smallLogoutModalOpen: boolean;
+    like: LikedCommodityInfoType[];
     addedToLikeModalOpen: boolean;
     addedToLikeModalTimeId: number;
+    showSmallNavBar: boolean;
 }
 
 interface Actions {
@@ -24,28 +19,26 @@ interface Actions {
     openSignInModal: () => void;
     closeSignInModal: () => void;
     toggleLogoutModalOpen: () => void;
+    openSmallLogoutModal: () => void;
+    closeSmallLogoutModal: () => void;
     closeAllModal: () => void;
     clearSignInfo: () => void;
-    setLike: (like: {
-        id: string,
-        name: string,
-        image: string,
-        rating: string,
-        ratingAmount: string,
-        price: number,
-        promotingPrice: number,
-    }[]) => void;
+    setLike: (like: LikedCommodityInfoType[]) => void;
     handleClickLike: (id: string, checked: boolean) => void;
     setAddedToLikeModalOpen: (open: boolean) => void;
     setAddedToLikeModalTimeId: (timeId: number) => void;
+    setShowSmallNavBar: (showSmallNavBar: boolean) => void;
 }
+
 
 const initialState = {
     email: getEmailFromLocalStorage(),
     signInModalOpen: false,
+    smallLogoutModalOpen: false,
     like: [],
     addedToLikeModalOpen: false,
     addedToLikeModalTimeId: 0,
+    showSmallNavBar: true,
 }
 
 const initialModalState = {
@@ -69,6 +62,14 @@ const useUserInfoStore = create<State & Actions>(set => ({
         window.document.body.style.overflow = "visible";
     },
     toggleLogoutModalOpen: () => set(state => ({...initialModalState, logoutModalOpen: !state.logoutModalOpen})),
+    openSmallLogoutModal: () => {
+        set({smallLogoutModalOpen: true});
+        window.document.body.style.overflow = "hidden";
+    },
+    closeSmallLogoutModal: () => {
+        set({smallLogoutModalOpen: false});
+        window.document.body.style.overflow = "visible";
+    },
     closeAllModal: () => set({...initialModalState}),
     clearSignInfo: () => {
         set({email: ""});
@@ -103,6 +104,7 @@ const useUserInfoStore = create<State & Actions>(set => ({
     }),
     setAddedToLikeModalOpen: (open) => set({addedToLikeModalOpen: open}),
     setAddedToLikeModalTimeId: (timeId) => set({addedToLikeModalTimeId: timeId}),
+    setShowSmallNavBar: (showSmallNavBar) => set({showSmallNavBar}),
 }))
 
 export default useUserInfoStore;

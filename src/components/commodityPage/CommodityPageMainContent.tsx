@@ -342,6 +342,7 @@ const CommodityPageMainContent = () => {
                                     updateCartAmountCommodityPage();
                                 }}
                             >
+                                {/*extreme big div*/}
                                 <div className="duration-300"
                                     style={{translate: addToCartStatus==="success"?"0 -50%":"" }}
                                 >
@@ -358,7 +359,7 @@ const CommodityPageMainContent = () => {
                                                         d="M3 13C5 11.75 10.4968 6.92307 21.5 6.4999C34.5 5.99993 42 13 45 23C48.3 34 42.9211 48.1335 30.5 51C17.5 54 6.6 46 6 37C5.46667 29 10.5 25 14 23"
                                                         strokeWidth="12"></path>
                                                 </svg>
-                                                : <p>Add to cart</p>
+                                                : addToCartStatus==="success"? "" : <p>Add to cart</p>
                                         }
                                     </div>
                                     <div className="h-11 flex items-center justify-center gap-1">

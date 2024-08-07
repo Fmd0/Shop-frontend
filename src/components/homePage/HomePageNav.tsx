@@ -4,7 +4,7 @@ import { useEffect, useState} from "react";
 import Search from "../../assets/HomePage/Search.svg";
 import {searchPlaceholderList} from "../../utils/data.ts";
 import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
-import LogoutModal from "../LogoutModal.tsx";
+import LogoutModal from "../common/LogoutModal.tsx";
 import useCartInfoStore from "../../hooks/useCartInfoStore.ts";
 import LikeAnchor from "../common/LikeAnchor.tsx";
 

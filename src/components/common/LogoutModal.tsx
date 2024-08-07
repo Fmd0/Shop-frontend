@@ -1,5 +1,5 @@
-import useUserInfoStore from "../hooks/useUserInfoStore.ts";
-import {mutateUserLikeList} from "../hooks/useUserLikeList.ts";
+import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
+import {mutateUserLikeList} from "../../hooks/useUserLikeList.ts";
 
 
 const LogoutModal = () => {
@@ -18,6 +18,7 @@ const LogoutModal = () => {
                 return res.json();
             })
             .then(() => {
+
                 clearSignInfo();
                 mutateUserLikeList();
             })
@@ -27,7 +28,7 @@ const LogoutModal = () => {
     }
     return (
         <div className={`absolute top-[calc(100%+6px)] bg-white right-1 p-2 rounded-xl w-48
-        ${logoutModalOpen?"":"hidden"} shadow-[0px_0px_8px_#00000026]`}
+        ${logoutModalOpen?"hidden md:block":"hidden"} shadow-[0px_0px_8px_#00000026]`}
              onClick={handleClick}
         >
             <p className="cursor-pointer py-1 pl-4 rounded-xl hover:bg-neutral-100 font-medium">Logout</p>

@@ -1,8 +1,8 @@
-import AddToLikeSvg from "../homePage/AddToLikeSvg.tsx";
+import AddToLikeButton from "../homePage/AddToLikeButton.tsx";
 import useRecentlyViewedInfoStore from "../../hooks/useRecentlyViewedInfoStore.ts";
 
 
-const CommodityItemRecentlyViewed = ({id, name, image, price, promotingPrice, hasDelete, checked, handleClickLike}: {
+const CommodityItemRecentlyViewedPage = ({id, name, image, price, promotingPrice, hasDelete, checked, handleClickLike, key}: {
     id: string,
     name: string,
     image: string,
@@ -11,12 +11,13 @@ const CommodityItemRecentlyViewed = ({id, name, image, price, promotingPrice, ha
     hasDelete: boolean,
     handleClickLike: (id: string, checked: boolean) => void,
     checked: boolean,
+    key: number,
 }) => {
 
     const {deleteRecentlyViewedInfoItem} = useRecentlyViewedInfoStore();
 
     return (
-        <a href={`/commodity?id=${id}`}>
+        <a key={key} href={`/commodity?id=${id}`}>
             <div className="cursor-pointer  group/CommodityItem tracking-[0.15px] text-[12px]">
                 <div className="relative overflow-hidden rounded-xl">
                     <img src={image} alt="picItem"
@@ -61,7 +62,7 @@ const CommodityItemRecentlyViewed = ({id, name, image, price, promotingPrice, ha
                              e.preventDefault();
                              handleClickLike(id, checked)
                          }}>
-                        <AddToLikeSvg checked={checked}/>
+                        <AddToLikeButton checked={checked}/>
                     </div>
                 </div>
 
@@ -80,4 +81,4 @@ const CommodityItemRecentlyViewed = ({id, name, image, price, promotingPrice, ha
     )
 }
 
-export default CommodityItemRecentlyViewed;
+export default CommodityItemRecentlyViewedPage;

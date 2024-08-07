@@ -5,18 +5,16 @@ import MarketPageCommodityInfo from "../components/marketPage/MarketPageCommodit
 import {useEffect} from "react";
 import useMarketPageCommodityInfoStore from "../hooks/useMarketPageCommodityInfoStore.ts";
 import useMarketInfoStore from "../hooks/useMarketInfoStore.ts";
-import Layout from "../components/Layout.tsx";
+import Layout from "../components/common/Layout.tsx";
 import RefundModal from "../components/marketPage/RefundModal.tsx";
 import ShippingModal from "../components/marketPage/ShippingModal.tsx";
 import useMarketInfo from "../hooks/useMarketInfo.ts";
-import useUserInfoStore from "../hooks/useUserInfoStore.ts";
 
 
 const MarketPage = () => {
 
     const id = (new URLSearchParams(window.location.search)).get('id')||"";
     const {closeAllModal: closeMarketPageAllModal} = useMarketPageCommodityInfoStore();
-    const {closeAllModal: closeUserInfoAllModal} = useUserInfoStore();
     const {data:{data: marketInfo}={data: null}, error} = useMarketInfo(id);
 
     const {
@@ -30,10 +28,8 @@ const MarketPage = () => {
 
     useEffect(() => {
         window.addEventListener("click", closeMarketPageAllModal);
-        window.addEventListener("click", closeUserInfoAllModal);
         return () => {
             window.removeEventListener("click", closeMarketPageAllModal);
-            window.removeEventListener("click", closeUserInfoAllModal);
         }
     }, []);
 

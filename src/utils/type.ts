@@ -147,3 +147,13 @@ export interface HomeBannerType {
     isCommodity: boolean,
     row: string,
 }
+
+export interface LikedCommodityInfoType {
+    id: string,
+    name: string,
+    image: string,
+    rating: string,
+    ratingAmount: string,
+    price: number,
+    promotingPrice: number,
+}

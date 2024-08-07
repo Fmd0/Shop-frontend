@@ -5,11 +5,9 @@ import ContactModal from "../components/marketPage/ContactModal.tsx";
 import useCommodityPageStore from "../hooks/useCommodityPageStore.ts";
 import CommodityPageDescriptionModal from "../components/commodityPage/CommodityPageDescriptionModal.tsx";
 import CommodityPageCommentModal from "../components/commodityPage/CommodityPageCommentModal.tsx";
-import Layout from "../components/Layout.tsx";
+import Layout from "../components/common/Layout.tsx";
 import ShippingModal from "../components/marketPage/ShippingModal.tsx";
 import RefundModal from "../components/marketPage/RefundModal.tsx";
-import useUserInfoStore from "../hooks/useUserInfoStore.ts";
-import {useEffect} from "react";
 
 
 const CommodityPage = () => {
@@ -24,14 +22,6 @@ const CommodityPage = () => {
         shippingModalOpen,
         closeShippingModal
     } = useCommodityPageStore();
-    const {closeAllModal} = useUserInfoStore();
-
-    useEffect(() => {
-        window.addEventListener("click", closeAllModal);
-        return () => {
-            window.removeEventListener("click", closeAllModal);
-        }
-    }, []);
 
     if( searchParams.get("id")===null) {
         return (

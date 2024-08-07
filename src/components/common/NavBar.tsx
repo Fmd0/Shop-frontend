@@ -1,12 +1,12 @@
-import navCart from "../assets/HomePage/navCart.svg"
-import navLogo from "../assets/HomePage/navLogo.svg"
-import Search from "../assets/HomePage/Search.svg";
+import navCart from "../../assets/HomePage/navCart.svg"
+import navLogo from "../../assets/HomePage/navLogo.svg"
+import Search from "../../assets/HomePage/Search.svg";
 import {useEffect, useState} from "react";
-import {searchPlaceholderList} from "../utils/data.ts";
-import useCartInfoStore from "../hooks/useCartInfoStore.ts";
+import {searchPlaceholderList} from "../../utils/data.ts";
+import useCartInfoStore from "../../hooks/useCartInfoStore.ts";
 import LogoutModal from "./LogoutModal.tsx";
-import useUserInfoStore from "../hooks/useUserInfoStore.ts";
-import LikeAnchor from "./common/LikeAnchor.tsx";
+import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
+import LikeAnchor from "./LikeAnchor.tsx";
 
 
 const NavBar = () => {
@@ -32,9 +32,9 @@ const NavBar = () => {
     }, []);
 
     return (
-        <header className="sticky top-0 left-0 z-50 bg-white flex justify-between items-center p-4">
+        <header className="hidden md:flex sticky top-0 left-0 z-50 bg-white justify-between items-center p-4">
 
-            <a href="/">
+            <a href="/public">
                 <img src={navLogo} alt="navLogo" className={`h-[30px] text-purple-600 transition-all duration-200`}/>
             </a>
 
@@ -61,6 +61,7 @@ const NavBar = () => {
                             </div>
 
                             <LogoutModal/>
+
                         </div>
                         : <div
                             className="cursor-pointer ml-4 bg-neutral-100 text-black text-[14px] py-2 px-3 rounded-lg font-semibold hover:bg-neutral-200"
@@ -70,6 +71,7 @@ const NavBar = () => {
                 }
             </div>
 
+            {/*center search and placeholder list*/}
             <div
                 className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[25%] flex items-center  bg-neutral-100 rounded-2xl p-3 transition-all duration-200`}>
                 <img src={Search} alt="Search" className="w-5 mr-2"/>
@@ -97,7 +99,6 @@ const NavBar = () => {
                     }
                     <p className={`${searchIndex === 0 ? "" : "duration-300"} ${searchIndex === searchPlaceholderList.length ? "opacity-100" : "opacity-0"}`}>{searchPlaceholderList[0]}</p>
                     <p className="opacity-0">{searchPlaceholderList[1]}</p>
-
                 </div>
             </div>
         </header>

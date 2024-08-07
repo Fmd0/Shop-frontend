@@ -1,4 +1,4 @@
-import AddToLikeSvg from "../homePage/AddToLikeSvg.tsx";
+import AddToLikeButton from "../homePage/AddToLikeButton.tsx";
 
 
 const CommodityItem = ({id, name, image, rating, ratingAmount, price, promotingPrice, checked, handleClickLike}: {
@@ -28,7 +28,7 @@ const CommodityItem = ({id, name, image, rating, ratingAmount, price, promotingP
                              e.preventDefault();
                              handleClickLike(id, checked);
                          }}>
-                        <AddToLikeSvg checked={checked}/>
+                        <AddToLikeButton checked={checked}/>
                     </div>
 
                     {/*top left promoting sign*/}

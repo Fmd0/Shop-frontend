@@ -28,17 +28,17 @@ const CommodityItemCartPage = ({id, name, price, promotingPrice, image, skuKey, 
                 <div className="flex flex-col justify-between">
 
                     {/*top part*/}
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between gap-4">
                         <div>
-                            <p>{name}</p>
-                            <p className="text-neutral-500 text-[12px]">{skuKey.split("_").slice(1).join("/")}</p>
+                            <p className="text-sm md:text-base">{name.length>30?name.slice(0, 30)+"...":name}</p>
+                            <p className="text-neutral-500 text-[10px] md:text-[12px]">{skuKey.split("_").slice(1).join("/")}</p>
                         </div>
                         <div>
                             {
                                 promotingPrice !== 0
                                     ? <>
                                         <p>${(promotingPrice / 100).toFixed(2)}</p>
-                                        <p className="text-[14px] line-through text-neutral-500 text-end">${(price / 100).toFixed(2)}</p>
+                                        <p className="text-[12px] md:text-[14px] line-through text-neutral-500 text-end">${(price / 100).toFixed(2)}</p>
                                     </>
                                     : <p>${(price / 100).toFixed(2)}</p>
                             }

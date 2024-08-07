@@ -3,9 +3,9 @@ import HomePageNav from "../components/homePage/HomePageNav.tsx";
 import HomePageMainContent from "../components/homePage/HomePageMainContent.tsx";
 import RewardingWay from "../components/homePage/RewardingWay.tsx";
 import StartShopList from "../components/homePage/StartShopList.tsx";
-import Footer from "../components/Footer.tsx";
-import SignInGlobalModal from "../components/SignInGlobalModal.tsx";
-import AddedToLikeGlobalModal from "../components/AddedToLikeGlobalModal.tsx";
+import Footer from "../components/common/Footer.tsx";
+import SignInFormModal from "../components/common/SignInFormModal.tsx";
+import AddToLikeNotificationModal from "../components/common/AddToLikeNotificationModal.tsx";
 
 const HomePage = () => {
 
@@ -17,8 +17,8 @@ const HomePage = () => {
             <StartShopList />
             <RewardingWay />
             <Footer />
-            <SignInGlobalModal />
-            <AddedToLikeGlobalModal />
+            <SignInFormModal />
+            <AddToLikeNotificationModal />
         </>
     )
 }

@@ -1,4 +1,4 @@
-import AddToLikeSvg from "./AddToLikeSvg.tsx";
+import AddToLikeButton from "./AddToLikeButton.tsx";
 import SearchSvg from "./SearchSvg.tsx";
 
 
@@ -22,7 +22,7 @@ const PicCommodityItem = ({id, img, handleClickLike, checked}: {
                          e.preventDefault();
                          handleClickLike(id, checked);
                      }}>
-                    <AddToLikeSvg checked={checked}/>
+                    <AddToLikeButton checked={checked}/>
                 </div>
                 <div className="absolute bottom-3 right-3 transition-all duration-200 opacity-0 group-hover/picCommodityItem:opacity-100">
                     <SearchSvg/>

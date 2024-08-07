@@ -1,36 +1,26 @@
 import {RecentlyViewedItemInfoType} from "../../utils/type.ts";
-import CommodityItemRecentlyViewed from "./CommodityItemRecentlyViewed.tsx";
+import CommodityItemRecentlyViewedPage from "./CommodityItemRecentlyViewedPage.tsx";
 import useRecentlyViewedInfoStore from "../../hooks/useRecentlyViewedInfoStore.ts";
 import {useUserLikeList} from "../../hooks/useUserLikeList.ts";
 import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
-import {l} from "vite/dist/node/types.d-aGj9QkWt";
 
 
 const RecentlyViewedPageMainContent = () => {
 
     const {recentlyViewedInfo} = useRecentlyViewedInfoStore();
     const {handleClickLike} = useUserInfoStore();
+    const {userLikeList={msg: "", data: []}} = useUserLikeList();
 
-    const {userLikeList={msg: "", data: []}, error} = useUserLikeList();
-
-    if(error) {
-        return null;
-    }
     return (
-        <div className="w-[90%] max-w-[1144px] mx-auto tracking-[0.15px] font-medium mt-12">
+        <div className="w-[96%] max-w-[1144px] mx-auto tracking-[0.15px] font-medium mt-3 md:mt-12">
 
             {/*top part */}
-            <a href="/recently-viewed">
-                <div className="flex items-center gap-2">
-                    <p className="text-[24px]">Recently Viewed</p>
-                </div>
-            </a>
+            <p className="text-xl md:text-2xl">Recently Viewed</p>
 
-
-            <div className="grid grid-cols-5 gap-x-4 gap-y-8 mt-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-4 mt-3 md:mt-6">
                 {
                     recentlyViewedInfo?.map((r: RecentlyViewedItemInfoType, i: number) => (
-                        <CommodityItemRecentlyViewed key={i} {...r} hasDelete={true} checked={userLikeList?.data?.includes(r.id)} handleClickLike={handleClickLike} />
+                        <CommodityItemRecentlyViewedPage key={i} {...r} hasDelete={true} checked={userLikeList?.data?.includes(r.id)} handleClickLike={handleClickLike} />
                     ))
                 }
             </div>

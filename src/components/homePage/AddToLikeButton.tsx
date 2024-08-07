@@ -1,6 +1,6 @@
 
 
-const AddToLikeSvg = ({checked}: {
+const AddToLikeButton = ({checked}: {
     checked: boolean,
 }) => {
     return (
@@ -17,4 +17,4 @@ const AddToLikeSvg = ({checked}: {
     )
 }
 
-export default AddToLikeSvg;
+export default AddToLikeButton;

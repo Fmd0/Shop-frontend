@@ -1,6 +1,6 @@
-import useUserInfoStore from "../hooks/useUserInfoStore.ts";
+import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
 
-const AddedToLikeGlobalModal = () => {
+const AddToLikeNotificationModal = () => {
 
     const {addedToLikeModalOpen} = useUserInfoStore();
 
@@ -15,4 +15,4 @@ const AddedToLikeGlobalModal = () => {
     )
 }
 
-export default AddedToLikeGlobalModal;
+export default AddToLikeNotificationModal;

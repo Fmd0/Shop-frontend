@@ -1,5 +1,5 @@
 import RecentlyViewedPageMainContent from "../components/recentlyViewedPage/RecentlyViewedPageMainContent.tsx";
-import Layout from "../components/Layout.tsx";
+import Layout from "../components/common/Layout.tsx";
 
 
 const RecentlyViewedPage = () => {
