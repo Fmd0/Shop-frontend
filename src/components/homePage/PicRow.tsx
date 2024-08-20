@@ -47,14 +47,9 @@ const PicRow = ({data}:{data: picArrayObj}) => {
         timeIdRef.current = startPlay();
     }
 
-    const {userLikeList={msg:"", data:[]}, error} = useUserLikeList();
+    const {userLikeList={msg:"", data:[]}} = useUserLikeList();
 
-    if(error) {
-        return null;
-    }
 
-    // console.log("picRow");
-    // console.log(userLikeList?.data);
     return (
             <div className={`flex gap-4 w-max relative`}
                  onMouseOver={handleMouseOver}

@@ -66,7 +66,7 @@ const CommodityItemRecentlyViewedPage = ({id, name, image, price, promotingPrice
                     </div>
                 </div>
 
-                <p className="mt-1.5 text-[rgb(64_64_64)] font-normal">{name}</p>
+                <p className="mt-1.5 text-[rgb(64_64_64)] font-normal">{name.length>30?name.slice(0, 30)+"...":name}</p>
 
                 {
                     promotingPrice && promotingPrice !== 0

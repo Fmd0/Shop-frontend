@@ -49,7 +49,7 @@ const LikePageMainContent = () => {
 
     if(like.length === 0){
         return (
-            <div className="h-[calc(100vh-80px-390px)] text-neutral-600 flex flex-col gap-4 items-center justify-center text-[20px] font-medium">
+            <div className="h-[calc(100vh-390px)] text-neutral-600 flex flex-col text-center items-center justify-center px-4 text-[20px] font-medium">
                 <p className="text-[20px]">Favorites</p>
                 <p className="text-[14px] font-normal">Tap the heart on any product to save it to your favorites.</p>
             </div>
@@ -57,11 +57,11 @@ const LikePageMainContent = () => {
     }
 
     return (
-        <div className="w-[90%] max-w-[1144px] mx-auto tracking-[0.15px] font-medium mt-12">
-            <h1 className="text-[24px]">Favorites</h1>
+        <div className="max-w-[1144px] mx-auto px-2 tracking-[0.15px] font-medium mt-3 md:mt-12">
+            <h1 className="text-xl md:text-2xl">Favorites</h1>
 
 
-            <div className="grid grid-cols-5 mt-4 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-4 mt-3 md:mt-6">
                 {
                     like.map((l, i) => {
                         return (

@@ -12,7 +12,7 @@ const RecentlyViewedPageMainContent = () => {
     const {userLikeList={msg: "", data: []}} = useUserLikeList();
 
     return (
-        <div className="w-[96%] max-w-[1144px] mx-auto tracking-[0.15px] font-medium mt-3 md:mt-12">
+        <div className="max-w-[1144px] mx-auto px-2 tracking-[0.15px] font-medium mt-3 md:mt-12">
 
             {/*top part */}
             <p className="text-xl md:text-2xl">Recently Viewed</p>
