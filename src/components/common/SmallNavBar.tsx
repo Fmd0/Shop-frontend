@@ -6,7 +6,7 @@ const SmallNavBar = () => {
     const {email, openSignInModal, showSmallNavBar} = useUserInfoStore();
 
     return (
-        <header className={`duration-[250ms] ${showSmallNavBar?"translate-y-0":"-translate-y-full"} fixed left-0 right-0 top-0 md:hidden bg-white p-3 flex items-center justify-between z-10 border-b-[1px] border-[#0000001]`}>
+        <header className={`duration-[250ms] ${showSmallNavBar?"translate-y-0":"-translate-y-full"} sticky z-20 left-0 right-0 top-0 md:hidden bg-white p-3 flex items-center justify-between border-b-[1px] border-[#0000001]`}>
             <a href="/">
                 <svg width="101" height="42" viewBox="0 0 101 42" fill="none" xmlns="http://www.w3.org/2000/svg"
                      className="h-[24px] w-[auto] text-[rgb(84_51_235)]">
@@ -26,7 +26,7 @@ const SmallNavBar = () => {
             </a>
             {
                 email === "" &&
-                <div className="flex text-center border border-[#0000001a] rounded-xl py-1.5 px-3" onClick={openSignInModal}>
+                <div className="cursor-pointer flex text-center border border-[#0000001a] rounded-xl py-1.5 px-3" onClick={openSignInModal}>
                     <p className="font-medium text-sm">Sign In</p>
                 </div>
             }

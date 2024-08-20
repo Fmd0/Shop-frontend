@@ -7,7 +7,7 @@ const CartPageMainContent = () => {
 
     if(Object.keys(cartInfo).length === 0){
         return (
-            <div className="h-[calc(100vh-390px)] text-neutral-600 text-center content-center px-4 text-[20px] font-medium">
+            <div className="h-[calc(100vh-390px)] text-neutral-600 flex flex-col text-center items-center justify-center px-4 text-[20px] font-medium">
                 <p className="text-[20px]">Your cart is empty</p>
                 <p className="text-[14px] font-normal">Add products while you shop, so they'll be ready for checkout later.</p>
             </div>

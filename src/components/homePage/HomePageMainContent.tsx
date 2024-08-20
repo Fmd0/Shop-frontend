@@ -25,16 +25,11 @@ const HomePageMainContent = () => {
         return () => clearInterval(timeId);
     }, []);
 
-    const {data: homeBannerData={msg: "", data: []}, error} = useHomeBanner();
+    const {data: homeBannerData={msg: "", data: []}} = useHomeBanner();
 
-    if(error) {
-        return null;
-    }
-
-    // console.log(homeBannerData?.data.filter(d => d.row === "ROW0"));
     return (
-        <div className="overflow-hidden relative">
-            <div className="flex flex-col gap-4">
+        <div className="hidden md:block overflow-hidden relative">
+            <div className="flex flex-col gap-4 overflow-hidden">
                 <PicRow data={{
                     data: homeBannerData?.data.filter(d => d.row === "ROW0"),
                     isDirectionToRight: true,
@@ -49,18 +44,18 @@ const HomePageMainContent = () => {
                 }} />
             </div>
 
-            <div
-                className="absolute z-10 left-1/2 top-[calc(24%+2px)] -translate-x-1/2 flex flex-col items-center justify-center pointer-events-none gap-12">
-                <div className="z-[-1] absolute top-[-536px] size-[800px]
+            <div className="pointer-events-none absolute z-10 left-0 right-0 top-[calc(24%+2px)] flex flex-col gap-12">
+
+                {/*white fog*/}
+                <div className="z-[-1] absolute top-[-536px] size-[800px] left-1/2 -translate-x-1/2
                 bg-[radial-gradient(50%_50%_at_50%_50%,color(display-p3_1_1_1)_55.89%,color(display-p3_1_1_1_/_0.00)_100%)]
                 "></div>
 
-                <img src={MainContentLogo} alt="MainContentLogo" className="h-[72px] pointer-events-auto"/>
+                <img src={MainContentLogo} alt="MainContentLogo" className="h-[72px] self-center pointer-events-auto"/>
 
-                <form method="GET" action="/search">
+                <form method="GET" action="/search" className="pointer-events-auto self-center bg-neutral-300 bg-opacity-70 w-full max-w-[530px] mx-4 p-3 rounded-3xl">
 
-                    <div className="rounded-3xl p-[10px]  pointer-events-auto bg-neutral-300 bg-opacity-70">
-                        <div className="relative flex items-center w-[530px] p-3 bg-white rounded-2xl overflow-hidden">
+                        <div className="relative flex items-center p-3 bg-white rounded-2xl overflow-hidden">
                             <img src={Search} alt="Search" className="w-5 mr-2"/>
                             <input type="search" autoComplete="off"
                                    className="relative z-10 flex-grow-[1] bg-transparent focus:outline-none"
@@ -85,7 +80,6 @@ const HomePageMainContent = () => {
 
                             </div>
                         </div>
-                    </div>
 
                 </form>
             </div>

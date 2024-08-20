@@ -153,15 +153,14 @@ const SignInFormModal = () => {
 }
 
 
-const SignInInputItem = ({inputType, inputName, placeholder, key}: {
+const SignInInputItem = ({inputType, inputName, placeholder}: {
     inputType: string;
     inputName: string;
     placeholder: string;
-    key: number;
 }) => {
 
     return (
-        <div key={key} className="relative">
+        <div className="relative">
             <input type={inputType}
                    name={inputName}
                    className="focus:pt-6 inputHasText focus:pb-2 py-4 px-5 w-full duration-200 focus:placeholder:text-white placeholder:text-neutral-500 transition-[border] focus:outline-none focus:border-[rgb(84,51,235)] border-neutral-400 border-[1px] rounded-[16px] text-[14px] font-normal peer"

@@ -36,7 +36,7 @@ const Layout = ({children}: {
         window.addEventListener("scroll",handleScroll);
 
         return () => {
-            window.removeEventListener("scroll", handleScroll);
+            window.removeEventListener("wheel", handleScroll);
         }
     }, []);
 
@@ -52,9 +52,7 @@ const Layout = ({children}: {
         <>
             <NavBar />
             <SmallNavBar />
-            <div className="relative top-12 md:static md:top-0">
-                {children}
-            </div>
+            {children}
             <Footer />
             <SmallBottomSideBar />
             <SmallLogoutModal />

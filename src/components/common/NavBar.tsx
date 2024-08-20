@@ -11,18 +11,18 @@ import LikeAnchor from "./LikeAnchor.tsx";
 
 const NavBar = () => {
 
-    const [searchIndex, setSearchIndex] = useState<number>(0);
-    const [queryFormControl, setQueryFormControl] = useState("");
+    const [searchValue, setSearchValue] = useState("");
+    const [placeholderListIndex, setPlaceholderListIndex] = useState<number>(0);
+    const {email, toggleLogoutModalOpen, openSignInModal, logoutModalOpen} = useUserInfoStore();
     const {cartAmount} = useCartInfoStore();
-    const {email, toggleLogoutModalOpen, openSignInModal} = useUserInfoStore();
 
 
     useEffect(() => {
         const timeId = setInterval(() => {
-            setSearchIndex(i => {
+            setPlaceholderListIndex(i => {
                 if(i===searchPlaceholderList.length-1) {
                     setTimeout(() => {
-                        setSearchIndex(0);
+                        setPlaceholderListIndex(0);
                     }, 350)
                 }
                 return i + 1;
@@ -34,12 +34,14 @@ const NavBar = () => {
     return (
         <header className="hidden md:flex sticky top-0 left-0 z-50 bg-white justify-between items-center p-4">
 
-            <a href="/public">
+            {/*shop logo*/}
+            <a href="/">
                 <img src={navLogo} alt="navLogo" className={`h-[30px] text-purple-600 transition-all duration-200`}/>
             </a>
 
+            {/*like and cart link*/}
             <div className="flex items-center gap-1">
-                <LikeAnchor />
+                <LikeAnchor/>
                 <a href="/cart" className="relative p-[10px] rounded-[22px] hover:bg-neutral-100">
                     <img src={navCart} alt="navCart" className="w-6"/>
                     {
@@ -52,7 +54,7 @@ const NavBar = () => {
                         ? <div className="relative" onClick={e => e.stopPropagation()}>
 
                             <div
-                                className="cursor-pointer size-11 ml-2 rounded-[999px] grid place-items-center bg-white hover:bg-[rgb(242_244_245)]">
+                                className={`cursor-pointer size-11 ml-2 rounded-[999px] grid place-items-center bg-white hover:bg-[rgb(242_244_245)] ${logoutModalOpen ? "outline outline-2 outline-blue-600 -outline-offset-1" : ""}`}>
                                 <div
                                     className="w-8 h-8 bg-[rgb(242_244_245)] rounded-[999px] grid place-items-center border-[rgb(225_228_229)] border-[1px]"
                                     onClick={toggleLogoutModalOpen}>
@@ -61,7 +63,6 @@ const NavBar = () => {
                             </div>
 
                             <LogoutModal/>
-
                         </div>
                         : <div
                             className="cursor-pointer ml-4 bg-neutral-100 text-black text-[14px] py-2 px-3 rounded-lg font-semibold hover:bg-neutral-200"
@@ -78,26 +79,26 @@ const NavBar = () => {
                 <form method="GET" action="/search" className="relative z-10 flex-1">
                     <input type="search" autoComplete="off"
                            className="w-full bg-transparent focus:outline-none"
-                           value={queryFormControl}
+                           value={searchValue}
                            name="query"
-                           onChange={(e) => setQueryFormControl(e.target.value)}
+                           onChange={(e) => setSearchValue(e.target.value)}
                     />
                 </form>
 
                 {/*placeholder list animation*/}
                 <div className={`absolute text-[16px] text-gray-400 left-10 pointer-events-none
-                       ${searchIndex === 0 ? "" : "duration-300"}
-                        ${queryFormControl !== "" ? "hidden" : ""}`}
-                     style={{top: `calc(-12px - ${searchIndex * 24}px)`}}
+                       ${placeholderListIndex === 0 ? "" : "duration-300"}
+                        ${searchValue !== "" ? "hidden" : ""}`}
+                     style={{top: `calc(-12px - ${placeholderListIndex * 24}px)`}}
                 >
                     <p className="opacity-0">{searchPlaceholderList[searchPlaceholderList.length - 1]}</p>
                     {
                         searchPlaceholderList.map((s, i) => (
                             <p key={i}
-                               className={`text-nowrap ${searchIndex === 0 ? "" : "duration-300"} ${searchIndex === i ? "opacity-100" : "opacity-0"}`}>{s}</p>
+                               className={`text-nowrap ${placeholderListIndex === 0 ? "" : "duration-300"} ${placeholderListIndex === i ? "opacity-100" : "opacity-0"}`}>{s}</p>
                         ))
                     }
-                    <p className={`${searchIndex === 0 ? "" : "duration-300"} ${searchIndex === searchPlaceholderList.length ? "opacity-100" : "opacity-0"}`}>{searchPlaceholderList[0]}</p>
+                    <p className={`${placeholderListIndex === 0 ? "" : "duration-300"} ${placeholderListIndex === searchPlaceholderList.length ? "opacity-100" : "opacity-0"}`}>{searchPlaceholderList[0]}</p>
                     <p className="opacity-0">{searchPlaceholderList[1]}</p>
                 </div>
             </div>

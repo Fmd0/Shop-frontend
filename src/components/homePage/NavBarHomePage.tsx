@@ -9,14 +9,15 @@ import useCartInfoStore from "../../hooks/useCartInfoStore.ts";
 import LikeAnchor from "../common/LikeAnchor.tsx";
 
 
-const HomePageNav = () => {
+const NavBarHomePage = () => {
 
     const [show, setShow] = useState(false);
-    const [data, setData] = useState("");
+    const [searchValue, setSearchValue] = useState("");
     const [searchIndex, setSearchIndex] = useState<number>(0);
-    const {email, openSignInModal, toggleLogoutModalOpen, closeAllModal, logoutModalOpen} = useUserInfoStore();
+    const {email, openSignInModal, toggleLogoutModalOpen, logoutModalOpen} = useUserInfoStore();
     const {cartAmount} = useCartInfoStore();
 
+    // show search input
     useEffect(() => {
         const TopOffset = 370;
         let ignore = false;
@@ -54,13 +55,9 @@ const HomePageNav = () => {
         return () => clearInterval(timeId);
     }, []);
 
-    useEffect(() => {
-        window.addEventListener("click", closeAllModal);
-        return () => window.removeEventListener("click", closeAllModal);
-    }, []);
 
     return (
-        <header className="sticky top-0 left-0 z-50 bg-white flex justify-between items-center p-4">
+        <header className="hidden md:flex sticky top-0 left-0 z-50 bg-white justify-between items-center p-4">
 
             <a href="/">
                 <img src={navLogo} alt="navLogo" className={`h-[30px] text-purple-600 transition-all duration-200
@@ -99,20 +96,21 @@ const HomePageNav = () => {
                 }
             </div>
 
-            <div className={`absolute overflow-hidden top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[25%] flex items-center  bg-neutral-100 rounded-2xl p-3 transition-all duration-200
+            {/*search input and placeholder list*/}
+            <div className={`absolute overflow-hidden top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 flex items-center  bg-neutral-100 rounded-2xl p-3 transition-all duration-200
             ${show ? "opacity-100" : "opacity-0"}
             `}>
                 <img src={Search} alt="Search" className="w-5 mr-2"/>
                 <form action="/search" className="flex-1">
                     <input type="search" autoComplete="off" name="query"
                            className="relative z-10 w-full bg-transparent focus:outline-none"
-                           value={data}
-                           onChange={(e) => setData(e.target.value)}
+                           value={searchValue}
+                           onChange={(e) => setSearchValue(e.target.value)}
                     />
                 </form>
                 <div className={`absolute text-[18px] text-gray-400 left-10 pointer-events-none
                        ${searchIndex === 0 ? "" : "duration-300"}
-                        ${data !== "" ? "hidden" : ""}`}
+                        ${searchValue !== "" ? "hidden" : ""}`}
                      style={{top: `calc(-16.5px - ${searchIndex * 27}px)`}}
                 >
                     <p className="opacity-0 text-nowrap">{searchPlaceholderList[searchPlaceholderList.length - 1]}</p>
@@ -130,4 +128,4 @@ const HomePageNav = () => {
     )
 }
 
-export default HomePageNav;
+export default NavBarHomePage;

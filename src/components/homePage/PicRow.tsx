@@ -53,6 +53,7 @@ const PicRow = ({data}:{data: picArrayObj}) => {
         return null;
     }
 
+    // console.log("picRow");
     // console.log(userLikeList?.data);
     return (
             <div className={`flex gap-4 w-max relative`}
