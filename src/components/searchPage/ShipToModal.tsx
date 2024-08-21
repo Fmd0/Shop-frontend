@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {getParamFromURL} from "../../utils/searchPageUtils.ts";
 import {shipToOptions} from "../../utils/data.ts";
 
@@ -13,9 +13,15 @@ const SizeModal = ({modalOpen, toggleModalOpen, setState}: {
     const [formControlState, setFormControlState] = useState<string>(value)
     const [formControlStateText, setFormControlStateText] = useState<string>(shipToOptions.find(s => s.value===value)?.textValue||"")
 
+    useEffect(() => {
+        setFormControlState(value);
+        setFormControlStateText(shipToOptions.find(s => s.value===value)?.textValue||"")
+    }, [modalOpen]);
+
+
     return (
         <div className={`absolute z-30 top-[calc(100%+6px)] left-1/2 -translate-x-1/2 font-medium w-[300px] bg-white text-nowrap pt-1 pb-5 px-5 rounded-3xl shadow-[0px_0px_8px_#00000026]
-        ${modalOpen ? "" : "hidden"}
+        ${modalOpen ? "hidden md:block" : "hidden"}
         `}>
 
             <div className="relative mt-2 flex items-center justify-between font-normal py-2 px-4 border-neutral-200 border-[1px] rounded-lg">

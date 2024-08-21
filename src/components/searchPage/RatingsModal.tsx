@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import RatingsModalItem from "./RatingsModalItem.tsx";
 import {getParamFromURL} from "../../utils/searchPageUtils.ts";
 
@@ -10,9 +10,14 @@ const RatingsModal = ({modalOpen, toggleModalOpen, setState}: {
 
     const [formControlState, setFormControlState] = useState(Number(getParamFromURL("ratings")) || 0)
 
+
+    useEffect(() => {
+        setFormControlState(Number(getParamFromURL("ratings")) || 0);
+    }, [modalOpen]);
+
     return (
         <div className={`absolute z-30 top-[calc(100%+6px)] left-1/2 -translate-x-1/2 font-medium w-[300px] bg-white text-nowrap pt-1 pb-5 px-5 rounded-3xl shadow-[0px_0px_8px_#00000026]
-        ${modalOpen ? "" : "hidden"}
+        ${modalOpen ? "hidden md:block" : "hidden"}
         `}>
 
             <div className="flex items-center justify-between py-3 cursor-pointer group/sortByItem"

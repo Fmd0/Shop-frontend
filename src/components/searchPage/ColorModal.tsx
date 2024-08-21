@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import ColorModalItem from "./ColorModalItem.tsx";
 import {getParamArrayFromURL} from "../../utils/searchPageUtils.ts";
 
@@ -11,9 +11,14 @@ const ColorModal = ({modalOpen, toggleModalOpen, setState}: {
 
     const [formControlState, setFormControlState] = useState<string[]>(getParamArrayFromURL("color"))
 
+    useEffect(() => {
+        setFormControlState(getParamArrayFromURL("color"));
+    }, [modalOpen]);
+
+
     return (
         <div className={`absolute z-30 top-[calc(100%+6px)] left-1/2 -translate-x-1/2 font-medium w-[300px] bg-white text-nowrap pt-1 pb-5 px-5 rounded-3xl shadow-[0px_0px_8px_#00000026]
-        ${modalOpen ? "" : "hidden"}`}>
+        ${modalOpen ? "hidden md:block" : "hidden"}`}>
 
             <div className="max-h-[310px] overflow-auto no-scrollbar">
                 {

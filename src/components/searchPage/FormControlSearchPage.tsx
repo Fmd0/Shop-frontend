@@ -7,7 +7,7 @@ const FormControlSearchPage = ({name, hasArrow, onClick, checked}: {
     checked: boolean
 }) => {
     return (
-        <div className={`cursor-pointer h-8 ${checked?"bg-black text-white hover:bg-neutral-800 border-black":"bg-white text-black hover:bg-neutral-300 border-neutral-300"} border-[1px] ${hasArrow?"pl-4 pr-2":"px-4"} py-2 flex items-center gap-1 rounded-[8px] duration-300`}
+        <div className={`flex-shrink-0 cursor-pointer h-8 ${checked?"bg-black text-white hover:bg-neutral-800 border-black":"bg-white text-black hover:bg-neutral-300 border-neutral-300"} border-[1px] ${hasArrow?"pl-4 pr-2":"px-4"} py-2 flex items-center gap-1 rounded-[8px] duration-300`}
              onClick={onClick}
         >
             <span className="text-[12px] font-medium">{name}</span>

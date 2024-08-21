@@ -1,4 +1,3 @@
-import useMarketInfoStore from "../../hooks/useMarketInfoStore.ts";
 import CommodityList from "./CommodityList.tsx";
 import {useEffect, useState} from "react";
 import useMarketPageCommodityInfoStore from "../../hooks/useMarketPageCommodityInfoStore.ts";
@@ -10,7 +9,7 @@ import useMarketInfo from "../../hooks/useMarketInfo.ts";
 const MarketPageCommodityInfo = () => {
 
     const id = new URLSearchParams(window.location.search).get('id')||"";
-    const {data:{data: marketInfo}={data: null}, error} = useMarketInfo(id);
+    const {data:{data: marketInfo}={data: null}} = useMarketInfo(id);
 
     const {
         commodityList,
@@ -65,7 +64,7 @@ const MarketPageCommodityInfo = () => {
     }, [page, marketId, sortBy, onSale, inStock, startPrice, endPrice, tag, query, setCommodityList]);
 
     return (
-        <div className="max-w-[1144px] mx-auto w-[80%] flex flex-col gap-8 mt-8 mb-10">
+        <div className="max-w-[1144px] mx-auto px-4 flex flex-col gap-8 mt-8 mb-10">
 
             <h1 className="text-[20px] font-semibold tracking-[0.15px]">Products</h1>
 

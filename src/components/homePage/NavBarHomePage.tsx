@@ -2,18 +2,17 @@ import navCart from "../../assets/HomePage/navCart.svg"
 import navLogo from "../../assets/HomePage/navLogo.svg"
 import { useEffect, useState} from "react";
 import Search from "../../assets/HomePage/Search.svg";
-import {searchPlaceholderList} from "../../utils/data.ts";
 import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
 import LogoutModal from "../common/LogoutModal.tsx";
 import useCartInfoStore from "../../hooks/useCartInfoStore.ts";
 import LikeAnchor from "../common/LikeAnchor.tsx";
+import PlaceholderList from "../common/PlaceholderList.tsx";
 
 
 const NavBarHomePage = () => {
 
     const [show, setShow] = useState(false);
     const [searchValue, setSearchValue] = useState("");
-    const [searchIndex, setSearchIndex] = useState<number>(0);
     const {email, openSignInModal, toggleLogoutModalOpen, logoutModalOpen} = useUserInfoStore();
     const {cartAmount} = useCartInfoStore();
 
@@ -39,20 +38,6 @@ const NavBarHomePage = () => {
         }
         window.addEventListener('scroll', handleScroll)
         return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-    useEffect(() => {
-        const timeId = setInterval(() => {
-            setSearchIndex(i => {
-                if(i===searchPlaceholderList.length-1) {
-                    setTimeout(() => {
-                        setSearchIndex(0);
-                    }, 350)
-                }
-                return i + 1;
-            })
-        }, 2000)
-        return () => clearInterval(timeId);
     }, []);
 
 
@@ -108,21 +93,7 @@ const NavBarHomePage = () => {
                            onChange={(e) => setSearchValue(e.target.value)}
                     />
                 </form>
-                <div className={`absolute text-[18px] text-gray-400 left-10 pointer-events-none
-                       ${searchIndex === 0 ? "" : "duration-300"}
-                        ${searchValue !== "" ? "hidden" : ""}`}
-                     style={{top: `calc(-16.5px - ${searchIndex * 27}px)`}}
-                >
-                    <p className="opacity-0 text-nowrap">{searchPlaceholderList[searchPlaceholderList.length - 1]}</p>
-                    {
-                        searchPlaceholderList.map((s, i) => (
-                            <p key={i} className={`${searchIndex === 0 ? "" : "duration-300"} ${searchIndex === i ? "opacity-100" : "opacity-0"} text-nowrap`}>{s}</p>
-                        ))
-                    }
-                    <p className={`${searchIndex === 0 ? "" : "duration-300"} ${searchIndex === searchPlaceholderList.length ? "opacity-100" : "opacity-0"} text-nowrap`}>{searchPlaceholderList[0]}</p>
-                    <p className="opacity-0 text-nowrap">{searchPlaceholderList[1]}</p>
-
-                </div>
+                <PlaceholderList isVisible={searchValue===""} left={40} />
             </div>
         </header>
     )

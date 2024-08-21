@@ -1,41 +1,26 @@
 import navCart from "../../assets/HomePage/navCart.svg"
 import navLogo from "../../assets/HomePage/navLogo.svg"
 import Search from "../../assets/HomePage/Search.svg";
-import {useEffect, useState} from "react";
-import {searchPlaceholderList} from "../../utils/data.ts";
+import {useState} from "react";
 import {useSearchInfoStore} from "../../hooks/useSearchInfoStore.ts";
 import {getParamFromURL} from "../../utils/searchPageUtils.ts";
 import LikeAnchor from "../common/LikeAnchor.tsx";
 import LogoutModal from "../common/LogoutModal.tsx";
 import useCartInfoStore from "../../hooks/useCartInfoStore.ts";
 import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
+import PlaceholderList from "../common/PlaceholderList.tsx";
 
 
 const NavBarSearchPage = () => {
 
-    const [searchIndex, setSearchIndex] = useState<number>(0);
     const [queryFormControl, setQueryFormControl] = useState(getParamFromURL("query")||"");
 
     const {setQuery} = useSearchInfoStore();
     const {cartAmount} = useCartInfoStore();
     const {email, toggleLogoutModalOpen, openSignInModal} = useUserInfoStore();
 
-    useEffect(() => {
-        const timeId = setInterval(() => {
-            setSearchIndex(i => {
-                if(i===searchPlaceholderList.length-1) {
-                    setTimeout(() => {
-                        setSearchIndex(0);
-                    }, 350)
-                }
-                return i + 1;
-            })
-        }, 2000)
-        return () => clearInterval(timeId);
-    }, []);
-
     return (
-        <header className="sticky top-0 left-0 z-50 bg-white flex justify-between items-center p-4">
+        <header className="sticky top-0 left-0 z-50 bg-white hidden md:flex justify-between items-center p-4">
 
             <a href="/">
                 <img src={navLogo} alt="navLogo" className={`h-[30px] text-purple-600 transition-all duration-200`}/>
@@ -73,7 +58,7 @@ const NavBarSearchPage = () => {
                 }
             </div>
             <div
-                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[25%] flex items-center  bg-neutral-100 rounded-2xl p-3 transition-all duration-200`}>
+                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 overflow-hidden flex items-center  bg-neutral-100 rounded-2xl p-3 transition-all duration-200`}>
                 <img src={Search} alt="Search" className="w-5 mr-2"/>
                 <form method="GET" className="flex-1" onSubmit={(e) => {
                     e.preventDefault();
@@ -87,22 +72,7 @@ const NavBarSearchPage = () => {
                            onChange={(e) => setQueryFormControl(e.target.value)}
                     />
                 </form>
-                <div className={`absolute text-[16px] text-gray-400 left-10 pointer-events-none
-                       ${searchIndex === 0 ? "" : "duration-300"}
-                        ${queryFormControl !== "" ? "hidden" : ""}`}
-                     style={{top: `calc(-12px - ${searchIndex * 24}px)`}}
-                >
-                    <p className="opacity-0">{searchPlaceholderList[searchPlaceholderList.length - 1]}</p>
-                    {
-                        searchPlaceholderList.map((s, i) => (
-                            <p key={i}
-                               className={`text-nowrap ${searchIndex === 0 ? "" : "duration-300"} ${searchIndex === i ? "opacity-100" : "opacity-0"}`}>{s}</p>
-                        ))
-                    }
-                    <p className={`${searchIndex === 0 ? "" : "duration-300"} ${searchIndex === searchPlaceholderList.length ? "opacity-100" : "opacity-0"}`}>{searchPlaceholderList[0]}</p>
-                    <p className="opacity-0">{searchPlaceholderList[1]}</p>
-
-                </div>
+                <PlaceholderList isVisible={queryFormControl===""} left={40} />
             </div>
         </header>
     )

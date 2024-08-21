@@ -1,9 +1,9 @@
 import SortByItem from "./SortByItem.tsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import { getParamFromURL} from "../../utils/searchPageUtils.ts";
 
-const SortByModal = ({sortByModalOpen, toggleSortByModalOpen, setSortBy}: {
-    sortByModalOpen: boolean,
+const SortByModal = ({modalOpen, toggleSortByModalOpen, setSortBy}: {
+    modalOpen: boolean,
     toggleSortByModalOpen: () => void,
     setSortBy: (sortBy: string) => void;
 
@@ -12,9 +12,13 @@ const SortByModal = ({sortByModalOpen, toggleSortByModalOpen, setSortBy}: {
 
     const [sortByFormControl, setSortByFormControl] = useState<string>(getParamFromURL("sortBy")||"");
 
+    useEffect(() => {
+        setSortByFormControl(getParamFromURL("sortBy")||"");
+    }, [modalOpen]);
+
     return (
         <div className={`absolute z-30 top-[calc(100%+6px)] left-1/2 -translate-x-1/2 w-[300px] bg-white text-nowrap pt-1 pb-5 px-5 rounded-3xl shadow-[0px_0px_8px_#00000026]
-        ${sortByModalOpen?"":"hidden"}
+        ${modalOpen?"hidden md:block":"hidden"}
         `}>
 
             {

@@ -1,35 +1,20 @@
 import navCart from "../../assets/HomePage/navCart.svg"
 import navLogo from "../../assets/HomePage/navLogo.svg"
 import Search from "../../assets/HomePage/Search.svg";
-import {useEffect, useState} from "react";
-import {searchPlaceholderList} from "../../utils/data.ts";
+import {useState} from "react";
 import useCartInfoStore from "../../hooks/useCartInfoStore.ts";
 import LogoutModal from "./LogoutModal.tsx";
 import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
 import LikeAnchor from "./LikeAnchor.tsx";
+import PlaceholderList from "./PlaceholderList.tsx";
 
 
 const NavBar = () => {
 
     const [searchValue, setSearchValue] = useState("");
-    const [placeholderListIndex, setPlaceholderListIndex] = useState<number>(0);
     const {email, toggleLogoutModalOpen, openSignInModal, logoutModalOpen} = useUserInfoStore();
     const {cartAmount} = useCartInfoStore();
 
-
-    useEffect(() => {
-        const timeId = setInterval(() => {
-            setPlaceholderListIndex(i => {
-                if(i===searchPlaceholderList.length-1) {
-                    setTimeout(() => {
-                        setPlaceholderListIndex(0);
-                    }, 350)
-                }
-                return i + 1;
-            })
-        }, 2000)
-        return () => clearInterval(timeId);
-    }, []);
 
     return (
         <header className="hidden md:flex sticky top-0 left-0 z-50 bg-white justify-between items-center p-4">
@@ -74,7 +59,7 @@ const NavBar = () => {
 
             {/*center search and placeholder list*/}
             <div
-                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[25%] flex items-center  bg-neutral-100 rounded-2xl p-3 transition-all duration-200`}>
+                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 overflow-hidden flex items-center  bg-neutral-100 rounded-2xl p-3 transition-all duration-200`}>
                 <img src={Search} alt="Search" className="w-5 mr-2"/>
                 <form method="GET" action="/search" className="relative z-10 flex-1">
                     <input type="search" autoComplete="off"
@@ -85,22 +70,8 @@ const NavBar = () => {
                     />
                 </form>
 
-                {/*placeholder list animation*/}
-                <div className={`absolute text-[16px] text-gray-400 left-10 pointer-events-none
-                       ${placeholderListIndex === 0 ? "" : "duration-300"}
-                        ${searchValue !== "" ? "hidden" : ""}`}
-                     style={{top: `calc(-12px - ${placeholderListIndex * 24}px)`}}
-                >
-                    <p className="opacity-0">{searchPlaceholderList[searchPlaceholderList.length - 1]}</p>
-                    {
-                        searchPlaceholderList.map((s, i) => (
-                            <p key={i}
-                               className={`text-nowrap ${placeholderListIndex === 0 ? "" : "duration-300"} ${placeholderListIndex === i ? "opacity-100" : "opacity-0"}`}>{s}</p>
-                        ))
-                    }
-                    <p className={`${placeholderListIndex === 0 ? "" : "duration-300"} ${placeholderListIndex === searchPlaceholderList.length ? "opacity-100" : "opacity-0"}`}>{searchPlaceholderList[0]}</p>
-                    <p className="opacity-0">{searchPlaceholderList[1]}</p>
-                </div>
+                <PlaceholderList isVisible={searchValue===""} left={40} />
+
             </div>
         </header>
     )

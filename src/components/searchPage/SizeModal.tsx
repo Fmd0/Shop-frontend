@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {getParamArrayFromURL} from "../../utils/searchPageUtils.ts";
 import SizeModalItem from "./SizeModalItem.tsx";
 
@@ -11,9 +11,14 @@ const SizeModal = ({modalOpen, toggleModalOpen, setState}: {
 
     const [formControlState, setFormControlState] = useState<string[]>(getParamArrayFromURL("size"))
 
+    useEffect(() => {
+        setFormControlState(getParamArrayFromURL("size"));
+    }, [modalOpen]);
+
+
     return (
         <div className={`absolute z-30 top-[calc(100%+6px)] left-1/2 -translate-x-1/2 font-medium w-[300px] bg-white text-nowrap pt-1 pb-5 px-5 rounded-3xl shadow-[0px_0px_8px_#00000026]
-        ${modalOpen ? "" : "hidden"}
+        ${modalOpen ? "hidden md:block" : "hidden"}
         `}>
             {
                 ["S", "M", "L", "XL", "2XL"].map((item) => (

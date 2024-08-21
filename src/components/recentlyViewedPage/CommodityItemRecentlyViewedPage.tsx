@@ -2,7 +2,7 @@ import AddToLikeButton from "../homePage/AddToLikeButton.tsx";
 import useRecentlyViewedInfoStore from "../../hooks/useRecentlyViewedInfoStore.ts";
 
 
-const CommodityItemRecentlyViewedPage = ({id, name, image, price, promotingPrice, hasDelete, checked, handleClickLike, key}: {
+const CommodityItemRecentlyViewedPage = ({id, name, image, price, promotingPrice, hasDelete, checked, handleClickLike}: {
     id: string,
     name: string,
     image: string,
@@ -11,13 +11,12 @@ const CommodityItemRecentlyViewedPage = ({id, name, image, price, promotingPrice
     hasDelete: boolean,
     handleClickLike: (id: string, checked: boolean) => void,
     checked: boolean,
-    key: number,
 }) => {
 
     const {deleteRecentlyViewedInfoItem} = useRecentlyViewedInfoStore();
 
     return (
-        <a key={key} href={`/commodity?id=${id}`}>
+        <a href={`/commodity?id=${id}`}>
             <div className="cursor-pointer  group/CommodityItem tracking-[0.15px] text-[12px]">
                 <div className="relative overflow-hidden rounded-xl">
                     <img src={image} alt="picItem"
