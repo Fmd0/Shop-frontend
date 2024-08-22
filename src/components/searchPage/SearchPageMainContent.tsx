@@ -10,7 +10,7 @@ import ColorModal from "./ColorModal.tsx";
 import ShipToModal from "./ShipToModal.tsx";
 import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
 import {useUserLikeList} from "../../hooks/useUserLikeList.ts";
-import SmallSearchInput from "./SmallSearchInput.tsx";
+import SmallSearchInputSearchPage from "./SmallSearchInputSearchPage.tsx";
 import Spinner from "../common/Spinner.tsx";
 import SmallRatingsModal from "./SmallRatingsModal.tsx";
 import SmallSizeModal from "./SmallSizeModal.tsx";
@@ -18,6 +18,7 @@ import SmallShipToModal from "./SmallShipToModal.tsx";
 import SmallColorModal from "./SmallColorModal.tsx";
 import SmallPriceModal from "./SmallPriceModal.tsx";
 import SmallSortByModal from "./SmallSortByModal.tsx";
+import SvgIcons from "../common/SvgIcons.tsx";
 
 const SearchPageMainContent = () => {
 
@@ -97,20 +98,14 @@ const SearchPageMainContent = () => {
     return (
         <div className="select-none">
 
-            <SmallSearchInput />
+            <SmallSearchInputSearchPage />
 
             <div
                 className="overflow-auto md:overflow-visible no-scrollbar max-w-[1144px] mx-auto pl-3 pr-4 py-3 md:p-4 mt-2 md:mt-4 flex items-center justify-start md:justify-center flex-nowrap gap-2 text-black tracking-[0.15px] text-[SuisseIntl-Medium,sans-serif]">
 
                 {/*filter button*/}
                 <div className="flex-shrink-0 cursor-pointer w-8 h-8 grid place-items-center rounded-[999px] border-neutral-300 border-[1px] duration-300 bg-white hover:bg-neutral-300">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                         className="text-text-inverse" data-testid="icon-filter" stroke="none"
-                         style={{width: "16px", height: "16px"}}>
-                        <path
-                            d="M10 17L20 17M10 17C10 18.6575 8.6575 20 7 20C5.3425 20 4 18.6575 4 17C4 15.3425 5.3425 14 7 14C8.6575 14 10 15.3425 10 17ZM4 7L12 7M12 7C12 5.3425 13.3425 4 15 4C16.6575 4 18 5.3425 18 7M12 7C12 8.6575 13.3425 10 15 10C16.6575 10 18 8.6575 18 7M18 7L20 7"
-                            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-                    </svg>
+                    <SvgIcons.Filter className="size-4" />
                 </div>
 
                 {/*category button*/}

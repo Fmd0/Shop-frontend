@@ -15,7 +15,7 @@ interface State {
     sortByModalOpen: boolean,
     priceModalOpen: boolean,
     moreInfoModalOpen: boolean,
-
+    smallFilterModalOpen: boolean,
 }
 
 
@@ -33,6 +33,7 @@ interface Actions {
     togglePriceModalOpen: () => void,
     toggleMoreInfoModalOpen: () => void,
     closeAllModal: () => void,
+    toggleSmallFilterModal: () => void,
 }
 
 const initialState: State = {
@@ -48,6 +49,7 @@ const initialState: State = {
     sortByModalOpen: false,
     priceModalOpen: false,
     moreInfoModalOpen: false,
+    smallFilterModalOpen: false,
 }
 
 const modalGroupState = {
@@ -71,6 +73,7 @@ const useMarketPageCommodityInfoStore = create<State & Actions>((set) => ({
     togglePriceModalOpen: () => set(state => ({...modalGroupState, priceModalOpen: !state.priceModalOpen})),
     toggleMoreInfoModalOpen: () => set(state => ({...modalGroupState, moreInfoModalOpen: !state.moreInfoModalOpen})),
     closeAllModal: () => set(({...modalGroupState})),
+    toggleSmallFilterModal: () => set(state => ({smallFilterModalOpen: !state.smallFilterModalOpen})),
 }))
 
 export default useMarketPageCommodityInfoStore

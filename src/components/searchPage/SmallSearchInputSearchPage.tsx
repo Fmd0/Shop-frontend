@@ -5,7 +5,7 @@ import {getParamFromURL} from "../../utils/searchPageUtils.ts";
 import PlaceholderList from "../common/PlaceholderList.tsx";
 
 
-const SmallSearchInput = () => {
+const SmallSearchInputSearchPage = () => {
 
     const {setQuery} = useSearchInfoStore();
     const [queryFormControl, setQueryFormControl] = useState(getParamFromURL("query")||"");
@@ -31,4 +31,4 @@ const SmallSearchInput = () => {
     )
 }
 
-export default SmallSearchInput;
+export default SmallSearchInputSearchPage;

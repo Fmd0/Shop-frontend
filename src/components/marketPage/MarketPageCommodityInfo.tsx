@@ -4,6 +4,8 @@ import useMarketPageCommodityInfoStore from "../../hooks/useMarketPageCommodityI
 import SortByModal from "./SortByModal.tsx";
 import PriceModal from "./PriceModal.tsx";
 import useMarketInfo from "../../hooks/useMarketInfo.ts";
+import SmallSearchInputMarketPage from "./SmallSearchInputMarketPage.tsx";
+import SmallFilterBar from "./SmallFilterBar.tsx";
 
 
 const MarketPageCommodityInfo = () => {
@@ -64,14 +66,14 @@ const MarketPageCommodityInfo = () => {
     }, [page, marketId, sortBy, onSale, inStock, startPrice, endPrice, tag, query, setCommodityList]);
 
     return (
-        <div className="max-w-[1144px] mx-auto px-4 flex flex-col gap-8 mt-8 mb-10">
+        <div className="max-w-[1144px] mx-auto px-4 flex flex-col gap-4 md:gap-8 mt-8 mb-10">
 
-            <h1 className="text-[20px] font-semibold tracking-[0.15px]">Products</h1>
+            <h1 className="hidden md:block text-[18px] md:text-[20px] font-semibold tracking-[0.15px]">Products</h1>
 
             {/*first line form control button*/}
             {
                 marketInfo?.marketTag?.tags && marketInfo?.marketTag?.tags.length > 0 &&
-                <div className="flex items-center gap-6 text-[rgb(111_112_113)] text-[17px] tracking-[0.15px]">
+                <div className="hidden md:flex items-center gap-6 text-[rgb(111_112_113)] text-[17px] tracking-[0.15px]">
                     <p className={`${tag === "All" ? "text-black" : ""} cursor-pointer duration-300 hover:text-black`}
                        onClick={() => setTag("All")}>
                         All
@@ -89,8 +91,9 @@ const MarketPageCommodityInfo = () => {
 
             }
 
-            {/*second line form control button*/}
-            <div className="flex items-center justify-between text-[12px]">
+
+            {/*second line form control button and search input*/}
+            <div className="hidden md:flex items-center justify-between text-[12px]">
 
                 <div className="flex items-center gap-2 text-[12px]">
 
@@ -109,7 +112,7 @@ const MarketPageCommodityInfo = () => {
                                       strokeLinejoin="round"></path>
                             </svg>
                         </div>
-                        <SortByModal setSortBy={setSortBy} sortByModalOpen={sortByModalOpen} toggleSortByModalOpen={toggleSortByModalOpen}/>
+                        <SortByModal setSortBy={setSortBy} modalOpen={sortByModalOpen} toggleSortByModalOpen={toggleSortByModalOpen}/>
                     </div>
 
 
@@ -135,7 +138,7 @@ const MarketPageCommodityInfo = () => {
                                       strokeLinejoin="round"></path>
                             </svg>
                         </div>
-                        <PriceModal priceModalOpen={priceModalOpen} togglePriceModalOpen={togglePriceModalOpen} setStartPrice={setStartPrice} setEndPrice={setEndPrice}/>
+                        <PriceModal modalOpen={priceModalOpen} togglePriceModalOpen={togglePriceModalOpen} setStartPrice={setStartPrice} setEndPrice={setEndPrice}/>
                     </div>
 
 
@@ -153,7 +156,7 @@ const MarketPageCommodityInfo = () => {
 
 
                 {/*search input*/}
-                <form className="bg-neutral-100 flex items-center gap-1 py-3 px-4 rounded-xl"
+                <form className="bg-neutral-100 flex items-center gap-1 py-3 pl-4 pr-6 rounded-xl"
                       onSubmit={(e) => {
                           e.preventDefault();
                           setQuery(queryFormControl);
@@ -174,9 +177,11 @@ const MarketPageCommodityInfo = () => {
                            onChange={(e) => {setQueryFormControl(e.target.value)}}
                     />
                 </form>
-
             </div>
 
+
+            <SmallFilterBar />
+            <SmallSearchInputMarketPage />
             <CommodityList/>
 
 

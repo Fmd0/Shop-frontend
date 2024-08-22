@@ -8,10 +8,8 @@ import useMarketInfo from "../../hooks/useMarketInfo.ts";
 const MarketPageMainContent = () => {
 
     const {toggleMoreInfoModalOpen} = useMarketPageCommodityInfoStore();
+
     const id = new URLSearchParams(window.location.search).get('id')||"";
-
-
-
     const {data:{data: marketInfo}={data: null}} = useMarketInfo(id);
 
     if((!marketInfo?.bigLogo || marketInfo?.bigLogo === "") && (

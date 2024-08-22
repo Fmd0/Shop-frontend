@@ -9,6 +9,7 @@ import Layout from "../components/common/Layout.tsx";
 import RefundModal from "../components/marketPage/RefundModal.tsx";
 import ShippingModal from "../components/marketPage/ShippingModal.tsx";
 import useMarketInfo from "../hooks/useMarketInfo.ts";
+import SmallMarketPageMainContent from "../components/marketPage/SmallMarketPageMainContent.tsx";
 
 
 const MarketPage = () => {
@@ -47,8 +48,9 @@ const MarketPage = () => {
     return (
         <Layout>
             <MarketPageMainContent />
+            <SmallMarketPageMainContent />
             <MarketPageCommodityInfo/>
-            <ContactModal {...marketInfo} contactModalOpen={contactModalOpen} closeContactModalOpen={closeContactModalOpen} />
+            <ContactModal {...marketInfo} />
             <PrivacyModal />
             <RefundModal url={marketInfo?.refundPolicy} closeModal={closeRefundModalOpen} modalOpen={refundModalOpen}/>
             <ShippingModal url={marketInfo?.shippingPolicy} closeModal={closeShippingModalOpen} modalOpen={shippingModalOpen}/>

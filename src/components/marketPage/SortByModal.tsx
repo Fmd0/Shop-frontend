@@ -6,7 +6,6 @@ const SortByModal = ({modalOpen, toggleSortByModalOpen, setSortBy}: {
     modalOpen: boolean,
     toggleSortByModalOpen: () => void,
     setSortBy: (sortBy: string) => void;
-
 }) => {
 
 

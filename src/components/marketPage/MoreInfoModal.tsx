@@ -22,7 +22,7 @@ const MoreInfoModal = () => {
     return (
         <div className={`bg-white text-black rounded-xl absolute z-10 top-[calc(100%+5px)] left-1/2 -translate-x-1/2 p-2 text-nowrap min-w-max w-48
         border-[#0000001a] border-[0.5px] text-[16px] tracking-[0.15px] font-normal flex flex-col
-        shadow-[0_4px_6px_-1px_#0000001a]
+        shadow-[0px_0px_16px_rgba(0,0,0,0.1)]
         ${moreInfoModalOpen?"":"hidden"}
         `}>
             {

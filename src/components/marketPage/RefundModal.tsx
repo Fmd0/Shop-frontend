@@ -1,4 +1,4 @@
-import closeModalSvg from "../../assets/MarketPage/closeModal.svg";
+import SvgIcons from "../common/SvgIcons.tsx";
 
 
 const RefundModal = ({url, modalOpen, closeModal}: {
@@ -8,7 +8,7 @@ const RefundModal = ({url, modalOpen, closeModal}: {
 }) => {
 
     return (
-        <div className={`fixed left-0 top-0 w-screen h-screen bg-neutral-500 z-50
+        <div className={`hidden md:block fixed left-0 top-0 w-screen h-screen bg-neutral-500 z-50
         duration-300 ease-[cubic-bezier(.16,1,.3,1)]
         ${modalOpen ? "visible bg-opacity-50" : "invisible bg-opacity-0"}`}
              onClick={e => {
@@ -27,7 +27,7 @@ const RefundModal = ({url, modalOpen, closeModal}: {
                 }
 
                 <button type="button" className="absolute top-5 right-5" onClick={closeModal}>
-                    <img src={closeModalSvg} alt="closeModal" className="w-6"/>
+                    <SvgIcons.Close className="size-6 text-[rgb(111,112,113)]"/>
                 </button>
             </div>
 

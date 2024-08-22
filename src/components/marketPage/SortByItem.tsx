@@ -4,7 +4,7 @@ const SortByItem = ({textValue, value, sortByFormControl, setSortByFormControl}:
     textValue: string,
     value: string,
     sortByFormControl: string,
-    setSortByFormControl: Dispatch<SetStateAction<string>>,
+    setSortByFormControl: Dispatch<SetStateAction<string>>|((value: string) => void),
 }) => {
 
     return (

@@ -1,4 +1,5 @@
 import closeModal from "../../assets/MarketPage/closeModal.svg"
+import useMarketInfoStore from "../../hooks/useMarketInfoStore.ts";
 
 
 const ContactModal = (
@@ -12,8 +13,6 @@ const ContactModal = (
         ins,
         youtube,
         address,
-        contactModalOpen,
-        closeContactModalOpen,
 }: {
         name: string|undefined,
         website: string|undefined,
@@ -24,22 +23,25 @@ const ContactModal = (
         ins: string|undefined,
         youtube: string|undefined
         address: string|undefined,
-        contactModalOpen: boolean,
-        closeContactModalOpen:  () => void,
     }) => {
 
 
+    const {
+        contactModalOpen,
+        closeContactModalOpen,
+    } = useMarketInfoStore()
+
+
     return (
-        <div className={`fixed left-0 top-0 w-screen h-screen bg-neutral-500 z-50
-        duration-300 ease-[cubic-bezier(.16,1,.3,1)]
-        ${contactModalOpen?"visible bg-opacity-50":"invisible bg-opacity-0"}`}
+        <div className={`hidden md:block fixed left-0 top-0 w-screen h-screen z-50 bg-[#0006]
+        ${contactModalOpen?"opacity-100 duration-300":"opacity-0 pointer-events-none"}`}
              onClick={e => {
                  e.stopPropagation();
                  closeContactModalOpen();
              }}
         >
             <div className={`w-[640px] max-w-full h-[400px] tracking-[.15px] bg-white rounded-3xl absolute left-1/2 top-1/2 -translate-x-1/2
-            ${contactModalOpen ? "scale-100 opacity-100 -translate-y-1/2" : "scale-90 -translate-y-[40%] opacity-0"} duration-300 ease-[cubic-bezier(.16,1,.3,1)]`}
+            ${contactModalOpen ? "scale-100 -translate-y-1/2" : "scale-90 -translate-y-[40%]"} duration-200`}
                  onClick={(e) => e.stopPropagation()}>
                 <h1 className="p-5 text-[20px] font-semibold text-center">Contact {name}</h1>
                 <div className={`p-5 grid grid-cols-2 gap-4 text-[16px]`}>
