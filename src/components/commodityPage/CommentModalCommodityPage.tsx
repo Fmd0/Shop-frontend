@@ -6,7 +6,7 @@ import {convertDateToString} from "../../utils/dateHelper.ts";
 import CommentModalPlaceholderCommodityPage from "./CommentModalPlaceholderCommodityPage.tsx";
 
 
-const CommodityPageCommentModal = () => {
+const CommentModalCommodityPage = () => {
 
     const {
         comment,
@@ -131,4 +131,4 @@ const CommodityPageCommentModal = () => {
     )
 }
 
-export default CommodityPageCommentModal;
+export default CommentModalCommodityPage;

@@ -4,11 +4,9 @@ import PrivacyModal from "../components/marketPage/PrivacyModal.tsx";
 import MarketPageCommodityInfo from "../components/marketPage/MarketPageCommodityInfo.tsx";
 import {useEffect} from "react";
 import useMarketPageCommodityInfoStore from "../hooks/useMarketPageCommodityInfoStore.ts";
-import useMarketInfoStore from "../hooks/useMarketInfoStore.ts";
 import Layout from "../components/common/Layout.tsx";
 import RefundModal from "../components/marketPage/RefundModal.tsx";
 import ShippingModal from "../components/marketPage/ShippingModal.tsx";
-import useMarketInfo from "../hooks/useMarketInfo.ts";
 import SmallMarketPageMainContent from "../components/marketPage/SmallMarketPageMainContent.tsx";
 
 
@@ -16,16 +14,7 @@ const MarketPage = () => {
 
     const id = (new URLSearchParams(window.location.search)).get('id')||"";
     const {closeAllModal: closeMarketPageAllModal} = useMarketPageCommodityInfoStore();
-    const {data:{data: marketInfo}={data: null}, error} = useMarketInfo(id);
 
-    const {
-        contactModalOpen,
-        closeContactModalOpen,
-        refundModalOpen,
-        closeRefundModalOpen,
-        shippingModalOpen,
-        closeShippingModalOpen
-    } = useMarketInfoStore();
 
     useEffect(() => {
         window.addEventListener("click", closeMarketPageAllModal);
@@ -41,19 +30,16 @@ const MarketPage = () => {
             </div>
         )
     }
-    if(error) {
-        return null;
-    }
 
     return (
         <Layout>
             <MarketPageMainContent />
             <SmallMarketPageMainContent />
             <MarketPageCommodityInfo/>
-            <ContactModal {...marketInfo} />
+            <ContactModal />
             <PrivacyModal />
-            <RefundModal url={marketInfo?.refundPolicy} closeModal={closeRefundModalOpen} modalOpen={refundModalOpen}/>
-            <ShippingModal url={marketInfo?.shippingPolicy} closeModal={closeShippingModalOpen} modalOpen={shippingModalOpen}/>
+            <RefundModal />
+            <ShippingModal />
         </Layout>
     )
 }

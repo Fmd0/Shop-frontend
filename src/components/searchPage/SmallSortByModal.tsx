@@ -2,6 +2,7 @@ import SortByItem from "../marketPage/SortByItem.tsx";
 import {useEffect, useState} from "react";
 import { getParamFromURL} from "../../utils/searchPageUtils.ts";
 import {useSearchInfoStore} from "../../hooks/useSearchInfoStore.ts";
+import {sortByList} from "../../utils/data.ts";
 
 const SortByModal = () => {
 
@@ -41,13 +42,9 @@ const SortByModal = () => {
                 </div>
 
                 {
-                    [
-                        {textValue: "Best selling", value: "bestSelling"},
-                        {textValue: "Newest", value: "newest"},
-                        {textValue: "Price: Low - High", value: "priceAsc"},
-                        {textValue: "Price: High - Low", value: "priceDesc"},
-                    ].map((item) => (
+                    sortByList.map((item) => (
                         <SortByItem key={item.textValue}
+                                    size={18}
                                     textValue={item.textValue}
                                     value={item.value}
                                     sortByFormControl={sortByFormControl}

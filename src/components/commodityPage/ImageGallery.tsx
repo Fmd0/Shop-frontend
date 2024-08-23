@@ -1,10 +1,13 @@
 import useCommodityPageStore from "../../hooks/useCommodityPageStore.ts";
 import {useMemo} from "react";
+import useCommodityInfo from "../../hooks/useCommodityInfo.ts";
 
-const ImagesGallery = () => {
+const ImageGallery = () => {
+
+    const id = new URLSearchParams(window.location.search).get("id")||"";
+    const {data: {data: {commodity: commodityInfo}} = {data: {commodity: null, bestSellingCommodities: []}}} = useCommodityInfo(id);
 
     const {
-        commodityInfo,
         setImageModalOpen,
         imageIndex,
         setImageIndex,
@@ -12,7 +15,6 @@ const ImagesGallery = () => {
         subtractImageIndex,
         skuItemKey,
     } = useCommodityPageStore();
-
 
     const skuItemMap = useMemo(() => {
         if(!commodityInfo) return {};
@@ -34,40 +36,55 @@ const ImagesGallery = () => {
         const images = commodityInfo.images;
         images[0] = skuItemMap[skuItemKey]?.image||"";
         return images;
-    }, [commodityInfo]);
+    }, [commodityInfo, skuItemKey]);
+
 
     return (
         <>
             {/*big image gallery*/}
-            <div className="overflow-hidden cursor-zoom-in aspect-[1.33] mb-4"
+            <div className="relative overflow-hidden cursor-zoom-in mb-4"
                  onClick={() => setImageModalOpen(true)}>
 
                 {/*extra huge element*/}
-                <div className={`relative flex h-full duration-300`}
-                     style={{left: `-${imageIndex * 100}%`}}>
+                <div className={`flex duration-300`}
+                     style={{transform: `translate(-${imageIndex * 100}%, 0)`}}>
                     {
-                        !!images &&  images.map((image, index) => (
-                            <div key={index} className="min-w-full w-full h-full">
-                                <div className="relative h-full w-max mx-auto overflow-hidden rounded-2xl">
-                                    <img className="h-full object-cover"
-                                         src={image}
-                                         alt="commodity"
-                                    />
-                                    <div className="absolute inset-0 bg-[#0000000a]"></div>
-                                </div>
+                        images.length > 0 &&  images.map((image, index) => (
+                            <div key={index} className="flex-shrink-0 w-full flex items-center justify-center">
+                                    <div className="relative w-max mx-auto overflow-hidden rounded-2xl">
+                                        <img className="h-[65vh] max-w-full object-contain"
+                                             src={image}
+                                             alt="commodity"
+                                        />
+                                        <div className="absolute inset-0 bg-[#0000000a]"></div>
+                                    </div>
                             </div>
                         ))
                     }
                 </div>
+
+                {
+                    images.length > 0 &&
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-row items-center gap-2">
+                        {
+                            Array.from({length: images.length }).map((_, index) =>
+                                index === imageIndex
+                                    ? <div key={index} className="size-1.5 bg-[#0006] bg-opacity-80 rounded-[999px]"></div>
+                                    : <div key={index} className="size-1 bg-[#0003]  rounded-[999px]"></div>
+                            )
+                        }
+                    </div>
+                }
             </div>
 
-            <div className="flex justify-between items-center">
+            {/*small image gallery*/}
+            <div className="hidden md:flex justify-between items-center">
 
                 {/*image gallery*/}
-                <div className="flex gap-1.5">
+                <div className="flex gap-1.5 overflow-auto no-scrollbar">
                     {
-                        !!images && images.map((image, index) => (
-                            <div key={index} className={`relative cursor-pointer rounded-[8px] overflow-hidden w-16 h-16 border-[2px]
+                        images.length > 0 && images.map((image, index) => (
+                            <div key={index} className={`relative cursor-pointer flex-shrink-0 rounded-[8px] overflow-hidden size-12 lg:size-16 border-[2px]
                                 ${imageIndex === index ? "border-black" : "border-transparent duration-300 hover:border-black"}`}
                                  onClick={() => setImageIndex(index)}
                             >
@@ -105,4 +122,4 @@ const ImagesGallery = () => {
     )
 }
 
-export default ImagesGallery;
+export default ImageGallery;

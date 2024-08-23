@@ -1,7 +1,7 @@
 import closeModalSvg from "../../assets/MarketPage/closeModal.svg"
 import useCommodityPageStore from "../../hooks/useCommodityPageStore.ts";
 
-const CommodityPageDescriptionModal = () => {
+const DescriptionModalCommodityPage = () => {
 
     const {
         closeDescriptionModal: closeModal,
@@ -38,4 +38,4 @@ const CommodityPageDescriptionModal = () => {
     )
 }
 
-export default CommodityPageDescriptionModal;
+export default DescriptionModalCommodityPage;

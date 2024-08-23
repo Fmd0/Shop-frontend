@@ -17,7 +17,7 @@ const SmallMarketPageMainContent = () => {
 
     return (
         <div
-            className="md:hidden tracking-[0.15px] leading-[normal] line-clamp-2 font-[SuisseIntl-Medium,sans-serif]">
+            className="md:hidden tracking-[0.15px] leading-[normal] font-[SuisseIntl-Medium,sans-serif]">
 
             {
                 marketInfo?.bigPic && marketInfo.bigPic !== "" &&
@@ -33,7 +33,7 @@ const SmallMarketPageMainContent = () => {
                 </div>
             }
 
-            <div className="pt-4 px-4">
+            <div className="m-4 mx-4">
                 <div className="flex items-center justify-between">
                     <div className="flex flex-row items-center gap-3">
 
@@ -70,15 +70,16 @@ const SmallMarketPageMainContent = () => {
                         </button>
                     </div>
                 </div>
+
                 <p className="font-normal text-[14px] mt-4">{marketInfo?.description || ""}</p>
 
-                <SmallMoreInfoModal />
-
-                <SmallPrivacyModal />
-                <SmallRefundModal />
-                <SmallShippingModal />
-                <SmallContactModal />
             </div>
+
+            <SmallMoreInfoModal />
+            <SmallPrivacyModal />
+            <SmallRefundModal />
+            <SmallShippingModal />
+            <SmallContactModal />
 
 
         </div>

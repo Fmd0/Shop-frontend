@@ -1266,6 +1266,14 @@ const shipToOptions = [
     }
 ]
 
+
+const sortByList = [
+    {textValue: "Best selling", value: "bestSelling"},
+    {textValue: "Newest", value: "newest"},
+    {textValue: "Price: Low - High", value: "priceAsc"},
+    {textValue: "Price: High - Low", value: "priceDesc"},
+];
+
 export {
     row0,
     row1,
@@ -1273,5 +1281,6 @@ export {
     startShopRow0,
     startShopRow1,
     searchPlaceholderList,
-    shipToOptions
+    shipToOptions,
+    sortByList,
 }

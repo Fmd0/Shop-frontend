@@ -89,7 +89,7 @@ const SmallContactModal = () => {
 
             {
                 marketInfo?.address && marketInfo.address !== "" &&
-                <p className="absolute bottom-5 left-5 text-neutral-500">{marketInfo.address}</p>
+                <p className="p-5 text-neutral-500">{marketInfo.address}</p>
             }
 
         </div>

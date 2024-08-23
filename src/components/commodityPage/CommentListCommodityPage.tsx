@@ -3,7 +3,7 @@ import useCommodityPageStore from "../../hooks/useCommodityPageStore.ts";
 import {convertDateToString} from "../../utils/dateHelper.ts";
 
 
-const CommodityPageCommentPart = () => {
+const CommentListCommodityPage = () => {
 
     const {
         commodityInfo,
@@ -12,9 +12,9 @@ const CommodityPageCommentPart = () => {
     } = useCommodityPageStore();
 
     return (
-        <div className="mt-6">
+        <div className="hidden md:block mt-6 font-[SuisseIntl-Book,sans-serif] font-normal">
 
-            {/*comments head*/}
+            {/*comments header*/}
             <div className="flex items-center">
                 <h3 className="text-[20px] mr-4">Reviews</h3>
                 <div className="cursor-pointer text-black flex items-center gap-1">
@@ -26,14 +26,15 @@ const CommodityPageCommentPart = () => {
             </div>
 
 
+            {/*four reviews*/}
             <div className="mt-5 grid grid-cols-2 gap-x-16 gap-y-8 mb-8">
                 {
                     comment.slice(0, 4).map((c, index) => (
-                        <div key={index} className="font-[SuisseIntl-Book,sans-serif]">
+                        <div key={index}>
                             <StarList size={16} rating={c.rating} gap={2}/>
-                            <p className="mt-1 text-[12px] font-[460] leading-[normal] tracking-[0.15px] text-[rgb(111_112_113)]">{c.userName} ·
+                            <p className="mt-1 text-[12px] text-[rgb(111_112_113)]">{c.userName} ·
                                 {convertDateToString(new Date(c.createdAt))}</p>
-                            <p className="mt-3 text-[14px] text-black leading-[normal] tracking-[0.15px]">
+                            <p className="mt-3 text-[14px] text-black">
                                 {
                                     c.comment.length > 150
                                         ? c.comment.slice(0, 150) + '...'
@@ -45,6 +46,7 @@ const CommodityPageCommentPart = () => {
                 }
             </div>
 
+            {/*Read more reviews button*/}
             {
                 comment.length>4 &&
                 <div
@@ -58,4 +60,4 @@ const CommodityPageCommentPart = () => {
     )
 }
 
-export default CommodityPageCommentPart;
+export default CommentListCommodityPage;

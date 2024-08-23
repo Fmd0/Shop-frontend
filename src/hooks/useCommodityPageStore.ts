@@ -22,7 +22,7 @@ interface State {
 }
 
 interface Actions {
-    setCommodityInfo: (state: CommodityInfoType) => void,
+    setCommodityInfo: (state: CommodityInfoType|null) => void,
     setBestSellingCommodities: (state: CommodityInfoType[]) => void,
     setComment: (comment: CommentType[]) => void,
     setCommentGroup: (commentGroup: {_count: number, rating: number}[]) => void,

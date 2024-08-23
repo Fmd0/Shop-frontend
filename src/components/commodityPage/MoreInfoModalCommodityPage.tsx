@@ -1,7 +1,7 @@
 import useCommodityPageStore from "../../hooks/useCommodityPageStore.ts";
 
 
-const CommodityPageMoreInfoModal = () => {
+const MoreInfoModalCommodityPage = () => {
 
     const {commodityInfo, moreInfoModalOpen, openContactModal} = useCommodityPageStore();
 
@@ -23,4 +23,4 @@ const CommodityPageMoreInfoModal = () => {
     )
 }
 
-export default CommodityPageMoreInfoModal;
+export default MoreInfoModalCommodityPage;

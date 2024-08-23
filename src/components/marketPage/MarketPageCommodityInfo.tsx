@@ -182,6 +182,7 @@ const MarketPageCommodityInfo = () => {
 
             <SmallFilterBar />
             <SmallSearchInputMarketPage />
+
             <CommodityList/>
 
 

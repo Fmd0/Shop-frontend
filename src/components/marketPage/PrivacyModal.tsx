@@ -6,13 +6,11 @@ import SvgIcons from "../common/SvgIcons.tsx";
 const PrivacyModal = () => {
 
     const id = (new URLSearchParams(window.location.search)).get('id')||"";
-    const {data:{data: marketInfo}={data: null}, error} = useMarketInfo(id);
-
-    const { privacyModalOpen: modalOpen, closePrivacyModalOpen: closeModal} = useMarketInfoStore();
-
-    if(error) {
-        return null;
-    }
+    const {data:{data: marketInfo}={data: null}} = useMarketInfo(id);
+    const {
+        privacyModalOpen: modalOpen,
+        closePrivacyModalOpen: closeModal
+    } = useMarketInfoStore();
 
     return (
         <div className={`hidden md:block fixed left-0 top-0 w-screen h-screen z-50 bg-[#0006]
