@@ -21,10 +21,10 @@ const SmallPicRow = ({data}:{data: picArrayObj}) => {
             if(rowRef.current){
                 startPointRef.current++;
                 if(data.isDirectionToRight){
-                    rowRef.current.style.transform = `translate3d(${(startPointRef.current%10000/10000-1)*108*9}px,0,0)`;
+                    rowRef.current.style.transform = `translate3d(${(startPointRef.current%10000/10000-1)*216*9}px,0,0)`;
                 }
                 else {
-                    rowRef.current.style.transform = `translate3d(${(-startPointRef.current%10000/10000)*108*9}px,0,0)`;
+                    rowRef.current.style.transform = `translate3d(${(-startPointRef.current%10000/10000)*216*9}px,0,0)`;
                 }
             }
         }, 10);

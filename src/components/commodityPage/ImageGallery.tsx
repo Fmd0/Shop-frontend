@@ -1,6 +1,7 @@
 import useCommodityPageStore from "../../hooks/useCommodityPageStore.ts";
-import {useMemo} from "react";
+import React, {useEffect, useRef} from "react";
 import useCommodityInfo from "../../hooks/useCommodityInfo.ts";
+import SvgIcons from "../common/SvgIcons.tsx";
 
 const ImageGallery = () => {
 
@@ -11,47 +12,128 @@ const ImageGallery = () => {
         setImageModalOpen,
         imageIndex,
         setImageIndex,
-        addImageIndex,
-        subtractImageIndex,
-        skuItemKey,
+        images,
     } = useCommodityPageStore();
 
-    const skuItemMap = useMemo(() => {
-        if(!commodityInfo) return {};
-        return Object.fromEntries(commodityInfo?.skuItems.map(skuItem => {
-            const key = commodityInfo?.skuConfigs.map(skuConfig => {
-                return skuItem.sku[skuConfig.key]||skuConfig.defaultValue
-            }).join("_");
-            return [key, skuItem]
-        }))
+    const imageGalleryRef = useRef<HTMLDivElement>(null);
+    const imageGalleryWidthRef = useRef<number>(0);
+    const commodityImageLength = useRef<number>(1);
+    const prePosition = useRef<number>(0);
+    const totalOffset = useRef<number>(0);
+    const startMove = useRef<boolean>(false);
+    const hasMoved = useRef<boolean>(false);
+    const animationFrameId = useRef<number>(0);
+
+    const handlePointDown = (event:  React.PointerEvent<HTMLDivElement>) => {
+        hasMoved.current = false;
+        startMove.current = true;
+        prePosition.current = event.clientX;
+        if(imageGalleryRef.current) {
+            imageGalleryRef.current.style.transitionDuration = '0ms';
+        }
+    }
+
+
+    const handlePointMove = (() => {
+        let isThrottle = false;
+        return (e: PointerEvent) => {
+            if(!startMove.current || isThrottle) {
+                return;
+            }
+            isThrottle = true;
+            setTimeout(() => {
+                isThrottle = false;
+            }, 8);
+            if(imageGalleryRef.current) {
+                const currentOffset = e.clientX - prePosition.current;
+                if(!hasMoved.current && Math.abs(currentOffset)>3) {
+                    hasMoved.current = true;
+                }
+                if(totalOffset.current > 0 || totalOffset.current < -(commodityImageLength.current-1)*imageGalleryWidthRef.current) {
+                    totalOffset.current += currentOffset/2;
+                }
+                else {
+                    totalOffset.current += currentOffset;
+                }
+                window.cancelAnimationFrame(animationFrameId.current);
+                animationFrameId.current = window.requestAnimationFrame(() => {
+                    if(imageGalleryRef.current) {
+                        imageGalleryRef.current.style.transform = `translate3d(${totalOffset.current}px, 0, 0)`;
+                    }
+                })
+                // imageGalleryRef.current.style.transform = `translate3d(${totalOffset.current}px, 0, 0)`;
+                prePosition.current = e.clientX;
+            }
+
+        }
+    })();
+
+    const handlePointUp = () => {
+        if(!startMove.current) {
+            return;
+        }
+        startMove.current = false;
+        if(imageGalleryRef.current) {
+            const commodityImageLength = commodityInfo?.images.length || 0;
+            let newImageIndex = Math.round(-totalOffset.current/imageGalleryWidthRef.current);
+            newImageIndex = newImageIndex < 0 ? 0 : newImageIndex;
+            newImageIndex = newImageIndex > commodityImageLength-1 ? commodityImageLength-1 : newImageIndex;
+
+            totalOffset.current = -newImageIndex * imageGalleryWidthRef.current;
+
+            setImageIndex(newImageIndex);
+            imageGalleryRef.current.style.transform = `translate3d(${totalOffset.current}px, 0, 0)`;
+            imageGalleryRef.current.style.transitionDuration = '300ms';
+        }
+    }
+
+    const handlePointerCancel = handlePointUp;
+
+    useEffect(() => {
+        if(imageGalleryRef.current) {
+            totalOffset.current = -imageIndex * imageGalleryWidthRef.current;
+        }
+    }, [imageIndex]);
+
+    useEffect(() => {
+        if(imageGalleryRef.current) {
+            imageGalleryWidthRef.current = imageGalleryRef.current.offsetWidth;
+        }
+    }, [imageGalleryWidthRef.current]);
+
+    useEffect(() => {
+        commodityImageLength.current = commodityInfo?.images.length||1;
+        window.addEventListener("pointermove", handlePointMove);
+        window.addEventListener("pointerup", handlePointUp);
+        window.addEventListener("pointercancel", handlePointerCancel);
+        return () => {
+            window.removeEventListener("pointermove", handlePointMove);
+            window.removeEventListener("pointerup", handlePointUp);
+            window.removeEventListener("pointercancel", handlePointerCancel);
+        }
     }, [commodityInfo]);
 
-    const images = useMemo(() => {
-        if(!commodityInfo) {
-            return [];
-        }
-        if(commodityInfo.skuItems.length === 0) {
-            return commodityInfo.images;
-        }
-        const images = commodityInfo.images;
-        images[0] = skuItemMap[skuItemKey]?.image||"";
-        return images;
-    }, [commodityInfo, skuItemKey]);
 
 
     return (
         <>
             {/*big image gallery*/}
-            <div className="relative overflow-hidden cursor-zoom-in mb-4"
-                 onClick={() => setImageModalOpen(true)}>
+            <div className="relative cursor-zoom-in md:mb-4"
+                 onClick={() => {
+                     if(!hasMoved.current) {
+                         setImageModalOpen(true);
+                     }
+                 }}>
 
                 {/*extra huge element*/}
-                <div className={`flex duration-300`}
-                     style={{transform: `translate(-${imageIndex * 100}%, 0)`}}>
+                <div className="flex duration-300 touch-pan-y will-change-transform" style={{transform: `translate3d(-${imageIndex * 100}%, 0, 0)`}}
+                     ref={imageGalleryRef}
+                     onPointerDown={handlePointDown}
+                >
                     {
                         images.length > 0 &&  images.map((image, index) => (
                             <div key={index} className="flex-shrink-0 w-full flex items-center justify-center">
-                                    <div className="relative w-max mx-auto overflow-hidden rounded-2xl">
+                                    <div className="relative w-max mx-auto overflow-hidden md:rounded-2xl">
                                         <img className="h-[65vh] max-w-full object-contain"
                                              src={image}
                                              alt="commodity"
@@ -65,7 +147,7 @@ const ImageGallery = () => {
 
                 {
                     images.length > 0 &&
-                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-row items-center gap-2">
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 md:hidden flex flex-row items-center gap-2">
                         {
                             Array.from({length: images.length }).map((_, index) =>
                                 index === imageIndex
@@ -98,22 +180,21 @@ const ImageGallery = () => {
                 {/*two button*/}
                 <div className="flex gap-1">
                     <div className="cursor-pointer w-11 h-11 grid place-items-center rounded-[999px] bg-white border-neutral-300 border-[1px] duration-300 hover:bg-neutral-300"
-                         onClick={subtractImageIndex}>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                             xmlns="http://www.w3.org/2000/svg" data-testid="icon-left-chevron" stroke="none"
-                             style={{width: "20px", height: "20px"}}>
-                            <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
-                                  strokeLinejoin="round"></path>
-                        </svg>
+                         onClick={() => {
+                             if(imageIndex === 0) return;
+                             setImageIndex(imageIndex-1);
+                         }}>
+                        <SvgIcons.LeftArrow className="size-5" />
                     </div>
                     <div className="cursor-pointer w-11 h-11 grid place-items-center rounded-[999px] bg-white border-neutral-300 border-[1px] duration-300 hover:bg-neutral-300"
-                         onClick={addImageIndex}>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                             xmlns="http://www.w3.org/2000/svg" className="text-text"
-                             data-testid="icon-right-chevron" stroke="none" style={{width: "20px", height: "20px"}}>
-                            <path d="M9 6L15 12L9 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
-                                  strokeLinejoin="round"></path>
-                        </svg>
+                         onClick={() => {
+                             if(imageIndex === commodityImageLength.current-1) {
+                                 setImageIndex(0);
+                                 return;
+                             }
+                             setImageIndex(imageIndex+1);
+                         }}>
+                        <SvgIcons.RightArrow className="size-5" />
                     </div>
                 </div>
             </div>

@@ -1,17 +1,12 @@
-import useMarketInfoStore from "../../hooks/useMarketInfoStore.ts";
-import useMarketInfo from "../../hooks/useMarketInfo.ts";
 import SvgIcons from "../common/SvgIcons.tsx";
+import {MarketInfoType} from "../../utils/type.ts";
 
 
-const SmallPrivacyModal = () => {
-
-    const id = (new URLSearchParams(window.location.search)).get('id')||"";
-    const {data:{data: marketInfo}={data: null}} = useMarketInfo(id);
-
-    const {
-        privacyModalOpen: modalOpen,
-        closePrivacyModalOpen: closeModal
-    } = useMarketInfoStore();
+const SmallPrivacyModal = ({data, modalOpen, closeModal}: {
+    data: MarketInfoType|null,
+    modalOpen: boolean,
+    closeModal: () => void,
+}) => {
 
 
     return (
@@ -28,8 +23,8 @@ const SmallPrivacyModal = () => {
                     </button>
                 </div>
                 {
-                    marketInfo?.privacyPolicy && marketInfo.privacyPolicy !== "" &&
-                    <iframe src={marketInfo.privacyPolicy} className="w-full"/>
+                    data?.privacyPolicy && data.privacyPolicy !== "" &&
+                    <iframe src={data.privacyPolicy} className="w-full"/>
                 }
             </div>
 

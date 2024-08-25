@@ -2,19 +2,23 @@ import MoreInfoModalCommodityPage from "./MoreInfoModalCommodityPage.tsx";
 import BigAddToLikeButton from "./BigAddToLikeButton.tsx";
 import {setCartInfoItemToLocalStorage} from "../../utils/localStorage.ts";
 import AddToFavorite from "./AddToFavorite.tsx";
-import useCommodityInfo from "../../hooks/useCommodityInfo.ts";
 import useCommodityPageStore from "../../hooks/useCommodityPageStore.ts";
 import {useMemo, useState} from "react";
 import useCartInfoStore from "../../hooks/useCartInfoStore.ts";
+import useCommodityInfo from "../../hooks/useCommodityInfo.ts";
 
 
 const CommodityInfo = () => {
 
     const id = new URLSearchParams(window.location.search).get("id")||"";
-    const {data: {data: {commodity: commodityInfo, bestSellingCommodities}} = {data: {commodity: null, bestSellingCommodities: []}}} = useCommodityInfo(id);
+    const {data: {data: { bestSellingCommodities}} = {data: {commodity: null, bestSellingCommodities: []}}} = useCommodityInfo(id);
 
     const {
+        commodityInfo,
+        skuItemMap,
         setImageIndex,
+        setImages,
+        images,
         skuItemKey,
         setSkuItemKey,
         toggleMoreInfoModalOpen,
@@ -22,16 +26,6 @@ const CommodityInfo = () => {
         openRefundModal,
         openShippingModal,
     } = useCommodityPageStore();
-
-    const skuItemMap = useMemo(() => {
-        if(!commodityInfo) return {};
-        return Object.fromEntries(commodityInfo?.skuItems.map(skuItem => {
-            const key = commodityInfo?.skuConfigs.map(skuConfig => {
-                return skuItem.sku[skuConfig.key]||skuConfig.defaultValue
-            }).join("_");
-            return [key, skuItem]
-        }))
-    }, [commodityInfo]);
 
     const price = useMemo(() => {
         return skuItemMap[skuItemKey]?.price||commodityInfo?.price||0;
@@ -45,15 +39,6 @@ const CommodityInfo = () => {
         return skuItemMap[skuItemKey]!==undefined?skuItemMap[skuItemKey].stock:commodityInfo?.stock||0;
     }, [commodityInfo, skuItemMap, skuItemKey]);
 
-    const image = useMemo(() => {
-        if(!commodityInfo) {
-            return "";
-        }
-        if(commodityInfo.skuItems.length === 0) {
-            return commodityInfo.images[0];
-        }
-        return skuItemMap[skuItemKey]?.image||"";
-    }, [commodityInfo]);
 
     const {updateCartAmountCommodityPage, addToCartStatus} = useCartInfoStore();
     const [quantity, setQuantity] = useState<number>(1);
@@ -77,7 +62,7 @@ const CommodityInfo = () => {
                 </a>
                 <div className="relative" onClick={e => e.stopPropagation()}>
                     <div
-                        className="font-extrabold w-11 h-11 grid place-items-center rounded-[999px] cursor-pointer duration-300 hover:bg-neutral-200"
+                        className="font-extrabold w-11 h-11 grid place-items-center border-neutral-300 border-[1px] rounded-[999px] cursor-pointer duration-300 hover:bg-neutral-300"
                         onClick={toggleMoreInfoModalOpen}
                     >
                         ···
@@ -170,7 +155,13 @@ const CommodityInfo = () => {
                                 onChange={(e) => {
                                     const keyArray = skuItemKey.split("_");
                                     keyArray[index] = e.target.value;
-                                    setSkuItemKey(keyArray.join("_"));
+                                    const newSkuItemKey = keyArray.join("_");
+                                    setSkuItemKey(newSkuItemKey);
+
+                                    let images: string[] = [] ;
+                                    images = [...commodityInfo.images];
+                                    images[0] = skuItemMap[newSkuItemKey]?.image||"";
+                                    setImages(images);
                                     setImageIndex(0);
                                 }}>
                             {
@@ -246,7 +237,7 @@ const CommodityInfo = () => {
                                         name: commodityInfo?.name || "",
                                         price,
                                         promotingPrice,
-                                        image,
+                                        image: images[0],
                                         skuKey: [commodityInfo?.name || "", skuItemKey].join("_"),
                                         count: quantity,
                                     }

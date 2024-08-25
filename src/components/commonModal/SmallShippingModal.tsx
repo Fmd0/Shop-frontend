@@ -1,17 +1,13 @@
-import useMarketInfoStore from "../../hooks/useMarketInfoStore.ts";
-import useMarketInfo from "../../hooks/useMarketInfo.ts";
 import SvgIcons from "../common/SvgIcons.tsx";
+import {MarketInfoType} from "../../utils/type.ts";
 
 
-const SmallShippingModal = () => {
+const SmallShippingModal = ({data, modalOpen, closeModal}: {
+    data: MarketInfoType|null,
+    modalOpen: boolean,
+    closeModal: () => void,
+}) => {
 
-    const id = (new URLSearchParams(window.location.search)).get('id')||"";
-    const {data:{data: marketInfo}={data: null}} = useMarketInfo(id);
-
-    const {
-        shippingModalOpen: modalOpen,
-        closeShippingModalOpen: closeModal
-    } = useMarketInfoStore();
 
 
     return (
@@ -28,8 +24,8 @@ const SmallShippingModal = () => {
                     </button>
                 </div>
                 {
-                    marketInfo?.shippingPolicy && marketInfo.shippingPolicy !== "" &&
-                    <iframe src={marketInfo.shippingPolicy} className="w-full"/>
+                    data?.shippingPolicy && data.shippingPolicy !== "" &&
+                    <iframe src={data.shippingPolicy} className="w-full"/>
                 }
             </div>
 

@@ -1,36 +1,25 @@
 import useCommodityPageStore from "../../hooks/useCommodityPageStore.ts";
-import {useMemo, useState} from "react";
+import { useState} from "react";
 
 const ImageModal = () => {
 
-    const {imageModalOpen,commodityInfo, setImageModalOpen, skuItemKey, imageIndex, addImageIndex, subtractImageIndex} = useCommodityPageStore();
+    const {
+        imageModalOpen,
+        commodityInfoImageLength,
+        setImageModalOpen,
+        imageIndex,
+        setImageIndex,
+        images,
+    } = useCommodityPageStore();
     const [isZoomIn, setIsZoomIn] = useState<boolean>(true);
 
-    const skuItemMap = useMemo(() => {
-        if(!commodityInfo) return {};
-        return Object.fromEntries(commodityInfo?.skuItems.map(skuItem => {
-            const key = commodityInfo?.skuConfigs.map(skuConfig => {
-                return skuItem.sku[skuConfig.key]||skuConfig.defaultValue
-            }).join("_");
-            return [key, skuItem]
-        }))
-    }, [commodityInfo]);
-
-    const images = useMemo(() => {
-        if(!commodityInfo) {
-            return [];
-        }
-        if(commodityInfo.skuItems.length === 0) {
-            return commodityInfo.images;
-        }
-        const images = commodityInfo.images;
-        images[0] = skuItemMap[skuItemKey]?.image||"";
-        return images;
-    }, [commodityInfo]);
-
     return (
-        <div className={`overflow-scroll select-none fixed z-50 inset-0 bg-white ${imageModalOpen ? "" : "hidden"} ${isZoomIn ? "cursor-zoom-in" : "cursor-zoom-out"}`}
-            onClick={() => setIsZoomIn(z => !z)}>
+        <div className={`overflow-scroll select-none fixed z-50 inset-0 touch-none bg-white ${imageModalOpen ? "" : "hidden"} ${isZoomIn ? "md:cursor-zoom-in" : "md:cursor-zoom-out"}`}
+            onClick={() => {
+                if(window.innerWidth >= 768 ) {
+                    setIsZoomIn(z => !z);
+                }
+            }}>
             <img src={images[imageIndex]} alt="commodity" className={`${isZoomIn?"w-full h-full object-contain":"w-full"}`}/>
 
             {/*close button*/}
@@ -51,9 +40,10 @@ const ImageModal = () => {
             <div className="fixed left-1/2 -translate-x-1/2 bottom-10 flex gap-1">
                 <div
                     className="cursor-pointer w-11 h-11 grid place-items-center rounded-[999px] bg-neutral-400 duration-300 hover:bg-neutral-500"
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        subtractImageIndex();
+                    onClick={(event) => {
+                        event.stopPropagation();
+                        if(imageIndex === 0) return;
+                        setImageIndex(imageIndex-1);
                     }}>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" color="white"
                          xmlns="http://www.w3.org/2000/svg" data-testid="icon-left-chevron" stroke="none"
@@ -63,10 +53,11 @@ const ImageModal = () => {
                     </svg>
                 </div>
                 <div className="cursor-pointer w-11 h-11 grid place-items-center rounded-[999px] bg-neutral-400 duration-300 hover:bg-neutral-500"
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        addImageIndex();
-                    }}>
+                     onClick={(event) => {
+                         event.stopPropagation();
+                         if(imageIndex === commodityInfoImageLength-1) return;
+                         setImageIndex(imageIndex+1);
+                     }}>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                          xmlns="http://www.w3.org/2000/svg" color="white"
                          data-testid="icon-right-chevron" stroke="none" style={{width: "20px", height: "20px"}}>

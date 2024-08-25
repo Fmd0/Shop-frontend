@@ -11,6 +11,7 @@ import SmallNavBar from "../components/common/SmallNavBar.tsx";
 import SmallBottomSideBar from "../components/common/SmallBottomSideBar.tsx";
 import SmallLogoutModal from "../components/common/SmallLogoutModal.tsx";
 import SmallHomePageMainContent from "../components/homePage/SmallHomePageMainContent.tsx";
+import StartShopList from "../components/homePage/StartShopList.tsx";
 
 const HomePage = () => {
 
@@ -55,7 +56,7 @@ const HomePage = () => {
             <SmallNavBar />
             <HomePageMainContent />
             <SmallHomePageMainContent />
-            {/*<StartShopList />*/}
+            <StartShopList />
             <RewardingWay />
             <SmallBottomSideBar />
             <SmallLogoutModal />

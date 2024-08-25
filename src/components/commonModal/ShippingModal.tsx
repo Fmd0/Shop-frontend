@@ -1,16 +1,13 @@
 import SvgIcons from "../common/SvgIcons.tsx";
-import useMarketInfoStore from "../../hooks/useMarketInfoStore.ts";
-import useMarketInfo from "../../hooks/useMarketInfo.ts";
+import {MarketInfoType} from "../../utils/type.ts";
 
 
-const ShippingModal = () => {
+const ShippingModal = ({data, modalOpen, closeModal}: {
+    data: MarketInfoType|null,
+    modalOpen: boolean,
+    closeModal: () => void,
+}) => {
 
-    const id = (new URLSearchParams(window.location.search)).get('id')||"";
-    const {data:{data: marketInfo}={data: null}} = useMarketInfo(id);
-    const {
-        shippingModalOpen: modalOpen,
-        closeShippingModalOpen: closeModal,
-    } = useMarketInfoStore();
 
     return (
         <div className={`hidden md:block fixed left-0 top-0 w-screen h-screen bg-neutral-500 z-50
@@ -27,8 +24,8 @@ const ShippingModal = () => {
                 <h1 className="p-5 text-[20px] font-semibold text-center">Shipping policy</h1>
 
                 {
-                    marketInfo?.shippingPolicy && marketInfo.shippingPolicy !== "" &&
-                    <iframe src={marketInfo.shippingPolicy} className="w-full h-[calc(100%-70px)] p-2 rounded-b-3xl"/>
+                    data?.shippingPolicy && data.shippingPolicy !== "" &&
+                    <iframe src={data.shippingPolicy} className="w-full h-[calc(100%-70px)] p-2 rounded-b-3xl"/>
                 }
 
                 <button type="button" className="absolute top-5 right-5" onClick={closeModal}>

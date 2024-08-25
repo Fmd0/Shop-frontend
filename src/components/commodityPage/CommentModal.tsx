@@ -1,12 +1,12 @@
-import closeModalSvg from "../../assets/MarketPage/closeModal.svg";
 import useCommodityPageStore from "../../hooks/useCommodityPageStore.ts";
 import {useEffect, useMemo, useRef} from "react";
 import StarList from "./StarList.tsx";
 import {convertDateToString} from "../../utils/dateHelper.ts";
-import CommentModalPlaceholderCommodityPage from "./CommentModalPlaceholderCommodityPage.tsx";
+import CommentModalPlaceholder from "./CommentModalPlaceholder.tsx";
+import SvgIcons from "../common/SvgIcons.tsx";
 
 
-const CommentModalCommodityPage = () => {
+const CommentModal = () => {
 
     const {
         comment,
@@ -53,8 +53,8 @@ const CommentModalCommodityPage = () => {
                  closeModal();
              }}
         >
-            <div className={`w-[640px] max-w-full h-4/5  max-h-[600px] tracking-[.15px] bg-white rounded-3xl absolute left-1/2 top-1/2 -translate-x-1/2
-            ${modalOpen ? "scale-100 opacity-100 -translate-y-1/2" : "scale-90 -translate-y-[40%] opacity-0"} duration-300 ease-[cubic-bezier(.16,1,.3,1)]`}
+            <div className={`w-[640px] max-w-full h-4/5 bg-white rounded-3xl absolute left-1/2 top-1/2 -translate-x-1/2
+            ${modalOpen ? "scale-100 -translate-y-1/2" : "scale-90 -translate-y-[40%]"} duration-300`}
                  onClick={(e) => e.stopPropagation()}>
 
                 <h1 className="p-5 text-[20px] font-medium text-center">Ratings and reviews</h1>
@@ -109,7 +109,7 @@ const CommentModalCommodityPage = () => {
 
                     {
                         comment.map((c, index) => (
-                            <div key={index} className="mt-6 border-b-neutral-300 pb-6 border-b-[0.5px]">
+                            <div key={index} className="mt-6 border-b-neutral-300 pb-6 border-b-[0.5px] font-normal">
                                 <StarList size={16} rating={c.rating} gap={2}/>
                                 <p className="text-[12px] text-[rgb(111_112_113)]">{c.userName} · {convertDateToString(new Date(c.createdAt))}</p>
                                 <p className="mt-4 text-[14px]">{c.comment}</p>
@@ -120,14 +120,14 @@ const CommentModalCommodityPage = () => {
                     {
                         commentHasMore &&
                         Array.from({length: 3}, (_, i) => i).map(a => (
-                            <CommentModalPlaceholderCommodityPage key={a}/>
+                            <CommentModalPlaceholder key={a}/>
                         ))
                     }
 
                 </div>
 
                 <button type="button" className="absolute top-5 right-5" onClick={closeModal}>
-                    <img src={closeModalSvg} alt="closeModal" className="w-6"/>
+                    <SvgIcons.Close className="size-6" />
                 </button>
             </div>
 
@@ -135,4 +135,4 @@ const CommentModalCommodityPage = () => {
     )
 }
 
-export default CommentModalCommodityPage;
+export default CommentModal;

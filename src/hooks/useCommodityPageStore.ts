@@ -1,9 +1,12 @@
-import {CommentType, CommodityInfoType} from "../utils/type.ts";
+import {CommentType, CommodityInfoType, SkuItemType} from "../utils/type.ts";
 import {create} from "zustand";
 
 
 interface State {
     commodityInfo: CommodityInfoType|null,
+    commodityInfoImageLength: number,
+    images: string[],
+    skuItemMap: { [key: string]: SkuItemType },
     bestSellingCommodities: CommodityInfoType[],
     comment: CommentType[],
     commentGroup: {_count: number, rating: number}[],
@@ -23,6 +26,9 @@ interface State {
 
 interface Actions {
     setCommodityInfo: (state: CommodityInfoType|null) => void,
+    setCommodityInfoImageLength: (commodityInfoImageLength: number) => void,
+    setImages: (state: string[]) => void,
+    setSkuItemMap: (map: { [key: string]: SkuItemType }) => void,
     setBestSellingCommodities: (state: CommodityInfoType[]) => void,
     setComment: (comment: CommentType[]) => void,
     setCommentGroup: (commentGroup: {_count: number, rating: number}[]) => void,
@@ -31,8 +37,6 @@ interface Actions {
     addCommentPage: () => void,
     setImageModalOpen: (state: boolean) => void,
     setImageIndex: (index: number) => void,
-    addImageIndex: () => void,
-    subtractImageIndex: () => void,
     setSkuItemKey: (key: string) => void,
     toggleMoreInfoModalOpen: () => void,
     openContactModal: () => void,
@@ -50,6 +54,9 @@ interface Actions {
 
 const initialState = {
     commodityInfo: null,
+    commodityInfoImageLength: 1,
+    images: [],
+    skuItemMap: {},
     bestSellingCommodities: [],
     comment: [],
     commentGroup: [],
@@ -75,16 +82,25 @@ const useCommodityPageStore = create<State & Actions>((set) => ({
     commentModalOpen: false,
     commentModalRowDisplay: false,
     setCommodityInfo: (state) => set({commodityInfo: state}),
+    setCommodityInfoImageLength: (state) => set({commodityInfoImageLength: state}),
+    setImages: (state) => set({images: state}),
+    setSkuItemMap: (map) => set({skuItemMap: map}),
     setBestSellingCommodities: (state) => set({bestSellingCommodities: state}),
     setComment: (comment: CommentType[]) => set({comment}),
     setCommentGroup: (commentGroup) => set({commentGroup}),
     setCommentTotalAmount: (commentTotalAmount: number) => set({commentTotalAmount}),
     setCommentHasMore: (commentHasMore) => set({commentHasMore: commentHasMore}),
     addCommentPage: () => set(state => ({commentPage: state.commentPage + 1})),
-    setImageModalOpen: (state) => set({imageModalOpen: state}),
+    setImageModalOpen: (state) => {
+        if(state) {
+            window.document.body.style.overflow="hidden";
+        }
+        else {
+            window.document.body.style.overflow="visible";
+        }
+        set({imageModalOpen: state})
+    },
     setImageIndex: (index) => set(({imageIndex: index})),
-    addImageIndex: () => set(state => ({imageIndex: (state.imageIndex + 1)%(state?.commodityInfo?.images?.length||0)})),
-    subtractImageIndex: () => set(state => ({imageIndex: (state.imageIndex - 1 + (state?.commodityInfo?.images?.length||0))%(state?.commodityInfo?.images?.length||0)})),
     setSkuItemKey: (key) => set({skuItemKey: key}),
     toggleMoreInfoModalOpen: () => set(state => ({...initialModalState, moreInfoModalOpen: !state.moreInfoModalOpen})),
     openContactModal: () => {

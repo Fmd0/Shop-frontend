@@ -183,6 +183,21 @@ const SvgIcons = {
             <path d="M2.72369 11.7031L7.2695 16.0243L17.5 3.33334" stroke="#FFFFFF" strokeWidth="1.66667"
                   strokeLinecap="round" strokeLinejoin="round"></path>
         </svg>
+    ),
+    LeftArrow: ({className}: {className: string}) => (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className={className}
+             xmlns="http://www.w3.org/2000/svg" data-testid="icon-left-chevron" stroke="none">
+            <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                  strokeLinejoin="round"></path>
+        </svg>
+    ),
+    RightArrow: ({className}: {className: string}) => (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+             xmlns="http://www.w3.org/2000/svg" className={className}
+             data-testid="icon-right-chevron" stroke="none">
+            <path d="M9 6L15 12L9 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                  strokeLinejoin="round"></path>
+        </svg>
     )
 }
 

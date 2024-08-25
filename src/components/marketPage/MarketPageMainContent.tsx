@@ -3,11 +3,29 @@ import whiteLink from "../../assets/MarketPage/whiteLink.svg"
 import MoreInfoModal from "./MoreInfoModal.tsx";
 import useMarketPageCommodityInfoStore from "../../hooks/useMarketPageCommodityInfoStore.ts";
 import useMarketInfo from "../../hooks/useMarketInfo.ts";
+import ContactModal from "../commonModal/ContactModal.tsx";
+import useMarketInfoStore from "../../hooks/useMarketInfoStore.ts";
+import PrivacyModal from "../commonModal/PrivacyModal.tsx";
+import RefundModal from "../commonModal/RefundModal.tsx";
+import ShippingModal from "../commonModal/ShippingModal.tsx";
 
 
 const MarketPageMainContent = () => {
 
-    const {toggleMoreInfoModalOpen} = useMarketPageCommodityInfoStore();
+    const {
+        toggleMoreInfoModalOpen,
+    } = useMarketPageCommodityInfoStore();
+
+    const {
+        contactModalOpen,
+        closeContactModalOpen,
+        privacyModalOpen,
+        closePrivacyModalOpen,
+        refundModalOpen,
+        closeRefundModalOpen,
+        shippingModalOpen,
+        closeShippingModalOpen
+    } = useMarketInfoStore();
 
     const id = new URLSearchParams(window.location.search).get('id')||"";
     const {data:{data: marketInfo}={data: null}} = useMarketInfo(id);
@@ -52,7 +70,11 @@ const MarketPageMainContent = () => {
                         </div>
                     </div>
                 </div>
-            </main>
+                <ContactModal data={marketInfo} modalOpen={contactModalOpen} closeModal={closeContactModalOpen} />
+                <PrivacyModal data={marketInfo} modalOpen={privacyModalOpen} closeModal={closePrivacyModalOpen} />
+                <RefundModal data={marketInfo} modalOpen={refundModalOpen} closeModal={closeRefundModalOpen} />
+                <ShippingModal data={marketInfo} modalOpen={shippingModalOpen} closeModal={closeShippingModalOpen} />
+             </main>
         )
     }
 
@@ -136,6 +158,10 @@ const MarketPageMainContent = () => {
                     }
                 </div>
             </div>
+            <ContactModal data={marketInfo} modalOpen={contactModalOpen} closeModal={closeContactModalOpen} />
+            <PrivacyModal data={marketInfo} modalOpen={privacyModalOpen} closeModal={closePrivacyModalOpen} />
+            <RefundModal data={marketInfo} modalOpen={refundModalOpen} closeModal={closeRefundModalOpen} />
+            <ShippingModal data={marketInfo} modalOpen={shippingModalOpen} closeModal={closeShippingModalOpen} />
         </main>
     )
 }

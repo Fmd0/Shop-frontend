@@ -1,6 +1,6 @@
 import StarList from "./StarList.tsx";
 
-const CommentModalPlaceholderCommodityPage = () => {
+const CommentModalPlaceholder = () => {
     return (
         <div className="mt-6 border-b-neutral-300 pb-6 border-b-[0.5px] flex flex-col gap-3">
             <StarList size={16} rating={0} gap={2}/>
@@ -11,4 +11,4 @@ const CommentModalPlaceholderCommodityPage = () => {
 }
 
 
-export default CommentModalPlaceholderCommodityPage;
+export default CommentModalPlaceholder;

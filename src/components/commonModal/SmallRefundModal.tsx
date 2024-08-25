@@ -1,17 +1,13 @@
-import useMarketInfoStore from "../../hooks/useMarketInfoStore.ts";
-import useMarketInfo from "../../hooks/useMarketInfo.ts";
 import SvgIcons from "../common/SvgIcons.tsx";
+import {MarketInfoType} from "../../utils/type.ts";
 
 
-const SmallRefundModal = () => {
+const SmallRefundModal = ({data, modalOpen, closeModal}: {
+    data: MarketInfoType|null,
+    modalOpen: boolean,
+    closeModal: () => void,
+}) => {
 
-    const id = (new URLSearchParams(window.location.search)).get('id')||"";
-    const {data:{data: marketInfo}={data: null}} = useMarketInfo(id);
-
-    const {
-        refundModalOpen: modalOpen,
-        closeRefundModalOpen: closeModal
-    } = useMarketInfoStore();
 
 
     return (
@@ -28,8 +24,8 @@ const SmallRefundModal = () => {
                     </button>
                 </div>
                 {
-                    marketInfo?.refundPolicy && marketInfo.refundPolicy !== "" &&
-                    <iframe src={marketInfo.refundPolicy} className="w-full"/>
+                    data?.refundPolicy && data.refundPolicy !== "" &&
+                    <iframe src={data.refundPolicy} className="w-full"/>
                 }
             </div>
 

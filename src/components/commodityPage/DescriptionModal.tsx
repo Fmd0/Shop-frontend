@@ -1,7 +1,7 @@
 import closeModalSvg from "../../assets/MarketPage/closeModal.svg"
 import useCommodityPageStore from "../../hooks/useCommodityPageStore.ts";
 
-const DescriptionModalCommodityPage = () => {
+const DescriptionModal = () => {
 
     const {
         closeDescriptionModal: closeModal,
@@ -12,7 +12,7 @@ const DescriptionModalCommodityPage = () => {
     const description = commodityInfo?.description||"";
 
     return (
-        <div className={`fixed left-0 top-0 w-screen h-screen bg-neutral-500 z-50
+        <div className={`hidden md:block fixed left-0 top-0 w-screen h-screen bg-neutral-500 z-50
         duration-300 ease-[cubic-bezier(.16,1,.3,1)]
         ${modalOpen ? "visible bg-opacity-50" : "invisible bg-opacity-0"}`}
              onClick={e => {
@@ -38,4 +38,4 @@ const DescriptionModalCommodityPage = () => {
     )
 }
 
-export default DescriptionModalCommodityPage;
+export default DescriptionModal;

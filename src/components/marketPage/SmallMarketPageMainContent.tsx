@@ -1,11 +1,12 @@
 import useMarketInfo from "../../hooks/useMarketInfo.ts";
 import useMarketPageCommodityInfoStore from "../../hooks/useMarketPageCommodityInfoStore.ts";
 import SmallMoreInfoModal from "./SmallMoreInfoModal.tsx";
-import SmallContactModal from "./SmallContactModal.tsx";
-import SmallPrivacyModal from "./SmallPrivacyModal.tsx";
-import SmallRefundModal from "./SmallRefundModal.tsx";
-import SmallShippingModal from "./SmallShippingModal.tsx";
+import SmallContactModal from "../commonModal/SmallContactModal.tsx";
+import SmallPrivacyModal from "../commonModal/SmallPrivacyModal.tsx";
+import SmallRefundModal from "../commonModal/SmallRefundModal.tsx";
+import SmallShippingModal from "../commonModal/SmallShippingModal.tsx";
 import SvgIcons from "../common/SvgIcons.tsx";
+import useMarketInfoStore from "../../hooks/useMarketInfoStore.ts";
 
 
 const SmallMarketPageMainContent = () => {
@@ -13,6 +14,16 @@ const SmallMarketPageMainContent = () => {
     const id = new URLSearchParams(window.location.search).get('id')||"";
     const {data:{data: marketInfo}={data: null}} = useMarketInfo(id);
     const {toggleMoreInfoModalOpen} = useMarketPageCommodityInfoStore();
+    const {
+        contactModalOpen,
+        closeContactModalOpen,
+        privacyModalOpen,
+        closePrivacyModalOpen,
+        refundModalOpen,
+        closeRefundModalOpen,
+        shippingModalOpen,
+        closeShippingModalOpen
+    } = useMarketInfoStore();
 
 
     return (
@@ -76,12 +87,10 @@ const SmallMarketPageMainContent = () => {
             </div>
 
             <SmallMoreInfoModal />
-            <SmallPrivacyModal />
-            <SmallRefundModal />
-            <SmallShippingModal />
-            <SmallContactModal />
-
-
+            <SmallPrivacyModal data={marketInfo} modalOpen={privacyModalOpen} closeModal={closePrivacyModalOpen} />
+            <SmallRefundModal data={marketInfo} modalOpen={refundModalOpen} closeModal={closeRefundModalOpen} />
+            <SmallShippingModal data={marketInfo} modalOpen={shippingModalOpen} closeModal={closeShippingModalOpen} />
+            <SmallContactModal data={marketInfo} modalOpen={contactModalOpen} closeModal={closeContactModalOpen} />
         </div>
     )
 }

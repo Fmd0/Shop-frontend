@@ -1,18 +1,12 @@
-import useMarketInfoStore from "../../hooks/useMarketInfoStore.ts";
-import useMarketInfo from "../../hooks/useMarketInfo.ts";
 import SvgIcons from "../common/SvgIcons.tsx";
+import {MarketInfoType} from "../../utils/type.ts";
 
 
-const ContactModal = () => {
-
-
-    const id = new URLSearchParams(window.location.search).get('id')||"";
-    const {data:{data: marketInfo}={data: null}} = useMarketInfo(id);
-    const {
-        contactModalOpen: modalOpen,
-        closeContactModalOpen: closeModal,
-    } = useMarketInfoStore();
-
+const ContactModal = ({data, modalOpen, closeModal}: {
+    data: MarketInfoType|null,
+    modalOpen: boolean,
+    closeModal: () => void,
+}) => {
 
 
     return (
@@ -26,14 +20,14 @@ const ContactModal = () => {
             <div className={`w-[640px] max-w-full h-[400px] tracking-[.15px] bg-white rounded-3xl absolute left-1/2 top-1/2 -translate-x-1/2
             ${modalOpen ? "scale-100 -translate-y-1/2" : "scale-90 -translate-y-[40%]"} duration-200`}
                  onClick={(e) => e.stopPropagation()}>
-                <h1 className="p-5 text-[20px] font-semibold text-center">Contact {marketInfo?.name||""}</h1>
+                <h1 className="p-5 text-[20px] font-semibold text-center">Contact {data?.name||""}</h1>
                 <div className={`p-5 grid grid-cols-2 gap-4 text-[16px]`}>
 
                     {/*left column*/}
                     <div className="flex flex-col gap-6">
                         {
-                            marketInfo?.website && marketInfo.website!==""&&
-                            <a href={marketInfo.website} target="_blank" className="flex items-center gap-3">
+                            data?.website && data.website!==""&&
+                            <a href={data.website} target="_blank" className="flex items-center gap-3">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                      xmlns="http://www.w3.org/2000/svg" data-testid="icon-website" stroke="none"
                                      style={{width: "20px", height: "20px"}}>
@@ -41,12 +35,12 @@ const ContactModal = () => {
                                           d="M3 4C2.44772 4 2 4.44772 2 5V20C2 20.5523 2.44772 21 3 21H12C12.5523 21 13 20.5523 13 20C13 19.4477 12.5523 19 12 19H4V6H20V12.25C20 12.8023 20.4477 13.25 21 13.25C21.5523 13.25 22 12.8023 22 12.25V5C22 4.44772 21.5523 4 21 4H3ZM14.7941 13.5442C14.4401 13.4353 14.0548 13.531 13.7929 13.7929C13.531 14.0548 13.4353 14.4401 13.5442 14.7941L15.5442 21.2941C15.6644 21.6847 16.0102 21.9629 16.4175 21.9966C16.8248 22.0303 17.2117 21.8128 17.3944 21.4472L18.7454 18.7454L21.4472 17.3944C21.8128 17.2117 22.0303 16.8248 21.9966 16.4175C21.9629 16.0102 21.6847 15.6644 21.2941 15.5442L14.7941 13.5442ZM16.7218 18.3204L16.0113 16.0113L18.3204 16.7218L17.5528 17.1056C17.3593 17.2023 17.2023 17.3593 17.1056 17.5528L16.7218 18.3204ZM5.5 8.75C5.5 9.44036 6.05964 10 6.75 10C7.44036 10 8 9.44036 8 8.75C8 8.05964 7.44036 7.5 6.75 7.5C6.05964 7.5 5.5 8.05964 5.5 8.75ZM9 8.75C9 9.44036 9.55964 10 10.25 10C10.9404 10 11.5 9.44036 11.5 8.75C11.5 8.05964 10.9404 7.5 10.25 7.5C9.55964 7.5 9 8.05964 9 8.75ZM12.5 8.75C12.5 9.44036 13.0596 10 13.75 10C14.4404 10 15 9.44036 15 8.75C15 8.05964 14.4404 7.5 13.75 7.5C13.0596 7.5 12.5 8.05964 12.5 8.75Z"
                                           fill="currentColor"></path>
                                 </svg>
-                                <p>{marketInfo.website.replace("https://", "").replace("/", "")}</p>
+                                <p>{data.website.replace("https://", "").replace("/", "")}</p>
                             </a>
                         }
                         {
-                            marketInfo?.email && marketInfo.email!=="" &&
-                            <a href={`mailto:${marketInfo.email}`} target="_blank" className="flex items-center gap-3">
+                            data?.email && data.email!=="" &&
+                            <a href={`mailto:${data.email}`} target="_blank" className="flex items-center gap-3">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                      xmlns="http://www.w3.org/2000/svg" data-testid="icon-email"
                                      stroke="none" style={{width: "20px", height: "20px"}}>
@@ -54,12 +48,12 @@ const ContactModal = () => {
                                         d="M21 5H22C22 4.44772 21.5523 4 21 4V5ZM21 19V20C21.5523 20 22 19.5523 22 19H21ZM3 19H2C2 19.5523 2.44772 20 3 20V19ZM3 5V4C2.44772 4 2 4.44772 2 5H3ZM12 13L11.3668 13.774C11.7351 14.0754 12.2649 14.0754 12.6332 13.774L12 13ZM20 5V19H22V5H20ZM21 18H3V20H21V18ZM4 19V5H2V19H4ZM3 6H21V4H3V6ZM20.3668 4.86241L11.3668 12.226L12.6332 13.774L21.6332 6.41033L20.3668 4.86241ZM12.6332 12.226L3.63324 4.86241L2.36676 6.41033L11.3668 13.774L12.6332 12.226Z"
                                         fill="currentColor"></path>
                                 </svg>
-                                <p>{marketInfo.email}</p>
+                                <p>{data.email}</p>
                             </a>
                         }
                         {
-                            marketInfo?.telephone && marketInfo.telephone!=="" &&
-                            <a href={`tel:${marketInfo.telephone}`} target="_blank" className="flex items-center gap-3">
+                            data?.telephone && data.telephone!=="" &&
+                            <a href={`tel:${data.telephone}`} target="_blank" className="flex items-center gap-3">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                      xmlns="http://www.w3.org/2000/svg" data-testid="icon-phone"
                                      stroke="none" style={{width: "20px", height: "20px"}}>
@@ -68,7 +62,7 @@ const ContactModal = () => {
                                         stroke="currentColor" strokeWidth="2" strokeLinecap="round"
                                         strokeLinejoin="round"></path>
                                 </svg>
-                                <p>{marketInfo.telephone}</p>
+                                <p>{data.telephone}</p>
                             </a>
                         }
                     </div>
@@ -77,8 +71,8 @@ const ContactModal = () => {
                     {/*right column*/}
                     <div className="flex flex-col gap-6">
                         {
-                            marketInfo?.facebook && marketInfo.facebook !== "" &&
-                            <a href={marketInfo.facebook} target="_blank" className="flex items-center gap-3">
+                            data?.facebook && data.facebook !== "" &&
+                            <a href={data.facebook} target="_blank" className="flex items-center gap-3">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                      xmlns="http://www.w3.org/2000/svg"
                                      data-testid="icon-shop-facebook" stroke="none"
@@ -94,8 +88,8 @@ const ContactModal = () => {
                             </a>
                         }
                         {
-                            marketInfo?.twitter && marketInfo.twitter !== "" &&
-                            <a href={marketInfo.twitter} target="_blank" className="flex items-center gap-3">
+                            data?.twitter && data.twitter !== "" &&
+                            <a href={data.twitter} target="_blank" className="flex items-center gap-3">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                      xmlns="http://www.w3.org/2000/svg"
                                      data-testid="icon-shop-twitter" stroke="none"
@@ -108,8 +102,8 @@ const ContactModal = () => {
                             </a>
                         }
                         {
-                            marketInfo?.ins && marketInfo.ins !== "" &&
-                            <a href={marketInfo.ins} target="_blank" className="flex items-center gap-3">
+                            data?.ins && data.ins !== "" &&
+                            <a href={data.ins} target="_blank" className="flex items-center gap-3">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                      xmlns="http://www.w3.org/2000/svg" className="text-text"
                                      data-testid="icon-shop-instagram" stroke="none"
@@ -123,8 +117,8 @@ const ContactModal = () => {
                         }
 
                         {
-                            marketInfo?.youtube && marketInfo.youtube !== "" &&
-                            <a href={marketInfo.youtube} target="_blank" className="flex items-center gap-3">
+                            data?.youtube && data.youtube !== "" &&
+                            <a href={data.youtube} target="_blank" className="flex items-center gap-3">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                      xmlns="http://www.w3.org/2000/svg" className="text-text" data-testid="icon-youtube"
                                      stroke="none" style={{width: "20px", height: "20px"}}>
@@ -140,8 +134,8 @@ const ContactModal = () => {
                 </div>
 
                 {
-                    marketInfo?.address && marketInfo.address !== "" &&
-                    <p className="absolute bottom-5 left-5 text-neutral-500">{marketInfo.address}</p>
+                    data?.address && data.address !== "" &&
+                    <p className="absolute bottom-5 left-5 text-neutral-500">{data.address}</p>
                 }
 
                 <button type="button" className="absolute top-5 right-5" onClick={closeModal}>
