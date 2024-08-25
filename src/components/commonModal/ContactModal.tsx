@@ -1,6 +1,6 @@
-import closeModal from "../../assets/MarketPage/closeModal.svg"
 import useMarketInfoStore from "../../hooks/useMarketInfoStore.ts";
 import useMarketInfo from "../../hooks/useMarketInfo.ts";
+import SvgIcons from "../common/SvgIcons.tsx";
 
 
 const ContactModal = () => {
@@ -9,22 +9,22 @@ const ContactModal = () => {
     const id = new URLSearchParams(window.location.search).get('id')||"";
     const {data:{data: marketInfo}={data: null}} = useMarketInfo(id);
     const {
-        contactModalOpen,
-        closeContactModalOpen,
+        contactModalOpen: modalOpen,
+        closeContactModalOpen: closeModal,
     } = useMarketInfoStore();
 
 
 
     return (
         <div className={`hidden md:block fixed left-0 top-0 w-screen h-screen z-50 bg-[#0006]
-        ${contactModalOpen?"opacity-100 duration-300":"opacity-0 pointer-events-none"}`}
+        ${modalOpen?"opacity-100 duration-300":"opacity-0 pointer-events-none"}`}
              onClick={e => {
                  e.stopPropagation();
-                 closeContactModalOpen();
+                 closeModal();
              }}
         >
             <div className={`w-[640px] max-w-full h-[400px] tracking-[.15px] bg-white rounded-3xl absolute left-1/2 top-1/2 -translate-x-1/2
-            ${contactModalOpen ? "scale-100 -translate-y-1/2" : "scale-90 -translate-y-[40%]"} duration-200`}
+            ${modalOpen ? "scale-100 -translate-y-1/2" : "scale-90 -translate-y-[40%]"} duration-200`}
                  onClick={(e) => e.stopPropagation()}>
                 <h1 className="p-5 text-[20px] font-semibold text-center">Contact {marketInfo?.name||""}</h1>
                 <div className={`p-5 grid grid-cols-2 gap-4 text-[16px]`}>
@@ -144,8 +144,8 @@ const ContactModal = () => {
                     <p className="absolute bottom-5 left-5 text-neutral-500">{marketInfo.address}</p>
                 }
 
-                <button type="button" className="absolute top-5 right-5" onClick={closeContactModalOpen}>
-                    <img src={closeModal} alt="closeModal" className="w-6"/>
+                <button type="button" className="absolute top-5 right-5" onClick={closeModal}>
+                    <SvgIcons.Close className="size-6" />
                 </button>
             </div>
         </div>

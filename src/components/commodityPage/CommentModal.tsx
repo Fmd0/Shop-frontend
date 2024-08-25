@@ -46,12 +46,16 @@ const CommentModalCommodityPage = () => {
     }, [commentHasMore]);
 
     return (
-        <div className={`fixed left-0 top-0 w-screen h-screen z-50 duration-300 ease-[cubic-bezier(.16,1,.3,1)] ${modalOpen ? "visible bg-[#0006]": "invisible bg-transparent"}`}
-             onClick={e => {e.stopPropagation(); closeModal();}}>
-
-            <div
-                className={`w-[640px] max-w-full h-[70vh] tracking-[.15px] bg-white rounded-3xl absolute left-1/2 top-1/2 -translate-x-1/2 ${modalOpen ? "scale-100 opacity-100 -translate-y-1/2" : "scale-90 -translate-y-[40%] opacity-0"} duration-300 ease-[cubic-bezier(.16,1,.3,1)]`}
-                onClick={(e) => e.stopPropagation()}>
+        <div className={`hidden md:block fixed left-0 top-0 w-screen h-screen z-50 bg-[#0006]
+        ${modalOpen ? "opacity-100 duration-300" : "opacity-0 pointer-events-none"}`}
+             onClick={e => {
+                 e.stopPropagation();
+                 closeModal();
+             }}
+        >
+            <div className={`w-[640px] max-w-full h-4/5  max-h-[600px] tracking-[.15px] bg-white rounded-3xl absolute left-1/2 top-1/2 -translate-x-1/2
+            ${modalOpen ? "scale-100 opacity-100 -translate-y-1/2" : "scale-90 -translate-y-[40%] opacity-0"} duration-300 ease-[cubic-bezier(.16,1,.3,1)]`}
+                 onClick={(e) => e.stopPropagation()}>
 
                 <h1 className="p-5 text-[20px] font-medium text-center">Ratings and reviews</h1>
 
@@ -73,21 +77,22 @@ const CommentModalCommodityPage = () => {
                                         fill="currentColor"></path>
                                 </svg>
                             </div>
-                            <p className="text-[12px] text-[rgb(111_112_113)]">{(Number(commodityInfo?.ratingAmount||0))*3} ratings</p>
+                            <p className="text-[12px] text-[rgb(111_112_113)]">{(Number(commodityInfo?.ratingAmount || 0)) * 3} ratings</p>
                         </div>
 
                         {/*right part*/}
-                        <div className="bg-[rgb(242,244,245)] flex-1 p-4 grid grid-rows-5 items-center rounded-r-[12px]">
+                        <div
+                            className="bg-[rgb(242,244,245)] flex-1 p-4 grid grid-rows-5 items-center rounded-r-[12px]">
                             {
-                                Array.from({length: 5}, (_, i) =>5-i).map(a => (
+                                Array.from({length: 5}, (_, i) => 5 - i).map(a => (
                                     <div key={a} className="flex items-center gap-1.5">
                                         <p className="text-[10px]">{a}</p>
                                         <div className="flex-1 h-2 rounded-[8px] overflow-hidden bg-white">
                                             <div className={`bg-black h-full rounded-[8px] delay-500`}
                                                  style={{
-                                                     width: modalOpen?(ratingAmountMap?.[a]||0)/commentTotalAmount*100+"%":0,
-                                                     transitionDuration: modalOpen?"700ms":"0ms",
-                                            }}>
+                                                     width: modalOpen ? (ratingAmountMap?.[a] || 0) / commentTotalAmount * 100 + "%" : 0,
+                                                     transitionDuration: modalOpen ? "700ms" : "0ms",
+                                                 }}>
                                             </div>
                                         </div>
                                     </div>
@@ -98,14 +103,14 @@ const CommentModalCommodityPage = () => {
 
                     <div className="mt-8 font-medium flex flex-row gap-1 text-[14px]">
                         <p>Reviews</p>
-                        <span className="text-[rgb(111_112_113)]">({commodityInfo?.ratingAmount||0})</span>
+                        <span className="text-[rgb(111_112_113)]">({commodityInfo?.ratingAmount || 0})</span>
                     </div>
 
 
                     {
                         comment.map((c, index) => (
                             <div key={index} className="mt-6 border-b-neutral-300 pb-6 border-b-[0.5px]">
-                                <StarList size={16} rating={c.rating} gap={2} />
+                                <StarList size={16} rating={c.rating} gap={2}/>
                                 <p className="text-[12px] text-[rgb(111_112_113)]">{c.userName} · {convertDateToString(new Date(c.createdAt))}</p>
                                 <p className="mt-4 text-[14px]">{c.comment}</p>
                             </div>
@@ -113,13 +118,12 @@ const CommentModalCommodityPage = () => {
                     }
 
                     {
-                        commentHasMore&&
-                        Array.from({length: 3}, (_, i) =>i).map(a => (
-                            <CommentModalPlaceholderCommodityPage key={a} />
+                        commentHasMore &&
+                        Array.from({length: 3}, (_, i) => i).map(a => (
+                            <CommentModalPlaceholderCommodityPage key={a}/>
                         ))
                     }
 
-                    {/*<button onClick={addCommentPage}>123</button>*/}
                 </div>
 
                 <button type="button" className="absolute top-5 right-5" onClick={closeModal}>

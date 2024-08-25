@@ -1,5 +1,5 @@
 import useMarketInfoStore from "../../hooks/useMarketInfoStore.ts";
-import SvgIcons from "../common/SvgIcons.tsx";
+import SvgIcons from "./SvgIcons.tsx";
 import useMarketInfo from "../../hooks/useMarketInfo.ts";
 
 
