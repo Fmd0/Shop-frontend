@@ -1,12 +1,10 @@
-import navCart from "../../assets/HomePage/navCart.svg"
-import navLogo from "../../assets/HomePage/navLogo.svg"
-import Search from "../../assets/HomePage/Search.svg";
 import {useState} from "react";
 import useCartInfoStore from "../../hooks/useCartInfoStore.ts";
 import LogoutModal from "./LogoutModal.tsx";
 import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
 import LikeAnchor from "./LikeAnchor.tsx";
 import PlaceholderList from "./PlaceholderList.tsx";
+import SvgIcons from "./SvgIcons.tsx";
 
 
 const NavBar = () => {
@@ -21,14 +19,14 @@ const NavBar = () => {
 
             {/*shop logo*/}
             <a href="/">
-                <img src={navLogo} alt="navLogo" className={`h-[30px] text-purple-600 transition-all duration-200`}/>
+                <SvgIcons.NavLogo className="h-[30px]" />
             </a>
 
             {/*like and cart link*/}
             <div className="flex items-center gap-1">
                 <LikeAnchor/>
                 <a href="/cart" className="relative p-[10px] rounded-[22px] hover:bg-neutral-100">
-                    <img src={navCart} alt="navCart" className="w-6"/>
+                    <SvgIcons.Cart className="size-6" />
                     {
                         cartAmount !== 0 &&
                         <p className="absolute right-1 top-1 w-4 h-4 rounded-[999px] bg-[rgb(84_51_235)] text-white text-[10px] grid place-items-center">{cartAmount}</p>
@@ -60,7 +58,7 @@ const NavBar = () => {
             {/*center search and placeholder list*/}
             <div
                 className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 overflow-hidden flex items-center  bg-neutral-100 rounded-2xl p-3 transition-all duration-200`}>
-                <img src={Search} alt="Search" className="w-5 mr-2"/>
+                <SvgIcons.Search className="size-5 mr-2 text-neutral-400" />
                 <form method="GET" action="/search" className="relative z-10 flex-1">
                     <input type="search" autoComplete="off"
                            className="w-full bg-transparent focus:outline-none"

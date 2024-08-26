@@ -1,6 +1,6 @@
 import SortByItem from "./SortByItem.tsx";
-import {useEffect, useState} from "react";
-import { getParamFromURL} from "../../utils/searchPageUtils.ts";
+import {useEffect, useRef, useState} from "react";
+import {getParamFromURL} from "../../utils/searchPageUtils.ts";
 import {sortByList} from "../../utils/data.ts";
 
 const SortByModal = ({modalOpen, toggleSortByModalOpen, setSortBy}: {
@@ -11,15 +11,27 @@ const SortByModal = ({modalOpen, toggleSortByModalOpen, setSortBy}: {
 
 
     const [sortByFormControl, setSortByFormControl] = useState<string>(getParamFromURL("sortBy")||"");
+    const sortByModalRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         setSortByFormControl(getParamFromURL("sortBy")||"");
     }, [modalOpen]);
 
+    useEffect(() => {
+        if(sortByModalRef.current) {
+            const position = sortByModalRef.current.getBoundingClientRect();
+            if(position.right > window.innerWidth) {
+                sortByModalRef.current.style.transform = `translate(${-position.width/2+window.innerWidth-position.right-4}px, 0)`
+            }
+        }
+    }, [modalOpen, sortByModalRef]);
+
+
     return (
         <div className={`absolute z-30 top-[calc(100%+6px)] left-1/2 -translate-x-1/2 w-[300px] bg-white text-nowrap pt-1 pb-5 px-5 rounded-3xl shadow-[0px_0px_8px_#00000026]
-        ${modalOpen?"hidden md:block":"hidden"}
-        `}>
+        ${modalOpen?"hidden md:block":"hidden"}`}
+             ref={sortByModalRef}
+        >
 
             {
                 sortByList.map((item) => (

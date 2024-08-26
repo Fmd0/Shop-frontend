@@ -1,5 +1,5 @@
-import closeModalSvg from "../../assets/MarketPage/closeModal.svg"
 import useCommodityPageStore from "../../hooks/useCommodityPageStore.ts";
+import SvgIcons from "../common/SvgIcons.tsx";
 
 const DescriptionModal = () => {
 
@@ -12,9 +12,8 @@ const DescriptionModal = () => {
     const description = commodityInfo?.description||"";
 
     return (
-        <div className={`hidden md:block fixed left-0 top-0 w-screen h-screen bg-neutral-500 z-50
-        duration-300 ease-[cubic-bezier(.16,1,.3,1)]
-        ${modalOpen ? "visible bg-opacity-50" : "invisible bg-opacity-0"}`}
+        <div className={`hidden md:block fixed left-0 top-0 w-screen h-screen z-50 bg-[#0006]
+        ${modalOpen ? "opacity-100 duration-300" : "opacity-0 pointer-events-none"}`}
              onClick={e => {
                  e.stopPropagation();
                  closeModal();
@@ -25,12 +24,12 @@ const DescriptionModal = () => {
                  onClick={(e) => e.stopPropagation()}
             >
                 <h1 className="p-5 text-[20px] font-semibold text-center">Description</h1>
-                <div className={`px-5 pt-2 text-[14px]`}>
+                <div className={`px-5 pt-2 text-[14px] font-normal`}>
                     {description}
                 </div>
 
                 <button type="button" className="absolute top-5 right-5" onClick={closeModal}>
-                    <img src={closeModalSvg} alt="closeModal" className="w-6"/>
+                    <SvgIcons.Close className="size-6 text-neutral-500" />
                 </button>
             </div>
 

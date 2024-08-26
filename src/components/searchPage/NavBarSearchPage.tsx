@@ -1,6 +1,3 @@
-import navCart from "../../assets/HomePage/navCart.svg"
-import navLogo from "../../assets/HomePage/navLogo.svg"
-import Search from "../../assets/HomePage/Search.svg";
 import {useState} from "react";
 import {useSearchInfoStore} from "../../hooks/useSearchInfoStore.ts";
 import {getParamFromURL} from "../../utils/searchPageUtils.ts";
@@ -9,6 +6,7 @@ import LogoutModal from "../common/LogoutModal.tsx";
 import useCartInfoStore from "../../hooks/useCartInfoStore.ts";
 import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
 import PlaceholderList from "../common/PlaceholderList.tsx";
+import SvgIcons from "../common/SvgIcons.tsx";
 
 
 const NavBarSearchPage = () => {
@@ -23,13 +21,13 @@ const NavBarSearchPage = () => {
         <header className="sticky top-0 left-0 z-50 bg-white hidden md:flex justify-between items-center p-4">
 
             <a href="/">
-                <img src={navLogo} alt="navLogo" className={`h-[30px] text-purple-600 transition-all duration-200`}/>
+                <SvgIcons.NavLogo className="h-[30px] w-[72px]" />
             </a>
 
             <div className="flex items-center gap-1">
                 <LikeAnchor/>
                 <a href="/cart" className="relative p-[10px] rounded-[22px] hover:bg-neutral-100">
-                    <img src={navCart} alt="navCart" className="w-6"/>
+                    <SvgIcons.Cart className="size-6" />
                     {
                         cartAmount !== 0 &&
                         <p className="absolute right-1 top-1 w-4 h-4 rounded-[999px] bg-[rgb(84_51_235)] text-white text-[10px] grid place-items-center">{cartAmount}</p>
@@ -59,7 +57,7 @@ const NavBarSearchPage = () => {
             </div>
             <div
                 className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 overflow-hidden flex items-center  bg-neutral-100 rounded-2xl p-3 transition-all duration-200`}>
-                <img src={Search} alt="Search" className="w-5 mr-2"/>
+                <SvgIcons.Search className="w-5 text-neutral-400 mr-2" />
                 <form method="GET" className="flex-1" onSubmit={(e) => {
                     e.preventDefault();
                     if (queryFormControl !== "") {

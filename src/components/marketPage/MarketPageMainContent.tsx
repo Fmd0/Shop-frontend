@@ -1,5 +1,3 @@
-import blackLink from "../../assets/MarketPage/blackLink.svg"
-import whiteLink from "../../assets/MarketPage/whiteLink.svg"
 import MoreInfoModal from "./MoreInfoModal.tsx";
 import useMarketPageCommodityInfoStore from "../../hooks/useMarketPageCommodityInfoStore.ts";
 import useMarketInfo from "../../hooks/useMarketInfo.ts";
@@ -8,6 +6,7 @@ import useMarketInfoStore from "../../hooks/useMarketInfoStore.ts";
 import PrivacyModal from "../commonModal/PrivacyModal.tsx";
 import RefundModal from "../commonModal/RefundModal.tsx";
 import ShippingModal from "../commonModal/ShippingModal.tsx";
+import SvgIcons from "../common/SvgIcons.tsx";
 
 
 const MarketPageMainContent = () => {
@@ -56,7 +55,7 @@ const MarketPageMainContent = () => {
                         </button>
                         <a className="border-neutral-400 border-[1px] px-3 text-center py-2 rounded-[10px] font-semibold flex items-center gap-[2px] duration-200 hover:bg-[rgba(0,0,0,.1)]"
                            href={marketInfo?.website||""} target="_blank">
-                            <img src={blackLink} alt="link" className="text-black w-4 object-cover"/>
+                            <SvgIcons.Link className="size-4 text-black" />
                             {marketInfo?.website?.replace("https://", "").replace("/", "") || ""}
                         </a>
 
@@ -123,8 +122,9 @@ const MarketPageMainContent = () => {
                            }}>
                             {
                                 marketInfo.bigLogoFontColor === "black"
-                                    ? <img src={blackLink} alt="link" className="w-4 object-cover"/>
-                                    : <img src={whiteLink} alt="link" className="w-4 object-cover"/>
+                                    ? <SvgIcons.Link className="size-4 text-black" />
+                                    : <SvgIcons.Link className="size-4 text-white" />
+
                             }
                             {marketInfo?.website?.replace("https://", "").replace("/", "") || ""}
                             <div

@@ -1,12 +1,12 @@
-import shopPay from "../../assets/HomePage/shopPay.png"
-import trackTop from "../../assets/HomePage/trackTop.png"
-import trackBottom from "../../assets/HomePage/trackBottom.png"
-import coinTop from "../../assets/HomePage/coinTop.png"
-import coinMiddle from "../../assets/HomePage/coinMiddle.png"
-import coinBottom from "../../assets/HomePage/coinBottom.png"
-import qrCode from "../../assets/HomePage/qrCode.svg"
-import appCorner from "../../assets/HomePage/appCorner.png"
-import aiShopping from "../../assets/HomePage/aiShopping.svg"
+import shopPay from "../../assets/shopPay.png"
+import trackTop from "../../assets/trackTop.png"
+import trackBottom from "../../assets/trackBottom.png"
+import coinTop from "../../assets/coinTop.png"
+import coinMiddle from "../../assets/coinMiddle.png"
+import coinBottom from "../../assets/coinBottom.png"
+import qrCode from "../../assets/qrCode.svg"
+import appCorner from "../../assets/appCorner.png"
+import aiShopping from "../../assets/aiShopping.svg"
 
 
 

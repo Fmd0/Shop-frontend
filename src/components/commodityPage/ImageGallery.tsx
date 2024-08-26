@@ -116,7 +116,7 @@ const ImageGallery = () => {
 
 
     return (
-        <>
+        <div>
             {/*big image gallery*/}
             <div className="relative cursor-zoom-in md:mb-4"
                  onClick={() => {
@@ -133,8 +133,8 @@ const ImageGallery = () => {
                     {
                         images.length > 0 &&  images.map((image, index) => (
                             <div key={index} className="flex-shrink-0 w-full flex items-center justify-center">
-                                    <div className="relative w-max mx-auto overflow-hidden md:rounded-2xl">
-                                        <img className="h-[65vh] max-w-full object-contain"
+                                    <div className="relative w-full md:w-max mx-auto overflow-hidden md:rounded-2xl">
+                                        <img className="h-[65vh] w-full md:max-w-full object-cover"
                                              src={image}
                                              alt="commodity"
                                         />
@@ -181,7 +181,10 @@ const ImageGallery = () => {
                 <div className="flex gap-1">
                     <div className="cursor-pointer w-11 h-11 grid place-items-center rounded-[999px] bg-white border-neutral-300 border-[1px] duration-300 hover:bg-neutral-300"
                          onClick={() => {
-                             if(imageIndex === 0) return;
+                             if(imageIndex === 0) {
+                                 setImageIndex(commodityImageLength.current-1);
+                                 return;
+                             }
                              setImageIndex(imageIndex-1);
                          }}>
                         <SvgIcons.LeftArrow className="size-5" />
@@ -199,7 +202,7 @@ const ImageGallery = () => {
                 </div>
             </div>
 
-        </>
+        </div>
     )
 }
 

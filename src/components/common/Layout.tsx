@@ -25,11 +25,16 @@ const Layout = ({children}: {
             setTimeout(() => {
                 isThrottled = false;
             }, 30)
-            if(window.scrollY > scrollY) {
-                setShowSmallNavBar(false);
-            }
-            else {
-                setShowSmallNavBar(true);
+            // console.log("window.scrollY", window.scrollY);
+            // console.log(window.scrollY - scrollY);
+            // console.log(window.document.documentElement.scrollHeight - window.innerHeight);
+            if(window.scrollY>0 && window.scrollY<window.document.documentElement.scrollHeight - window.innerHeight) {
+                if(window.scrollY - scrollY > 10) {
+                    setShowSmallNavBar(false);
+                }
+                else if(window.scrollY - scrollY < -10) {
+                    setShowSmallNavBar(true);
+                }
             }
             scrollY = window.scrollY;
         }

@@ -1,10 +1,9 @@
-import MainContentLogo from "../../assets/HomePage/MainContentLogo.svg";
-import Search from "../../assets/HomePage/Search.svg";
-import ShopPay from "../../assets/HomePage/ShopPay.svg";
 import {searchPlaceholderList} from "../../utils/data.ts";
 import {useEffect, useState} from "react";
 import {useHomeBanner} from "../../hooks/useHomeBanner.ts";
 import SmallPicRow from "./SmallPicRow.tsx";
+import SvgIcons from "../common/SvgIcons.tsx";
+import ShopPay from "../../assets/ShopPay.svg"
 
 
 const SmallHomePageMainContent = () => {
@@ -33,13 +32,13 @@ const SmallHomePageMainContent = () => {
         <div className="md:hidden">
             <div className="mt-12 flex flex-col gap-6">
 
-                <img src={MainContentLogo} alt="MainContentLogo" className="h-12 self-center"/>
+                <SvgIcons.MainContentLogo className="w-32 h-12 self-center" />
 
                 <form className="px-4 rounded-3xl"
                       method="GET" action="/search">
 
                     <div className="relative flex items-center p-3 bg-[rgb(242_244_245)] rounded-2xl overflow-hidden">
-                        <img src={Search} alt="Search" className="w-5 mr-2"/>
+                        <SvgIcons.Search className="size-5 mr-2 text-neutral-500" />
                         <input type="search" autoComplete="off"
                                className="relative z-10 flex-grow-[1] bg-transparent focus:outline-none"
                                value={data} name="query"

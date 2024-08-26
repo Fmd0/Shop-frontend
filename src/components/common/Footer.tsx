@@ -1,6 +1,6 @@
-import qrCode from "../../assets/HomePage/qrCode.svg"
-import appStore from "../../assets/HomePage/appStore.svg"
-import googlePlay from "../../assets/HomePage/googlePlay.svg"
+import qrCode from "../../assets/qrCode.svg"
+import appStore from "../../assets/appStore.svg"
+import googlePlay from "../../assets/googlePlay.svg"
 
 
 

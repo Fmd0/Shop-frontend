@@ -23,7 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 
-src/assets
+src/assets/HomePage
+src/assets/MarketPage
 
 yarn.lock
 package-lock.json

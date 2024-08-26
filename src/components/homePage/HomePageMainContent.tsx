@@ -1,9 +1,8 @@
 import PicRow from "./PicRow.tsx";
 import { searchPlaceholderList} from "../../utils/data.ts";
-import MainContentLogo from "../../assets/HomePage/MainContentLogo.svg"
-import Search from "../../assets/HomePage/Search.svg"
 import {useEffect, useState} from "react";
 import {useHomeBanner} from "../../hooks/useHomeBanner.ts";
+import SvgIcons from "../common/SvgIcons.tsx";
 
 
 const HomePageMainContent = () => {
@@ -51,12 +50,12 @@ const HomePageMainContent = () => {
                 bg-[radial-gradient(50%_50%_at_50%_50%,color(display-p3_1_1_1)_55.89%,color(display-p3_1_1_1_/_0.00)_100%)]
                 "></div>
 
-                <img src={MainContentLogo} alt="MainContentLogo" className="h-[72px] self-center pointer-events-auto"/>
+                <SvgIcons.MainContentLogo className="w-[173.14px] h-[72px] self-center pointer-events-auto" />
 
                 <form method="GET" action="/search" className="pointer-events-auto self-center bg-neutral-300 bg-opacity-70 w-full max-w-[530px] mx-4 p-3 rounded-3xl">
 
                         <div className="relative flex items-center p-3 bg-white rounded-2xl overflow-hidden">
-                            <img src={Search} alt="Search" className="w-5 mr-2"/>
+                            <SvgIcons.Search className="size-5 mr-2 text-neutral-500" />
                             <input type="search" autoComplete="off"
                                    className="relative z-10 flex-grow-[1] bg-transparent focus:outline-none"
                                    value={data} name="query"

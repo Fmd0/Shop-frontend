@@ -139,7 +139,7 @@ const ContactModal = ({data, modalOpen, closeModal}: {
                 }
 
                 <button type="button" className="absolute top-5 right-5" onClick={closeModal}>
-                    <SvgIcons.Close className="size-6" />
+                    <SvgIcons.Close className="size-6 text-neutral-500" />
                 </button>
             </div>
         </div>

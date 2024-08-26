@@ -1,10 +1,7 @@
 import useMarketInfoStore from "../../hooks/useMarketInfoStore.ts";
-import privacyPolicy from "../../assets/MarketPage/privacyPolicy.svg"
-import refundPolicy from "../../assets/MarketPage/refundPolicy.svg"
-import shippingPolicy from "../../assets/MarketPage/shippingPolicy.svg"
-import contact from "../../assets/MarketPage/contact.svg"
 import useMarketPageCommodityInfoStore from "../../hooks/useMarketPageCommodityInfoStore.ts";
 import useMarketInfo from "../../hooks/useMarketInfo.ts";
+import SvgIcons from "../common/SvgIcons.tsx";
 
 
 
@@ -20,7 +17,7 @@ const MoreInfoModal = () => {
     }
 
     return (
-        <div className={`bg-white text-black rounded-xl absolute z-10 top-[calc(100%+5px)] left-1/2 -translate-x-1/2 p-2 text-nowrap min-w-max w-48
+        <div className={`bg-white text-black rounded-xl absolute z-10 top-[calc(100%+5px)] left-0 p-2 text-nowrap min-w-max w-48
         border-[#0000001a] border-[0.5px] text-[16px] tracking-[0.15px] font-normal flex flex-col
         shadow-[0px_0px_16px_rgba(0,0,0,0.1)]
         ${moreInfoModalOpen?"":"hidden"}
@@ -30,7 +27,7 @@ const MoreInfoModal = () => {
                     <button type="button" className="flex flex-row items-center gap-2 p-3 rounded-xl duration-300 hover:bg-[#0000001a]"
                             onClick={openPrivacyModalOpen}
                     >
-                        <img src={privacyPolicy} alt="privacyPolicy" className="w-5 h-5 object-cover"/>
+                        <SvgIcons.PrivacyPolicy className="size-5"/>
                         <p>Privacy policy</p>
                     </button>
                 )
@@ -40,7 +37,7 @@ const MoreInfoModal = () => {
                     <button type="button" className="flex flex-row items-center gap-2 p-3 rounded-xl duration-300 hover:bg-[#0000001a]"
                             onClick={openRefundModalOpen}
                     >
-                        <img src={refundPolicy} alt="refundPolicy" className="w-5 h-5 object-cover"/>
+                        <SvgIcons.RefundPolicy className="size-5"/>
                         <p>Refund policy</p>
                     </button>
                 )
@@ -50,7 +47,7 @@ const MoreInfoModal = () => {
                     <button type="button" className="flex flex-row items-center gap-2 p-3 rounded-xl duration-300 hover:bg-[#0000001a]"
                             onClick={openShippingModalOpen}
                     >
-                        <img src={shippingPolicy} alt="shippingPolicy" className="w-5 h-5 object-cover"/>
+                        <SvgIcons.ShippingPolicy className="size-5"/>
                         <p>Shipping policy</p>
                     </button>
                 )
@@ -59,7 +56,7 @@ const MoreInfoModal = () => {
             <button type="button" className="flex flex-row items-center gap-2 p-3 rounded-xl duration-300 hover:bg-[#0000001a]"
                     onClick={openContactModalOpen}
             >
-                <img src={contact} alt="contact" className="w-5 h-5 object-cover"/>
+                <SvgIcons.Contact className="size-5"/>
                 <p>Contact {marketInfo?.name||""}</p>
             </button>
         </div>
