@@ -19,7 +19,7 @@ const PicRow = ({data}:{data: picArrayObj}) => {
 
 
     const startPlay = () => {
-        return setInterval(() => {
+        return window.setInterval(() => {
             if(rowRef.current){
                 startPointRef.current++;
                 if(data.isDirectionToRight){
