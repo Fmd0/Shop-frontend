@@ -1,5 +1,5 @@
 import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
-import {mutateUserLikeList} from "../../hooks/useUserLikeList.ts";
+import {mutateUserLikeList} from "../../hooks/useUserLikeIdList.ts";
 
 
 const SmallLogoutModal = () => {
@@ -12,24 +12,28 @@ const SmallLogoutModal = () => {
     } = useUserInfoStore();
 
     const handleClick = () => {
-        fetch(`${import.meta.env.VITE_AUTH_API_ADDRESS}/api/session/user/logout`, {
-            method: "POST",
-            credentials: "include",
-        })
-            .then(res => {
-                if(res.status !== 200) {
-                    throw res.json()
-                }
-                return res.json();
-            })
-            .then(() => {
-                closeSmallLogoutModal();
-                clearSignInfo();
-                mutateUserLikeList();
-            })
-            .catch(err => {
-                console.log(err);
-            })
+        // fetch(`${import.meta.env.VITE_AUTH_API_ADDRESS}/api/session/user/logout`, {
+        //     method: "POST",
+        //     credentials: "include",
+        // })
+        //     .then(res => {
+        //         if(res.status !== 200) {
+        //             throw res.json()
+        //         }
+        //         return res.json();
+        //     })
+        //     .then(() => {
+        //         closeSmallLogoutModal();
+        //         clearSignInfo();
+        //         mutateUserLikeList();
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //     })
+        closeSmallLogoutModal();
+        clearSignInfo();
+        mutateUserLikeList();
+
     }
 
     return (

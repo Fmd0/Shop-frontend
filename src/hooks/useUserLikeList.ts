@@ -1,32 +1,32 @@
 
-import useSWR, {mutate} from "swr";
 import {credentialFetcher} from "../utils/fetcher.ts";
 import {getEmailFromLocalStorage} from "../utils/localStorage.ts";
+import useSWRImmutable from "swr/immutable";
 
 
 const useUserLikeList = () => {
-    const {data: userLikeList, error}: {
-        data: {msg: string, data: string[]},
+    const {data, error}: {
+        data: {msg: string, data: {
+                id: string,
+                name: string,
+                image: string,
+                rating: string,
+                ratingAmount: string,
+                price: number,
+                promotingPrice: number,
+            }[]},
         error: boolean|undefined
-    } = useSWR(
+    } = useSWRImmutable(
         getEmailFromLocalStorage() === ""
             ? null
-            :`${import.meta.env.VITE_AUTH_API_ADDRESS}/api/session/user/like/id`
+            :`${import.meta.env.VITE_AUTH_API_ADDRESS}/api/session/user/like`
         , credentialFetcher
     );
-
-    if(userLikeList?.msg === "Not auth") {
-        userLikeList.data = [];
+    if(data?.msg === "Not auth") {
+        data.data = [];
     }
-    return {userLikeList, error};
+    return {data, error};
 }
 
 
-const mutateUserLikeList = () => {
-    mutate(`${import.meta.env.VITE_AUTH_API_ADDRESS}/api/session/user/like/id`);
-}
-
-export {
-    useUserLikeList,
-    mutateUserLikeList,
-}
+export default useUserLikeList;

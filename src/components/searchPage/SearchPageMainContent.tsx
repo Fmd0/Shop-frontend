@@ -9,7 +9,7 @@ import SizeModal from "./SizeModal.tsx";
 import ColorModal from "./ColorModal.tsx";
 import ShipToModal from "./ShipToModal.tsx";
 import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
-import {useUserLikeList} from "../../hooks/useUserLikeList.ts";
+import {useUserLikeIdList} from "../../hooks/useUserLikeIdList.ts";
 import SmallSearchInputSearchPage from "./SmallSearchInputSearchPage.tsx";
 import Spinner from "../common/Spinner.tsx";
 import SmallRatingsModal from "./SmallRatingsModal.tsx";
@@ -92,7 +92,7 @@ const SearchPageMainContent = () => {
     }, []);
 
 
-    const {userLikeList={msg: "", data: []}} = useUserLikeList();
+    const {userLikeList={msg: "", data: []}} = useUserLikeIdList();
     const {handleClickLike} = useUserInfoStore();
 
     return (

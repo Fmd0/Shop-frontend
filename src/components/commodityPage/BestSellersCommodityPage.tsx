@@ -1,13 +1,13 @@
 import CommodityItem from "../marketPage/CommodityItem.tsx";
 import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
-import {useUserLikeList} from "../../hooks/useUserLikeList.ts";
+import {useUserLikeIdList} from "../../hooks/useUserLikeIdList.ts";
 import useCommodityInfo from "../../hooks/useCommodityInfo.ts";
 
 const BestSellersCommodityPage = () => {
 
     const id = new URLSearchParams(window.location.search).get("id")||"";
     const {data: {data: {commodity: commodityInfo, bestSellingCommodities}} = {data: {commodity: null, bestSellingCommodities: []}}} = useCommodityInfo(id);
-    const {userLikeList={msg: "", data: []}} = useUserLikeList();
+    const {userLikeList={msg: "", data: []}} = useUserLikeIdList();
     const {handleClickLike} = useUserInfoStore();
 
 

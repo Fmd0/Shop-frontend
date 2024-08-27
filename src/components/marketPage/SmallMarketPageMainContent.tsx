@@ -7,6 +7,7 @@ import SmallRefundModal from "../commonModal/SmallRefundModal.tsx";
 import SmallShippingModal from "../commonModal/SmallShippingModal.tsx";
 import SvgIcons from "../common/SvgIcons.tsx";
 import useMarketInfoStore from "../../hooks/useMarketInfoStore.ts";
+import FollowButton from "./FollowButton.tsx";
 
 
 const SmallMarketPageMainContent = () => {
@@ -72,7 +73,8 @@ const SmallMarketPageMainContent = () => {
                     <div className="flex items-center gap-3">
 
                         {/*follow button*/}
-                        <button type="button" className="bg-[rgb(18,18,18)] duration-200 hover:bg-[rgb(42,42,42)] text-white py-2 px-[25px] font-medium text-[14px] rounded-lg">Follow</button>
+                        <FollowButton bgColor="black" textColor="white" isSmallCase={true} />
+                        {/*<button type="button" className="bg-[rgb(18,18,18)] duration-200 hover:bg-[rgb(42,42,42)] text-white py-2 px-[25px] font-medium text-[14px] rounded-lg">Follow</button>*/}
 
                         {/*more info button*/}
                         <button type="button" className="size-7 duration-200 hover:bg-[#0000001a] rounded-[999px] flex items-center justify-center"

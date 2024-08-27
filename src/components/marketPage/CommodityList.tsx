@@ -1,12 +1,12 @@
 import CommodityItem from "./CommodityItem.tsx";
 import useMarketPageCommodityInfoStore from "../../hooks/useMarketPageCommodityInfoStore.ts";
-import {useUserLikeList} from "../../hooks/useUserLikeList.ts";
+import {useUserLikeIdList} from "../../hooks/useUserLikeIdList.ts";
 import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
 
 const CommodityList = () => {
 
     const {commodityList} = useMarketPageCommodityInfoStore();
-    const {userLikeList={msg: "", data: []}, error} = useUserLikeList();
+    const {userLikeList={msg: "", data: []}, error} = useUserLikeIdList();
     const {handleClickLike} = useUserInfoStore();
 
     if(error) {

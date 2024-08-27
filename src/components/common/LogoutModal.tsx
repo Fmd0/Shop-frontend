@@ -1,30 +1,35 @@
 import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
-import {mutateUserLikeList} from "../../hooks/useUserLikeList.ts";
+import {mutateUserLikeList} from "../../hooks/useUserLikeIdList.ts";
 
 
 const LogoutModal = () => {
 
-    const { logoutModalOpen, clearSignInfo} = useUserInfoStore();
+    const {
+        logoutModalOpen,
+        clearSignInfo
+    } = useUserInfoStore();
 
     const handleClick = () => {
-        fetch(`${import.meta.env.VITE_AUTH_API_ADDRESS}/api/session/user/logout`, {
-            method: "POST",
-            credentials: "include",
-        })
-            .then(res => {
-                if(res.status !== 200) {
-                    throw res.json()
-                }
-                return res.json();
-            })
-            .then(() => {
-
-                clearSignInfo();
-                mutateUserLikeList();
-            })
-            .catch(err => {
-                console.log(err);
-            })
+        // fetch(`${import.meta.env.VITE_AUTH_API_ADDRESS}/api/session/user/logout`, {
+        //     method: "POST",
+        //     credentials: "include",
+        // })
+        //     .then(res => {
+        //         if(res.status !== 200) {
+        //             throw res.json()
+        //         }
+        //         return res.json();
+        //     })
+        //     .then(() => {
+        //
+        //         clearSignInfo();
+        //         mutateUserLikeList();
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //     })
+        clearSignInfo();
+        mutateUserLikeList();
     }
     return (
         <div className={`absolute top-[calc(100%+6px)] bg-white right-1 p-2 rounded-xl w-48

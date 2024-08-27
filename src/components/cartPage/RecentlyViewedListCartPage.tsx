@@ -1,12 +1,12 @@
 import {getRecentlyViewedInfoFromLocalStorage} from "../../utils/localStorage.ts";
 import CommodityItemRecentlyViewedPage from "../recentlyViewedPage/CommodityItemRecentlyViewedPage.tsx";
 import {RecentlyViewedItemInfoType} from "../../utils/type.ts";
-import {useUserLikeList} from "../../hooks/useUserLikeList.ts";
+import {useUserLikeIdList} from "../../hooks/useUserLikeIdList.ts";
 import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
 
 const RecentlyViewedListCartPage = () => {
 
-    const {userLikeList={msg: "", data: []}} = useUserLikeList();
+    const {userLikeList={msg: "", data: []}} = useUserLikeIdList();
     const {handleClickLike} = useUserInfoStore();
     const recentlyViewedList = getRecentlyViewedInfoFromLocalStorage();
 

@@ -1,10 +1,16 @@
 import {create} from "zustand";
-import {getEmailFromLocalStorage, setEmailToLocalStorage} from "../utils/localStorage.ts";
-import {mutateUserLikeList} from "./useUserLikeList.ts";
+import {
+    getEmailFromLocalStorage,
+    getTokenFromLocalStorage,
+    setEmailToLocalStorage,
+    setTokenToLocalStorage
+} from "../utils/localStorage.ts";
+import {mutateUserLikeList} from "./useUserLikeIdList.ts";
 import {LikedCommodityInfoType} from "../utils/type.ts";
 
 interface State {
     email: string;
+    token: string;
     signInModalOpen: boolean;
     logoutModalOpen: boolean;
     smallLogoutModalOpen: boolean;
@@ -16,6 +22,7 @@ interface State {
 
 interface Actions {
     setEmail: (email: string) => void;
+    setToken: (token: string) => void;
     openSignInModal: () => void;
     closeSignInModal: () => void;
     toggleLogoutModalOpen: () => void;
@@ -33,6 +40,7 @@ interface Actions {
 
 const initialState = {
     email: getEmailFromLocalStorage(),
+    token: getTokenFromLocalStorage(),
     signInModalOpen: false,
     smallLogoutModalOpen: false,
     like: [],
@@ -53,6 +61,10 @@ const useUserInfoStore = create<State & Actions>(set => ({
         set({email});
         setEmailToLocalStorage(email);
     },
+    setToken: (token: string) => {
+        set({token});
+        setTokenToLocalStorage(token);
+    },
     openSignInModal: () => {
         set({signInModalOpen: true});
         window.document.body.style.overflow = "hidden";
@@ -72,8 +84,9 @@ const useUserInfoStore = create<State & Actions>(set => ({
     },
     closeAllModal: () => set({...initialModalState}),
     clearSignInfo: () => {
-        set({email: ""});
+        set({email: "", token: ""});
         setEmailToLocalStorage("");
+        setTokenToLocalStorage("");
     },
     setLike: (like) => set({like}),
     handleClickLike: (id, checked) => set(state => {
@@ -81,11 +94,13 @@ const useUserInfoStore = create<State & Actions>(set => ({
             state.signInModalOpen = true;
             return {};
         }
-
         fetch(`${import.meta.env.VITE_AUTH_API_ADDRESS}/api/session/user/like`, {
             method: checked?"DELETE":"POST",
             body: new URLSearchParams("id="+id),
-            credentials: "include",
+            headers: {
+                authorization: "Bearer " + getTokenFromLocalStorage(),
+                contentType: "application/x-www-form-urlencoded",
+            }
         }).then((res) => {
             if (res.status !== 200) {
                 throw res.json()
@@ -94,7 +109,7 @@ const useUserInfoStore = create<State & Actions>(set => ({
             if(!checked) {
                 clearTimeout(state.addedToLikeModalTimeId);
                 state.setAddedToLikeModalOpen(true);
-                state.setAddedToLikeModalTimeId(setTimeout(() => state.setAddedToLikeModalOpen(false), 3000))
+                state.setAddedToLikeModalTimeId(window.setTimeout(() => state.setAddedToLikeModalOpen(false), 3000))
             }
         }).catch((err) => {
             console.log(err);

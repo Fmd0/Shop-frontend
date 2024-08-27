@@ -1,11 +1,11 @@
-import {useUserLikeList} from "../../hooks/useUserLikeList.ts";
+import {useUserLikeIdList} from "../../hooks/useUserLikeIdList.ts";
 import useCommodityPageStore from "../../hooks/useCommodityPageStore.ts";
 import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
 
 
 const BigAddToLikeButton = () => {
 
-    const {userLikeList={msg: "", data: []}, error} = useUserLikeList();
+    const {userLikeList={msg: "", data: []}, error} = useUserLikeIdList();
     const {commodityInfo} = useCommodityPageStore();
     const {handleClickLike} = useUserInfoStore();
 

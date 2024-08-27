@@ -2,7 +2,7 @@ import {useEffect, useRef} from "react";
 import PicCommodityItem from "./PicCommodityItem.tsx";
 import PicMerchantItem from "./PicMerchantItem.tsx";
 import {HomeBannerType} from "../../utils/type.ts";
-import {useUserLikeList} from "../../hooks/useUserLikeList.ts";
+import {useUserLikeIdList} from "../../hooks/useUserLikeIdList.ts";
 import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
 
 
@@ -47,7 +47,7 @@ const PicRow = ({data}:{data: picArrayObj}) => {
         timeIdRef.current = startPlay();
     }
 
-    const {userLikeList={msg:"", data:[]}} = useUserLikeList();
+    const {userLikeList={msg:"", data:[]}} = useUserLikeIdList();
 
 
     return (

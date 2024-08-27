@@ -1,7 +1,7 @@
 import {RecentlyViewedItemInfoType} from "../../utils/type.ts";
 import CommodityItemRecentlyViewedPage from "./CommodityItemRecentlyViewedPage.tsx";
 import useRecentlyViewedInfoStore from "../../hooks/useRecentlyViewedInfoStore.ts";
-import {useUserLikeList} from "../../hooks/useUserLikeList.ts";
+import {useUserLikeIdList} from "../../hooks/useUserLikeIdList.ts";
 import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
 
 
@@ -9,7 +9,7 @@ const RecentlyViewedPageMainContent = () => {
 
     const {recentlyViewedInfo} = useRecentlyViewedInfoStore();
     const {handleClickLike} = useUserInfoStore();
-    const {userLikeList={msg: "", data: []}} = useUserLikeList();
+    const {userLikeList={msg: "", data: []}} = useUserLikeIdList();
 
     return (
         <div className="max-w-[1144px] mx-auto px-2 tracking-[0.15px] font-medium mt-3 md:mt-12">

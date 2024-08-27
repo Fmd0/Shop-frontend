@@ -1,11 +1,11 @@
 import useUserInfoStore from "../../hooks/useUserInfoStore.ts";
 import {FormEvent, useState} from "react";
-import {mutateUserLikeList} from "../../hooks/useUserLikeList.ts";
+import {mutateUserLikeList} from "../../hooks/useUserLikeIdList.ts";
 
 
 const SignInFormModal = () => {
 
-    const {signInModalOpen: modalOpen, closeSignInModal: closeModal, setEmail, setLike, email} = useUserInfoStore();
+    const {signInModalOpen: modalOpen, closeSignInModal: closeModal, setEmail, setLike, email, setToken} = useUserInfoStore();
     const [isSignIn, setIsSignIn] = useState<boolean>(true);
     const [fetchStatus, setFetchStatus] = useState<string>("init");
 
@@ -15,7 +15,6 @@ const SignInFormModal = () => {
         const data = new URLSearchParams(new FormData(event.currentTarget));
         fetch(`${import.meta.env.VITE_AUTH_API_ADDRESS}/api/session/user/${isSignIn ? "login" : "register"}`, {
             method: "POST",
-            credentials: "include",
             headers: {
                 ContentType: "x-www-form-urlencoded",
             },
@@ -30,11 +29,8 @@ const SignInFormModal = () => {
             .then(data => {
                 closeModal();
                 mutateUserLikeList();
-                setTimeout(() => {
-
-                },)
                 setEmail(data.email);
-                setLike(data.like)
+                setToken(data.token);
                 setFetchStatus("success");
             })
             .catch(err => {

@@ -65,3 +65,11 @@ export const setEmailToLocalStorage = (email: string) => {
 export const getEmailFromLocalStorage = () => {
     return String(localStorage.getItem("email")||"");
 }
+
+export const setTokenToLocalStorage = (token: string) => {
+    localStorage.setItem("token", token);
+}
+
+export const getTokenFromLocalStorage = () => {
+    return String(localStorage.getItem("token")||"");
+}
