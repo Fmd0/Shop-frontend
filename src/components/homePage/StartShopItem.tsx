@@ -12,7 +12,7 @@ const StartShopItem = ({relativeId, logo, imageLeft, imageRight, name, rating, r
     hadMoved: MutableRefObject<boolean>,
 }) => {
     return (
-        <a href={`/market?id=${relativeId}`} className="flex-[1_1_0]" onClick={(event) => {
+        <a href={`./market?id=${relativeId}`} className="flex-[1_1_0]" onClick={(event) => {
             if(hadMoved.current) {
                 event.preventDefault();
             }

@@ -42,13 +42,13 @@ const NavBarHomePage = () => {
     return (
         <header className="hidden md:flex sticky top-0 left-0 z-50 bg-white justify-between items-center p-4">
 
-            <a href="/">
+            <a href="./">
                 <SvgIcons.NavLogo className={`h-[30px] w-[72px] duration-200 ${show ? "opacity-100" : "opacity-0"}`} />
             </a>
 
             <div className="flex items-center gap-1">
                 <LikeAnchor />
-                <a href="/cart" className="relative p-[10px] rounded-[22px] hover:bg-neutral-100">
+                <a href="./cart" className="relative p-[10px] rounded-[22px] hover:bg-neutral-100">
                     <SvgIcons.Cart className="size-6" />
                     {
                         cartAmount !== 0 &&
@@ -82,7 +82,7 @@ const NavBarHomePage = () => {
             ${show ? "opacity-100" : "opacity-0"}
             `}>
                 <SvgIcons.Search className="w-5 text-neutral-500" />
-                <form action="/search" className="flex-1">
+                <form action="search" className="flex-1">
                     <input type="search" autoComplete="off" name="query"
                            className="relative z-10 w-full bg-transparent focus:outline-none"
                            value={searchValue}

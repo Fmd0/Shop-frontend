@@ -7,7 +7,7 @@ const SmallNavBar = () => {
 
     return (
         <header className={`duration-[250ms] ${showSmallNavBar?"translate-y-0":"-translate-y-full"} sticky z-20 left-0 right-0 top-0 md:hidden bg-white p-3 flex items-center justify-between border-b-[1px] border-[#0000001]`}>
-            <a href="/">
+            <a href="./">
                 <svg width="101" height="42" viewBox="0 0 101 42" fill="none" xmlns="http://www.w3.org/2000/svg"
                      className="h-[24px] w-[auto] text-[rgb(84_51_235)]">
                     <path

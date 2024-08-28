@@ -35,7 +35,7 @@ const SmallHomePageMainContent = () => {
                 <SvgIcons.MainContentLogo className="w-32 h-12 self-center" />
 
                 <form className="px-4 rounded-3xl"
-                      method="GET" action="/search">
+                      method="GET" action="search">
 
                     <div className="relative flex items-center p-3 bg-[rgb(242_244_245)] rounded-2xl overflow-hidden">
                         <SvgIcons.Search className="size-5 mr-2 text-neutral-500" />

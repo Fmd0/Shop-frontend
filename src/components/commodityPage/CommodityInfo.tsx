@@ -48,7 +48,7 @@ const CommodityInfo = () => {
         <div className="flex flex-col">
             {/*market icon, name and more button*/}
             <div className="flex items-center justify-between">
-                <a href={`/market?id=${commodityInfo?.market?.id || ""}`}>
+                <a href={`./market?id=${commodityInfo?.market?.id || ""}`}>
                     <div className="flex items-center gap-1.5">
                         {
                             commodityInfo?.market?.icon && commodityInfo.market.icon!=="" &&
@@ -352,7 +352,7 @@ const CommodityInfo = () => {
             {/*four images market part*/}
             {
                 commodityInfo?.market &&
-                <a href={`/market?id=${commodityInfo?.market.id || ""}`}>
+                <a href={`./market?id=${commodityInfo?.market.id || ""}`}>
                     <div
                         className="relative cursor-pointer mt-8 rounded-xl overflow-hidden border-neutral-300 border-[1px] group/commodityPageMarket">
                         <div className="relative grid grid-cols-4">

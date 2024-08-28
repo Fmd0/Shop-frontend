@@ -18,14 +18,14 @@ const NavBar = () => {
         <header className="hidden md:flex sticky top-0 left-0 z-50 bg-white justify-between items-center p-4">
 
             {/*shop logo*/}
-            <a href="/">
+            <a href="./">
                 <SvgIcons.NavLogo className="h-[30px]" />
             </a>
 
             {/*like and cart link*/}
             <div className="flex items-center gap-1">
                 <LikeAnchor/>
-                <a href="/cart" className="relative p-[10px] rounded-[22px] hover:bg-neutral-100">
+                <a href="./cart" className="relative p-[10px] rounded-[22px] hover:bg-neutral-100">
                     <SvgIcons.Cart className="size-6" />
                     {
                         cartAmount !== 0 &&
@@ -59,7 +59,7 @@ const NavBar = () => {
             <div
                 className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 overflow-hidden flex items-center  bg-neutral-100 rounded-2xl p-3 transition-all duration-200`}>
                 <SvgIcons.Search className="size-5 mr-2 text-neutral-400" />
-                <form method="GET" action="/search" className="relative z-10 flex-1">
+                <form method="GET" action="search" className="relative z-10 flex-1">
                     <input type="search" autoComplete="off"
                            className="w-full bg-transparent focus:outline-none"
                            value={searchValue}

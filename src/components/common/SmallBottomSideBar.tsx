@@ -17,7 +17,7 @@ const SmallBottomSideBar = () => {
 
             {/*home button*/}
             <div className="cursor-pointer size-14 flex items-center justify-center">
-                <a href="/">
+                <a href="./">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                          className="size-6 text-[rgb(111_112_113)]" data-testid="icon-home" stroke="none">
                         <path
@@ -29,7 +29,7 @@ const SmallBottomSideBar = () => {
 
             {/*search button*/}
             <div className="cursor-pointer size-14 flex items-center justify-center">
-                <a href="/search">
+                <a href="./search">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                          className="size-6 text-[rgb(111_112_113)]" data-testid="icon-search" stroke="none">
                         <path
@@ -41,7 +41,7 @@ const SmallBottomSideBar = () => {
 
             {/*cart button*/}
             <div className="cursor-pointer size-14 flex items-center justify-center">
-                <a href="/cart" className="relative">
+                <a href="./cart" className="relative">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                          className="size-6 text-[rgb(111_112_113)]" data-testid="icon-cart-filled" stroke="none">
                         <path d="M19.1297 17.3512L20.7536 6.5249H5.05542L7.10589 17.3512H19.1297Z"></path>

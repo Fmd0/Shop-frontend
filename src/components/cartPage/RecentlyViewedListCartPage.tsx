@@ -17,7 +17,7 @@ const RecentlyViewedListCartPage = () => {
                 recentlyViewedList.length > 0 &&
                 <div>
                     {/*top part */}
-                    <a href="/recently-viewed">
+                    <a href="./recently-viewed">
                         <div className="flex items-center gap-2">
                             <p className="text-lg md:text-2xl">Recently Viewed</p>
                             <div className="size-6 md:size-8 bg-neutral-100  rounded-[999px] grid place-items-center">

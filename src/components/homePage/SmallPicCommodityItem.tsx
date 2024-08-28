@@ -6,7 +6,7 @@ const SmallPicCommodityItem = ({id, img}: {
 }) => {
 
     return (
-        <a href={`/commodity?id=${id}`}>
+        <a href={`./commodity?id=${id}`}>
             <div
                 className="relative cursor-pointer size-[100px] overflow-hidden rounded-lg group/picCommodityItem">
                 <img className="w-full h-full object-cover object-center duration-200 group-hover/picCommodityItem:scale-[105%]"

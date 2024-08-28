@@ -27,7 +27,7 @@ const HomePageMainContent = () => {
     const {data: homeBannerData={msg: "", data: []}} = useHomeBanner();
 
     return (
-        <div className="hidden md:block overflow-hidden relative">
+        <div className="hidden md:block overflow-hidden min-h-64 relative">
             <div className="flex flex-col gap-4 overflow-hidden">
                 <PicRow data={{
                     data: homeBannerData?.data.filter(d => d.row === "ROW0"),
@@ -52,7 +52,7 @@ const HomePageMainContent = () => {
 
                 <SvgIcons.MainContentLogo className="w-[173.14px] h-[72px] self-center pointer-events-auto" />
 
-                <form method="GET" action="/search" className="pointer-events-auto self-center bg-neutral-300 bg-opacity-70 w-full max-w-[530px] mx-4 p-3 rounded-3xl">
+                <form method="GET" action="search" className="pointer-events-auto self-center bg-neutral-300 bg-opacity-70 w-full max-w-[530px] mx-4 p-3 rounded-3xl">
 
                         <div className="relative flex items-center p-3 bg-white rounded-2xl overflow-hidden">
                             <SvgIcons.Search className="size-5 mr-2 text-neutral-500" />

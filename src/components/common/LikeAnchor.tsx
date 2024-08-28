@@ -5,7 +5,7 @@ const LikeAnchor = () => {
     const {email, openSignInModal} = useUserInfoStore();
 
     return (
-        <a href="/like" className="p-[10px] rounded-[22px] hover:bg-neutral-100" onClick={(e) => {
+        <a href="./like" className="p-[10px] rounded-[22px] hover:bg-neutral-100" onClick={(e) => {
             if (!email) {
                 e.preventDefault();
                 openSignInModal();

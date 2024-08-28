@@ -14,7 +14,7 @@ const CommodityItemCartPage = ({id, name, price, promotingPrice, image, skuKey, 
 
     const {addCartAmount, subtractCartAmount, updateCartAmount} = useCartInfoStore();
     return (
-        <a href={`/commodity?id=${id}`}>
+        <a href={`./commodity?id=${id}`}>
             <div className="grid grid-cols-[auto_1fr] gap-6">
 
                 {/*left part an image*/}

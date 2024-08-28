@@ -15,7 +15,7 @@ const CommodityItem = ({id, name, image, rating, ratingAmount, price, promotingP
 ) => {
 
     return (
-        <a href={`/commodity?id=${id}`}>
+        <a href={`./commodity?id=${id}`}>
             <div className="cursor-pointer  group/CommodityItem tracking-[0.15px] text-[12px]">
                 <div className="relative overflow-hidden rounded-xl">
                     <img src={image} alt="picItem"

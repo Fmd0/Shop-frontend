@@ -20,13 +20,13 @@ const NavBarSearchPage = () => {
     return (
         <header className="sticky top-0 left-0 z-50 bg-white hidden md:flex justify-between items-center p-4">
 
-            <a href="/">
+            <a href="./">
                 <SvgIcons.NavLogo className="h-[30px] w-[72px]" />
             </a>
 
             <div className="flex items-center gap-1">
                 <LikeAnchor/>
-                <a href="/cart" className="relative p-[10px] rounded-[22px] hover:bg-neutral-100">
+                <a href="./cart" className="relative p-[10px] rounded-[22px] hover:bg-neutral-100">
                     <SvgIcons.Cart className="size-6" />
                     {
                         cartAmount !== 0 &&
