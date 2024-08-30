@@ -1,30 +1,46 @@
-# React + TypeScript + Vite
+# Shop.app frontend clone with React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![screenshot](https://github.com/Fmd0/assets/blob/main/shop.jpg?raw=true)
 
-Currently, two official plugins are available:
+This is a complete clone of [shop.app](https://shop.app), consisting of three parts: shop [frontend](https://github.com/Fmd0/Shop-frontend), shop [backend](https://github.com/Fmd0/Shop-backend), and shop [administration](https://github.com/Fmd0/Shop-administration-nextjs).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This is the shop frontend part of the project. It is fully responsive and quite comprehensive, including seven pages: the home page, market page, product page, search page, cart page, recently viewed page, and favorites page.
 
-## Expanding the ESLint configuration
+Now you can find a live version of this project [here](https://fmd0.github.io/pages/shop/).
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-- Configure the top-level `parserOptions` property like this:
+Features:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+- Typescript, Vite Setup
+- JWT authentication
+- SWR, data fetching and mutation
+- Zustand state management
+- Tailwind CSS for customization of UI
+- Full responsiveness on all pages
+- All UI in-house, no third-party component libraries
+
+
+### Clone the repository
+
+```shell
+git clone https://github.com/Fmd0/Shop-frontend.git
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Install packages
+
+```shell
+npm i
+```
+
+### Setup .env file
+
+```env
+VITE_AUTH_API_ADDRESS=
+# This should be set to the API address of the `shop backend` project. Make sure to use the correct URL that matches your `shop backend` deployment.
+```
+
+### Start the app
+
+```shell
+npm run dev
+```
